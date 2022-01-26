@@ -1,0 +1,26 @@
+{
+  "assignmentAdministrationSystemApp": {
+    "courseSessionProgress": {
+      "home": {
+        "title": "Course Session Progresses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Course Session Progress",
+        "createOrEditLabel": "Create or edit a Course Session Progress",
+        "notFound": "No Course Session Progresses found"
+      },
+      "created": "A new Course Session Progress is created with identifier {{ param }}",
+      "updated": "A Course Session Progress is updated with identifier {{ param }}",
+      "deleted": "A Course Session Progress is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Course Session Progress {{ id }}?"
+      },
+      "detail": {
+        "title": "Course Session Progress"
+      },
+      "id": "Id",
+      "watchSeconds": "Watch Seconds",
+      "user": "User",
+      "courseSession": "Course Session"
+    }
+  }
+}

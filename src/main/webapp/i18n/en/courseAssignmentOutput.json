@@ -1,0 +1,25 @@
+{
+  "assignmentAdministrationSystemApp": {
+    "courseAssignmentOutput": {
+      "home": {
+        "title": "Course Assignment Outputs",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Course Assignment Output",
+        "createOrEditLabel": "Create or edit a Course Assignment Output",
+        "notFound": "No Course Assignment Outputs found"
+      },
+      "created": "A new Course Assignment Output is created with identifier {{ param }}",
+      "updated": "A Course Assignment Output is updated with identifier {{ param }}",
+      "deleted": "A Course Assignment Output is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Course Assignment Output {{ id }}?"
+      },
+      "detail": {
+        "title": "Course Assignment Output"
+      },
+      "id": "Id",
+      "output": "Output",
+      "courseAssignment": "Course Assignment"
+    }
+  }
+}

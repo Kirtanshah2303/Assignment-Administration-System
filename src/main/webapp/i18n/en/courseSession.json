@@ -1,0 +1,36 @@
+{
+  "assignmentAdministrationSystemApp": {
+    "courseSession": {
+      "home": {
+        "title": "Course Sessions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Course Session",
+        "createOrEditLabel": "Create or edit a Course Session",
+        "notFound": "No Course Sessions found"
+      },
+      "created": "A new Course Session is created with identifier {{ param }}",
+      "updated": "A Course Session is updated with identifier {{ param }}",
+      "deleted": "A Course Session is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Course Session {{ id }}?"
+      },
+      "detail": {
+        "title": "Course Session"
+      },
+      "id": "Id",
+      "sessionTitle": "Session Title",
+      "sessionDescription": "Session Description",
+      "sessionVideo": "Session Video",
+      "sessionDuration": "Session Duration",
+      "sessionOrder": "Session Order",
+      "sessionResource": "Session Resource",
+      "sessionQuiz": "Session Quiz",
+      "isPreview": "Is Preview",
+      "isDraft": "Is Draft",
+      "isApproved": "Is Approved",
+      "isPublished": "Is Published",
+      "courseSection": "Course Section",
+      "courseReviewStatus": "Course Review Status"
+    }
+  }
+}

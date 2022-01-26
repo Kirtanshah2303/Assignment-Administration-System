@@ -1,0 +1,50 @@
+{
+  "applications": "*",
+  "changelogDate": "20220126184946",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "course_review_status",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "status",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "20"
+    },
+    {
+      "fieldName": "statusUpdatedOn",
+      "fieldType": "LocalDate"
+    },
+    {
+      "fieldName": "feedback",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "200"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "CourseReviewStatus",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "courseReviewStatus",
+      "relationshipName": "user",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "courseSession",
+      "otherEntityRelationshipName": "courseReviewStatus",
+      "relationshipName": "courseSession",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

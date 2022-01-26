@@ -1,0 +1,27 @@
+{
+  "assignmentAdministrationSystemApp": {
+    "courseAssignmentProgress": {
+      "home": {
+        "title": "Course Assignment Progresses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Course Assignment Progress",
+        "createOrEditLabel": "Create or edit a Course Assignment Progress",
+        "notFound": "No Course Assignment Progresses found"
+      },
+      "created": "A new Course Assignment Progress is created with identifier {{ param }}",
+      "updated": "A Course Assignment Progress is updated with identifier {{ param }}",
+      "deleted": "A Course Assignment Progress is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Course Assignment Progress {{ id }}?"
+      },
+      "detail": {
+        "title": "Course Assignment Progress"
+      },
+      "id": "Id",
+      "completed": "Completed",
+      "completedDate": "Completed Date",
+      "user": "User",
+      "courseAssignment": "Course Assignment"
+    }
+  }
+}

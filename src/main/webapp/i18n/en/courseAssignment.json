@@ -1,0 +1,36 @@
+{
+  "assignmentAdministrationSystemApp": {
+    "courseAssignment": {
+      "home": {
+        "title": "Course Assignments",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Course Assignment",
+        "createOrEditLabel": "Create or edit a Course Assignment",
+        "notFound": "No Course Assignments found"
+      },
+      "created": "A new Course Assignment is created with identifier {{ param }}",
+      "updated": "A Course Assignment is updated with identifier {{ param }}",
+      "deleted": "A Course Assignment is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Course Assignment {{ id }}?"
+      },
+      "detail": {
+        "title": "Course Assignment"
+      },
+      "id": "Id",
+      "assignmentTitle": "Assignment Title",
+      "assignmentDescription": "Assignment Description",
+      "sessionVideo": "Session Video",
+      "sessionDuration": "Session Duration",
+      "assignmentOrder": "Assignment Order",
+      "assignmentResource": "Assignment Resource",
+      "isPreview": "Is Preview",
+      "isDraft": "Is Draft",
+      "isApproved": "Is Approved",
+      "isPublished": "Is Published",
+      "courseSection": "Course Section",
+      "courseAssignmentInput": "Course Assignment Input",
+      "courseAssignmentOutput": "Course Assignment Output"
+    }
+  }
+}

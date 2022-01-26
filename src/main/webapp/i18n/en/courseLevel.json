@@ -1,0 +1,25 @@
+{
+  "assignmentAdministrationSystemApp": {
+    "courseLevel": {
+      "home": {
+        "title": "Course Levels",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Course Level",
+        "createOrEditLabel": "Create or edit a Course Level",
+        "notFound": "No Course Levels found"
+      },
+      "created": "A new Course Level is created with identifier {{ param }}",
+      "updated": "A Course Level is updated with identifier {{ param }}",
+      "deleted": "A Course Level is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Course Level {{ id }}?"
+      },
+      "detail": {
+        "title": "Course Level"
+      },
+      "id": "Id",
+      "title": "Title",
+      "description": "Description"
+    }
+  }
+}

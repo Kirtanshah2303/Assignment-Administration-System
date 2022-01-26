@@ -1,0 +1,28 @@
+{
+  "assignmentAdministrationSystemApp": {
+    "courseCategory": {
+      "home": {
+        "title": "Course Categories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Course Category",
+        "createOrEditLabel": "Create or edit a Course Category",
+        "notFound": "No Course Categories found"
+      },
+      "created": "A new Course Category is created with identifier {{ param }}",
+      "updated": "A Course Category is updated with identifier {{ param }}",
+      "deleted": "A Course Category is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Course Category {{ id }}?"
+      },
+      "detail": {
+        "title": "Course Category"
+      },
+      "id": "Id",
+      "title": "Title",
+      "logo": "Logo",
+      "isParent": "Is Parent",
+      "parentId": "Parent Id",
+      "description": "Description"
+    }
+  }
+}

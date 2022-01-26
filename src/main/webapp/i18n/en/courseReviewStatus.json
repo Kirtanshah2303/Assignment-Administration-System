@@ -1,0 +1,28 @@
+{
+  "assignmentAdministrationSystemApp": {
+    "courseReviewStatus": {
+      "home": {
+        "title": "Course Review Statuses",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Course Review Status",
+        "createOrEditLabel": "Create or edit a Course Review Status",
+        "notFound": "No Course Review Statuses found"
+      },
+      "created": "A new Course Review Status is created with identifier {{ param }}",
+      "updated": "A Course Review Status is updated with identifier {{ param }}",
+      "deleted": "A Course Review Status is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Course Review Status {{ id }}?"
+      },
+      "detail": {
+        "title": "Course Review Status"
+      },
+      "id": "Id",
+      "status": "Status",
+      "statusUpdatedOn": "Status Updated On",
+      "feedback": "Feedback",
+      "user": "User",
+      "courseSession": "Course Session"
+    }
+  }
+}

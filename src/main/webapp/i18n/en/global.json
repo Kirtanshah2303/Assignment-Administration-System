@@ -7,6 +7,19 @@
       "jhipster-needle-menu-add-element": "JHipster will add additional menu entries here (do not translate!)",
       "entities": {
         "main": "Entities",
+        "course": "Course",
+        "courseCategory": "Course Category",
+        "courseEnrollment": "Course Enrollment",
+        "courseLevel": "Course Level",
+        "courseSessionProgress": "Course Session Progress",
+        "courseAssignmentProgress": "Course Assignment Progress",
+        "courseReviewStatus": "Course Review Status",
+        "courseSection": "Course Section",
+        "courseSession": "Course Session",
+        "courseAssignment": "Course Assignment",
+        "courseAssignmentInput": "Course Assignment Input",
+        "courseAssignmentOutput": "Course Assignment Output",
+        "courseType": "Course Type",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
       },
       "account": {

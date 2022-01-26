@@ -1,0 +1,44 @@
+{
+  "applications": "*",
+  "changelogDate": "20220126184945",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "course_assignment_progress",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "completed",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "completedDate",
+      "fieldType": "LocalDate"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "CourseAssignmentProgress",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "login",
+      "otherEntityName": "user",
+      "otherEntityRelationshipName": "courseAssignmentProgress",
+      "relationshipName": "user",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityName": "courseAssignment",
+      "otherEntityRelationshipName": "courseAssignmentProgress",
+      "relationshipName": "courseAssignment",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

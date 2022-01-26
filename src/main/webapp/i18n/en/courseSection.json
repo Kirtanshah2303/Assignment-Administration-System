@@ -1,0 +1,29 @@
+{
+  "assignmentAdministrationSystemApp": {
+    "courseSection": {
+      "home": {
+        "title": "Course Sections",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "Create a new Course Section",
+        "createOrEditLabel": "Create or edit a Course Section",
+        "notFound": "No Course Sections found"
+      },
+      "created": "A new Course Section is created with identifier {{ param }}",
+      "updated": "A Course Section is updated with identifier {{ param }}",
+      "deleted": "A Course Section is deleted with identifier {{ param }}",
+      "delete": {
+        "question": "Are you sure you want to delete Course Section {{ id }}?"
+      },
+      "detail": {
+        "title": "Course Section"
+      },
+      "id": "Id",
+      "sectionTitle": "Section Title",
+      "sectionDescription": "Section Description",
+      "sectionOrder": "Section Order",
+      "isDraft": "Is Draft",
+      "isApproved": "Is Approved",
+      "course": "Course"
+    }
+  }
+}

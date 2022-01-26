@@ -1,0 +1,34 @@
+{
+  "applications": "*",
+  "changelogDate": "20220126184951",
+  "dto": "mapstruct",
+  "embedded": false,
+  "entityTableName": "course_assignment_output",
+  "fields": [
+    {
+      "fieldName": "id",
+      "fieldType": "Long",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "output",
+      "fieldType": "String",
+      "fieldValidateRules": ["maxlength"],
+      "fieldValidateRulesMaxlength": "200"
+    }
+  ],
+  "fluentMethods": true,
+  "jpaMetamodelFiltering": true,
+  "name": "CourseAssignmentOutput",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityName": "courseAssignment",
+      "otherEntityRelationshipName": "courseAssignmentOutput",
+      "relationshipName": "courseAssignment",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "service": "serviceImpl"
+}

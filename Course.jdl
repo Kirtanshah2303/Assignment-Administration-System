@@ -1,0 +1,146 @@
+// Command to run: jhipster jdl ./my-jdl-file.jdl --force
+
+entity Course {
+    	id Long required,
+    	courseTitle String maxlength(600) required,
+    	courseDescription String maxlength(255) required,
+    	courseObjectives String maxlength(255),
+    	courseSubTitle String maxlength(120) required,
+        coursePreviewURL String maxlength(1000),
+    	courseLength Integer,
+    	courseLogo String maxlength(255) required,
+    	courseCreatedOn LocalDate required,
+    	courseUpdatedOn LocalDate required,
+    	courseRootDir String maxlength(255),
+    	amount Double,
+    	isDraft Boolean required required,
+    	isApproved Boolean required,
+    	isPublished Boolean required,
+    	courseApprovalDate LocalDate
+}
+
+entity CourseCategory {
+	id Long required,
+	title String maxlength(255) required,
+    logo String maxlength(255) required
+	isParent Boolean required,
+	parentId Integer required,
+    description String maxlength(100)
+}
+
+entity CourseEnrollment {
+	id Long required,
+	enrollementDate LocalDate required,
+	lastAccessedDate LocalDate required,
+}
+
+entity CourseLevel {
+	id Long required,
+	title String maxlength(20)
+	description String maxlength(100)
+}
+
+entity CourseSessionProgress {
+	id Long required,
+	watchSeconds Instant required
+}
+
+entity CourseAssignmentProgress {
+	id Long required,
+	completed Boolean required,
+	completedDate LocalDate
+}
+
+entity CourseReviewStatus{
+	id Long required,
+	status String maxlength(20),
+	statusUpdatedOn LocalDate,
+	feedback String maxlength(200)
+}
+
+entity CourseSection {
+	id Long required,
+	sectionTitle String maxlength(255) required,
+	sectionDescription String maxlength(255),
+	sectionOrder Integer required,
+	isDraft Boolean required,
+	isApproved Boolean required,
+}
+
+entity CourseSession {
+	id Long required,
+    	sessionTitle String maxlength(255) required,
+    	sessionDescription String maxlength(255),
+    	sessionVideo String maxlength(300) required,
+    	sessionDuration Instant required,
+    	sessionOrder Integer required,
+    	sessionResource String maxlength(300),
+	sessionQuiz String maxlength(300),
+    	isPreview Boolean required,
+    	isDraft Boolean required,
+	isApproved Boolean required,
+    	isPublished Boolean required
+}
+
+entity CourseAssignment {
+	id Long required,
+    	assignmentTitle String maxlength(255) required,
+    	assignmentDescription String maxlength(255),
+    	sessionVideo String maxlength(300) required,
+    	sessionDuration Instant required,
+    	assignmentOrder Integer required,
+    	assignmentResource String maxlength(300),
+	isPreview Boolean required,
+    	isDraft Boolean required,
+	isApproved Boolean required,
+    	isPublished Boolean required
+}
+
+entity CourseAssignmentInput{
+	id Long required,
+	input String maxlength(200)
+}
+
+entity CourseAssignmentOutput{
+	id Long required,
+	output String maxlength(200)
+}
+
+entity CourseType {
+	id Long required,
+    	title String maxlength(50) required,
+    	description String maxlength(100)
+}
+
+
+
+
+relationship ManyToOne {
+	Course{courseLevel} to CourseLevel
+	Course{courseCategory} to CourseCategory
+    Course{courseType} to CourseType
+	Course{user(login)} to User
+	CourseSection{course(courseTitle)} to Course
+    CourseSession{courseSection(sectionTitle)} to CourseSection
+	CourseSessionProgress{user(login)} to User
+	CourseSessionProgress{courseSession} to CourseSession
+	CourseAssignment{courseSection(sectionTitle)} to CourseSection
+	CourseAssignmentProgress{user(login)} to User
+	CourseAssignmentProgress{courseAssignment} to CourseAssignment
+    CourseEnrollment{user(login)} to User
+    CourseEnrollment{course} to Course
+    Course{reviewer(login)} to User
+	CourseAssignmentInput to CourseAssignment
+    CourseAssignmentInput to User
+	CourseAssignmentOutput to CourseAssignment
+    CourseReviewStatus to User
+    CourseReviewStatus to CourseSession
+    CourseReviewStatus to CourseSession
+}
+
+
+// Options
+service * with serviceImpl
+paginate * with pagination
+dto * with mapstruct
+filter *
