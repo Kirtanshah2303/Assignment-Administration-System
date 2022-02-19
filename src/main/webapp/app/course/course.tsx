@@ -95,7 +95,7 @@ class Course extends Component {
                 <i className="fas fa-calendar-day"></i>&nbsp;&nbsp;<span>{course.courseCreatedOn}</span>
               </p>
               <p>
-                <i className="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;<span>{course.courseDescription}</span>
+                <i className="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;<span>Parth Shah</span>
               </p>
               <Link to="/assignments" className="btn btn-primary">
                 <Button>
