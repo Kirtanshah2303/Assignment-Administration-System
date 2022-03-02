@@ -9,7 +9,7 @@ import { toast } from 'react-toastify';
 export const findUsername = () => {
   const [email, setEmail] = useState('');
 
-  var successMessage;
+  let successMessage;
 
   const changeHandler2 = event => {
     setEmail(event.target.value);
@@ -50,7 +50,6 @@ export const findUsername = () => {
           <Alert color="warning">
             <p>Enter the email address you used to register</p>
           </Alert>
-          {/*<ValidatedForm onSubmit={handleValidSubmit}>*/}
           <ValidatedField
             name="email"
             label="Email"
@@ -72,7 +71,6 @@ export const findUsername = () => {
           <Button color="primary" onClick={handleValidSubmit}>
             Get Username
           </Button>
-          {/*</ValidatedForm>*/}
         </Col>
       </Row>
     </div>
