@@ -20,17 +20,13 @@
       "id": "Id",
       "assignmentTitle": "Assignment Title",
       "assignmentDescription": "Assignment Description",
-      "sessionVideo": "Session Video",
-      "sessionDuration": "Session Duration",
       "assignmentOrder": "Assignment Order",
       "assignmentResource": "Assignment Resource",
       "isPreview": "Is Preview",
       "isDraft": "Is Draft",
       "isApproved": "Is Approved",
       "isPublished": "Is Published",
-      "courseSection": "Course Section",
-      "courseAssignmentInput": "Course Assignment Input",
-      "courseAssignmentOutput": "Course Assignment Output"
+      "courseSession": "Course Session"
     }
   }
 }

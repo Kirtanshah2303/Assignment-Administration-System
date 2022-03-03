@@ -25,7 +25,7 @@ public class CourseAssignmentOutput implements Serializable {
     private String output;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "courseSection", "courseAssignmentInputs", "courseAssignmentOutputs" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "courseSession" }, allowSetters = true)
     private CourseAssignment courseAssignment;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

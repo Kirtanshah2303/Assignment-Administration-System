@@ -253,6 +253,24 @@ class CourseResourceIT {
 
     @Test
     @Transactional
+    void checkCourseObjectivesIsRequired() throws Exception {
+        int databaseSizeBeforeTest = courseRepository.findAll().size();
+        // set the field null
+        course.setCourseObjectives(null);
+
+        // Create the Course, which fails.
+        CourseDTO courseDTO = courseMapper.toDto(course);
+
+        restCourseMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(courseDTO)))
+            .andExpect(status().isBadRequest());
+
+        List<Course> courseList = courseRepository.findAll();
+        assertThat(courseList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void checkCourseSubTitleIsRequired() throws Exception {
         int databaseSizeBeforeTest = courseRepository.findAll().size();
         // set the field null
@@ -1777,32 +1795,6 @@ class CourseResourceIT {
 
         // Get all the courseList where user equals to (userId + 1)
         defaultCourseShouldNotBeFound("userId.equals=" + (userId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllCoursesByReviewerIsEqualToSomething() throws Exception {
-        // Initialize the database
-        courseRepository.saveAndFlush(course);
-        User reviewer;
-        if (TestUtil.findAll(em, User.class).isEmpty()) {
-            reviewer = UserResourceIT.createEntity(em);
-            em.persist(reviewer);
-            em.flush();
-        } else {
-            reviewer = TestUtil.findAll(em, User.class).get(0);
-        }
-        em.persist(reviewer);
-        em.flush();
-        course.setReviewer(reviewer);
-        courseRepository.saveAndFlush(course);
-        Long reviewerId = reviewer.getId();
-
-        // Get all the courseList where reviewer equals to reviewerId
-        defaultCourseShouldBeFound("reviewerId.equals=" + reviewerId);
-
-        // Get all the courseList where reviewer equals to (reviewerId + 1)
-        defaultCourseShouldNotBeFound("reviewerId.equals=" + (reviewerId + 1));
     }
 
     /**

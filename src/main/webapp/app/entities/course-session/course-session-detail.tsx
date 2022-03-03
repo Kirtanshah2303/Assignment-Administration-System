@@ -70,12 +70,6 @@ export const CourseSessionDetail = (props: RouteComponentProps<{ id: string }>) 
           </dt>
           <dd>{courseSessionEntity.sessionResource}</dd>
           <dt>
-            <span id="sessionQuiz">
-              <Translate contentKey="assignmentAdministrationSystemApp.courseSession.sessionQuiz">Session Quiz</Translate>
-            </span>
-          </dt>
-          <dd>{courseSessionEntity.sessionQuiz}</dd>
-          <dt>
             <span id="isPreview">
               <Translate contentKey="assignmentAdministrationSystemApp.courseSession.isPreview">Is Preview</Translate>
             </span>
@@ -99,6 +93,18 @@ export const CourseSessionDetail = (props: RouteComponentProps<{ id: string }>) 
             </span>
           </dt>
           <dd>{courseSessionEntity.isPublished ? 'true' : 'false'}</dd>
+          <dt>
+            <span id="sessionLocation">
+              <Translate contentKey="assignmentAdministrationSystemApp.courseSession.sessionLocation">Session Location</Translate>
+            </span>
+          </dt>
+          <dd>{courseSessionEntity.sessionLocation}</dd>
+          <dt>
+            <span id="quizLink">
+              <Translate contentKey="assignmentAdministrationSystemApp.courseSession.quizLink">Quiz Link</Translate>
+            </span>
+          </dt>
+          <dd>{courseSessionEntity.quizLink}</dd>
           <dt>
             <Translate contentKey="assignmentAdministrationSystemApp.courseSession.courseSection">Course Section</Translate>
           </dt>

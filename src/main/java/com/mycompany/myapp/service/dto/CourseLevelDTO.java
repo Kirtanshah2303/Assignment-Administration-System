@@ -12,10 +12,10 @@ public class CourseLevelDTO implements Serializable {
     @NotNull
     private Long id;
 
-    @Size(max = 20)
+    @Size(min = 10, max = 50)
     private String title;
 
-    @Size(max = 100)
+    @Size(min = 10, max = 400)
     private String description;
 
     public Long getId() {

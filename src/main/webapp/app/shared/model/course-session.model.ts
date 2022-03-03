@@ -1,6 +1,5 @@
 import dayjs from 'dayjs';
 import { ICourseSection } from 'app/shared/model/course-section.model';
-import { ICourseReviewStatus } from 'app/shared/model/course-review-status.model';
 
 export interface ICourseSession {
   id?: number;
@@ -10,13 +9,13 @@ export interface ICourseSession {
   sessionDuration?: string;
   sessionOrder?: number;
   sessionResource?: string | null;
-  sessionQuiz?: string | null;
   isPreview?: boolean;
   isDraft?: boolean;
   isApproved?: boolean;
   isPublished?: boolean;
+  sessionLocation?: string | null;
+  quizLink?: string | null;
   courseSection?: ICourseSection | null;
-  courseReviewStatuses?: ICourseReviewStatus[] | null;
 }
 
 export const defaultValue: Readonly<ICourseSession> = {

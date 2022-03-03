@@ -2,9 +2,6 @@ package com.mycompany.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.Instant;
-import java.util.HashSet;
-import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -24,29 +21,20 @@ public class CourseAssignment implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 255)
-    @Column(name = "assignment_title", length = 255, nullable = false)
+    @Size(min = 10, max = 42)
+    @Column(name = "assignment_title", length = 42, nullable = false)
     private String assignmentTitle;
 
-    @Size(max = 255)
-    @Column(name = "assignment_description", length = 255)
+    @Size(min = 10, max = 400)
+    @Column(name = "assignment_description", length = 400)
     private String assignmentDescription;
-
-    @NotNull
-    @Size(max = 300)
-    @Column(name = "session_video", length = 300, nullable = false)
-    private String sessionVideo;
-
-    @NotNull
-    @Column(name = "session_duration", nullable = false)
-    private Instant sessionDuration;
 
     @NotNull
     @Column(name = "assignment_order", nullable = false)
     private Integer assignmentOrder;
 
-    @Size(max = 300)
-    @Column(name = "assignment_resource", length = 300)
+    @Size(min = 10, max = 42)
+    @Column(name = "assignment_resource", length = 42)
     private String assignmentResource;
 
     @NotNull
@@ -66,16 +54,8 @@ public class CourseAssignment implements Serializable {
     private Boolean isPublished;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "course" }, allowSetters = true)
-    private CourseSection courseSection;
-
-    @OneToMany(mappedBy = "courseAssignment")
-    @JsonIgnoreProperties(value = { "courseAssignment", "user" }, allowSetters = true)
-    private Set<CourseAssignmentInput> courseAssignmentInputs = new HashSet<>();
-
-    @OneToMany(mappedBy = "courseAssignment")
-    @JsonIgnoreProperties(value = { "courseAssignment" }, allowSetters = true)
-    private Set<CourseAssignmentOutput> courseAssignmentOutputs = new HashSet<>();
+    @JsonIgnoreProperties(value = { "courseSection" }, allowSetters = true)
+    private CourseSession courseSession;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -116,32 +96,6 @@ public class CourseAssignment implements Serializable {
 
     public void setAssignmentDescription(String assignmentDescription) {
         this.assignmentDescription = assignmentDescription;
-    }
-
-    public String getSessionVideo() {
-        return this.sessionVideo;
-    }
-
-    public CourseAssignment sessionVideo(String sessionVideo) {
-        this.setSessionVideo(sessionVideo);
-        return this;
-    }
-
-    public void setSessionVideo(String sessionVideo) {
-        this.sessionVideo = sessionVideo;
-    }
-
-    public Instant getSessionDuration() {
-        return this.sessionDuration;
-    }
-
-    public CourseAssignment sessionDuration(Instant sessionDuration) {
-        this.setSessionDuration(sessionDuration);
-        return this;
-    }
-
-    public void setSessionDuration(Instant sessionDuration) {
-        this.sessionDuration = sessionDuration;
     }
 
     public Integer getAssignmentOrder() {
@@ -222,78 +176,16 @@ public class CourseAssignment implements Serializable {
         this.isPublished = isPublished;
     }
 
-    public CourseSection getCourseSection() {
-        return this.courseSection;
+    public CourseSession getCourseSession() {
+        return this.courseSession;
     }
 
-    public void setCourseSection(CourseSection courseSection) {
-        this.courseSection = courseSection;
+    public void setCourseSession(CourseSession courseSession) {
+        this.courseSession = courseSession;
     }
 
-    public CourseAssignment courseSection(CourseSection courseSection) {
-        this.setCourseSection(courseSection);
-        return this;
-    }
-
-    public Set<CourseAssignmentInput> getCourseAssignmentInputs() {
-        return this.courseAssignmentInputs;
-    }
-
-    public void setCourseAssignmentInputs(Set<CourseAssignmentInput> courseAssignmentInputs) {
-        if (this.courseAssignmentInputs != null) {
-            this.courseAssignmentInputs.forEach(i -> i.setCourseAssignment(null));
-        }
-        if (courseAssignmentInputs != null) {
-            courseAssignmentInputs.forEach(i -> i.setCourseAssignment(this));
-        }
-        this.courseAssignmentInputs = courseAssignmentInputs;
-    }
-
-    public CourseAssignment courseAssignmentInputs(Set<CourseAssignmentInput> courseAssignmentInputs) {
-        this.setCourseAssignmentInputs(courseAssignmentInputs);
-        return this;
-    }
-
-    public CourseAssignment addCourseAssignmentInput(CourseAssignmentInput courseAssignmentInput) {
-        this.courseAssignmentInputs.add(courseAssignmentInput);
-        courseAssignmentInput.setCourseAssignment(this);
-        return this;
-    }
-
-    public CourseAssignment removeCourseAssignmentInput(CourseAssignmentInput courseAssignmentInput) {
-        this.courseAssignmentInputs.remove(courseAssignmentInput);
-        courseAssignmentInput.setCourseAssignment(null);
-        return this;
-    }
-
-    public Set<CourseAssignmentOutput> getCourseAssignmentOutputs() {
-        return this.courseAssignmentOutputs;
-    }
-
-    public void setCourseAssignmentOutputs(Set<CourseAssignmentOutput> courseAssignmentOutputs) {
-        if (this.courseAssignmentOutputs != null) {
-            this.courseAssignmentOutputs.forEach(i -> i.setCourseAssignment(null));
-        }
-        if (courseAssignmentOutputs != null) {
-            courseAssignmentOutputs.forEach(i -> i.setCourseAssignment(this));
-        }
-        this.courseAssignmentOutputs = courseAssignmentOutputs;
-    }
-
-    public CourseAssignment courseAssignmentOutputs(Set<CourseAssignmentOutput> courseAssignmentOutputs) {
-        this.setCourseAssignmentOutputs(courseAssignmentOutputs);
-        return this;
-    }
-
-    public CourseAssignment addCourseAssignmentOutput(CourseAssignmentOutput courseAssignmentOutput) {
-        this.courseAssignmentOutputs.add(courseAssignmentOutput);
-        courseAssignmentOutput.setCourseAssignment(this);
-        return this;
-    }
-
-    public CourseAssignment removeCourseAssignmentOutput(CourseAssignmentOutput courseAssignmentOutput) {
-        this.courseAssignmentOutputs.remove(courseAssignmentOutput);
-        courseAssignmentOutput.setCourseAssignment(null);
+    public CourseAssignment courseSession(CourseSession courseSession) {
+        this.setCourseSession(courseSession);
         return this;
     }
 
@@ -323,8 +215,6 @@ public class CourseAssignment implements Serializable {
             "id=" + getId() +
             ", assignmentTitle='" + getAssignmentTitle() + "'" +
             ", assignmentDescription='" + getAssignmentDescription() + "'" +
-            ", sessionVideo='" + getSessionVideo() + "'" +
-            ", sessionDuration='" + getSessionDuration() + "'" +
             ", assignmentOrder=" + getAssignmentOrder() +
             ", assignmentResource='" + getAssignmentResource() + "'" +
             ", isPreview='" + getIsPreview() + "'" +

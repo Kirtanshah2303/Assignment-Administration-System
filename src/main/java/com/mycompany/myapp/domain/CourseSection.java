@@ -21,12 +21,12 @@ public class CourseSection implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 255)
-    @Column(name = "section_title", length = 255, nullable = false)
+    @Size(min = 10, max = 42)
+    @Column(name = "section_title", length = 42, nullable = false)
     private String sectionTitle;
 
-    @Size(max = 255)
-    @Column(name = "section_description", length = 255)
+    @Size(min = 10, max = 400)
+    @Column(name = "section_description", length = 400)
     private String sectionDescription;
 
     @NotNull
@@ -42,7 +42,7 @@ public class CourseSection implements Serializable {
     private Boolean isApproved;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "courseLevel", "courseCategory", "courseType", "user", "reviewer" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "courseLevel", "courseCategory", "courseType", "user" }, allowSetters = true)
     private Course course;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

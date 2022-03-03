@@ -11,16 +11,18 @@
       "fieldValidateRules": ["required"]
     },
     {
-      "fieldName": "title",
+      "fieldName": "courseCategoryTitle",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength", "required"],
-      "fieldValidateRulesMaxlength": "255"
+      "fieldValidateRules": ["minlength", "maxlength", "required"],
+      "fieldValidateRulesMaxlength": "42",
+      "fieldValidateRulesMinlength": "10"
     },
     {
       "fieldName": "logo",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength", "required"],
-      "fieldValidateRulesMaxlength": "255"
+      "fieldValidateRules": ["minlength", "maxlength", "required"],
+      "fieldValidateRulesMaxlength": "42",
+      "fieldValidateRulesMinlength": "10"
     },
     {
       "fieldName": "isParent",
@@ -35,8 +37,9 @@
     {
       "fieldName": "description",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "100"
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "400",
+      "fieldValidateRulesMinlength": "10"
     }
   ],
   "fluentMethods": true,

@@ -14,10 +14,10 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="section_title" type="varchar(255)">
+            <column name="section_title" type="varchar(42)">
                 <constraints nullable="false" />
             </column>
-            <column name="section_description" type="varchar(255)">
+            <column name="section_description" type="varchar(400)">
                 <constraints nullable="true" />
             </column>
             <column name="section_order" type="integer">

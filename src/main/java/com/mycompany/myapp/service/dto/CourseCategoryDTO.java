@@ -13,11 +13,11 @@ public class CourseCategoryDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 255)
-    private String title;
+    @Size(min = 10, max = 42)
+    private String courseCategoryTitle;
 
     @NotNull
-    @Size(max = 255)
+    @Size(min = 10, max = 42)
     private String logo;
 
     @NotNull
@@ -26,7 +26,7 @@ public class CourseCategoryDTO implements Serializable {
     @NotNull
     private Integer parentId;
 
-    @Size(max = 100)
+    @Size(min = 10, max = 400)
     private String description;
 
     public Long getId() {
@@ -37,12 +37,12 @@ public class CourseCategoryDTO implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return title;
+    public String getCourseCategoryTitle() {
+        return courseCategoryTitle;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCourseCategoryTitle(String courseCategoryTitle) {
+        this.courseCategoryTitle = courseCategoryTitle;
     }
 
     public String getLogo() {
@@ -103,7 +103,7 @@ public class CourseCategoryDTO implements Serializable {
     public String toString() {
         return "CourseCategoryDTO{" +
             "id=" + getId() +
-            ", title='" + getTitle() + "'" +
+            ", courseCategoryTitle='" + getCourseCategoryTitle() + "'" +
             ", logo='" + getLogo() + "'" +
             ", isParent='" + getIsParent() + "'" +
             ", parentId=" + getParentId() +

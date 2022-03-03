@@ -38,7 +38,7 @@ export const CourseAssignmentOutputDetail = (props: RouteComponentProps<{ id: st
           <dt>
             <Translate contentKey="assignmentAdministrationSystemApp.courseAssignmentOutput.courseAssignment">Course Assignment</Translate>
           </dt>
-          <dd>{courseAssignmentOutputEntity.courseAssignment ? courseAssignmentOutputEntity.courseAssignment.id : ''}</dd>
+          <dd>{courseAssignmentOutputEntity.courseAssignment ? courseAssignmentOutputEntity.courseAssignment.assignmentTitle : ''}</dd>
         </dl>
         <Button tag={Link} to="/course-assignment-output" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

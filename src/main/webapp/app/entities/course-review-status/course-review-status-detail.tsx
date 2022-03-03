@@ -34,7 +34,7 @@ export const CourseReviewStatusDetail = (props: RouteComponentProps<{ id: string
               <Translate contentKey="assignmentAdministrationSystemApp.courseReviewStatus.status">Status</Translate>
             </span>
           </dt>
-          <dd>{courseReviewStatusEntity.status}</dd>
+          <dd>{courseReviewStatusEntity.status ? 'true' : 'false'}</dd>
           <dt>
             <span id="statusUpdatedOn">
               <Translate contentKey="assignmentAdministrationSystemApp.courseReviewStatus.statusUpdatedOn">Status Updated On</Translate>
@@ -54,11 +54,11 @@ export const CourseReviewStatusDetail = (props: RouteComponentProps<{ id: string
           <dt>
             <Translate contentKey="assignmentAdministrationSystemApp.courseReviewStatus.user">User</Translate>
           </dt>
-          <dd>{courseReviewStatusEntity.user ? courseReviewStatusEntity.user.id : ''}</dd>
+          <dd>{courseReviewStatusEntity.user ? courseReviewStatusEntity.user.login : ''}</dd>
           <dt>
             <Translate contentKey="assignmentAdministrationSystemApp.courseReviewStatus.courseSession">Course Session</Translate>
           </dt>
-          <dd>{courseReviewStatusEntity.courseSession ? courseReviewStatusEntity.courseSession.id : ''}</dd>
+          <dd>{courseReviewStatusEntity.courseSession ? courseReviewStatusEntity.courseSession.sessionTitle : ''}</dd>
         </dl>
         <Button tag={Link} to="/course-review-status" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

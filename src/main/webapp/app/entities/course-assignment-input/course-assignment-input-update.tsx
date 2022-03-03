@@ -121,7 +121,7 @@ export const CourseAssignmentInputUpdate = (props: RouteComponentProps<{ id: str
                 {courseAssignments
                   ? courseAssignments.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.assignmentTitle}
                       </option>
                     ))
                   : null}
@@ -137,7 +137,7 @@ export const CourseAssignmentInputUpdate = (props: RouteComponentProps<{ id: str
                 {users
                   ? users.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.login}
                       </option>
                     ))
                   : null}

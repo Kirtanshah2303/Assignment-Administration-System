@@ -12,9 +12,8 @@
     },
     {
       "fieldName": "status",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "20"
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
     },
     {
       "fieldName": "statusUpdatedOn",
@@ -23,8 +22,9 @@
     {
       "fieldName": "feedback",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "200"
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "400",
+      "fieldValidateRulesMinlength": "10"
     }
   ],
   "fluentMethods": true,
@@ -34,12 +34,14 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "login",
       "otherEntityName": "user",
       "otherEntityRelationshipName": "courseReviewStatus",
       "relationshipName": "user",
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "sessionTitle",
       "otherEntityName": "courseSession",
       "otherEntityRelationshipName": "courseReviewStatus",
       "relationshipName": "courseSession",

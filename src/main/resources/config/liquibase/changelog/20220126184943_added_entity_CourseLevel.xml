@@ -14,10 +14,10 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="title" type="varchar(20)">
+            <column name="title" type="varchar(50)">
                 <constraints nullable="true" />
             </column>
-            <column name="description" type="varchar(100)">
+            <column name="description" type="varchar(400)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

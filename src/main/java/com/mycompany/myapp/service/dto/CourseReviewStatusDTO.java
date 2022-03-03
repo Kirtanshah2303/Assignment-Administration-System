@@ -13,12 +13,12 @@ public class CourseReviewStatusDTO implements Serializable {
     @NotNull
     private Long id;
 
-    @Size(max = 20)
-    private String status;
+    @NotNull
+    private Boolean status;
 
     private LocalDate statusUpdatedOn;
 
-    @Size(max = 200)
+    @Size(min = 10, max = 400)
     private String feedback;
 
     private UserDTO user;
@@ -33,11 +33,11 @@ public class CourseReviewStatusDTO implements Serializable {
         this.id = id;
     }
 
-    public String getStatus() {
+    public Boolean getStatus() {
         return status;
     }
 
-    public void setStatus(String status) {
+    public void setStatus(Boolean status) {
         this.status = status;
     }
 

@@ -131,7 +131,7 @@ export const CourseAssignmentOutput = (props: RouteComponentProps<{ url: string 
                   <td>
                     {courseAssignmentOutput.courseAssignment ? (
                       <Link to={`course-assignment/${courseAssignmentOutput.courseAssignment.id}`}>
-                        {courseAssignmentOutput.courseAssignment.id}
+                        {courseAssignmentOutput.courseAssignment.assignmentTitle}
                       </Link>
                     ) : (
                       ''

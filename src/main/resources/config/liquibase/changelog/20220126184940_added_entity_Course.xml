@@ -14,25 +14,25 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="course_title" type="varchar(600)">
+            <column name="course_title" type="varchar(42)">
                 <constraints nullable="false" />
             </column>
-            <column name="course_description" type="varchar(255)">
+            <column name="course_description" type="varchar(400)">
                 <constraints nullable="false" />
             </column>
-            <column name="course_objectives" type="varchar(255)">
-                <constraints nullable="true" />
-            </column>
-            <column name="course_sub_title" type="varchar(120)">
+            <column name="course_objectives" type="varchar(400)">
                 <constraints nullable="false" />
             </column>
-            <column name="course_preview_url" type="varchar(1000)">
+            <column name="course_sub_title" type="varchar(42)">
+                <constraints nullable="false" />
+            </column>
+            <column name="course_preview_url" type="varchar(42)">
                 <constraints nullable="true" />
             </column>
             <column name="course_length" type="integer">
                 <constraints nullable="true" />
             </column>
-            <column name="course_logo" type="varchar(255)">
+            <column name="course_logo" type="varchar(42)">
                 <constraints nullable="false" />
             </column>
             <column name="course_created_on" type="date">
@@ -41,7 +41,7 @@
             <column name="course_updated_on" type="date">
                 <constraints nullable="false" />
             </column>
-            <column name="course_root_dir" type="varchar(255)">
+            <column name="course_root_dir" type="varchar(42)">
                 <constraints nullable="true" />
             </column>
             <column name="amount" type="double">
@@ -69,9 +69,6 @@
                 <constraints nullable="true" />
             </column>
             <column name="user_id" type="bigint">
-                <constraints nullable="true" />
-            </column>
-            <column name="reviewer_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->

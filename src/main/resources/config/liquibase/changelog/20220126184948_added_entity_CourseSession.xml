@@ -14,13 +14,13 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="session_title" type="varchar(255)">
+            <column name="session_title" type="varchar(42)">
                 <constraints nullable="false" />
             </column>
-            <column name="session_description" type="varchar(255)">
+            <column name="session_description" type="varchar(400)">
                 <constraints nullable="true" />
             </column>
-            <column name="session_video" type="varchar(300)">
+            <column name="session_video" type="varchar(42)">
                 <constraints nullable="false" />
             </column>
             <column name="session_duration" type="${datetimeType}">
@@ -29,10 +29,7 @@
             <column name="session_order" type="integer">
                 <constraints nullable="false" />
             </column>
-            <column name="session_resource" type="varchar(300)">
-                <constraints nullable="true" />
-            </column>
-            <column name="session_quiz" type="varchar(300)">
+            <column name="session_resource" type="varchar(42)">
                 <constraints nullable="true" />
             </column>
             <column name="is_preview" type="boolean">
@@ -46,6 +43,12 @@
             </column>
             <column name="is_published" type="boolean">
                 <constraints nullable="false" />
+            </column>
+            <column name="session_location" type="varchar(42)">
+                <constraints nullable="true" />
+            </column>
+            <column name="quiz_link" type="varchar(42)">
+                <constraints nullable="true" />
             </column>
             <column name="course_section_id" type="bigint">
                 <constraints nullable="true" />
@@ -78,11 +81,12 @@
             <column name="session_duration" type="date"/>
             <column name="session_order" type="numeric"/>
             <column name="session_resource" type="string"/>
-            <column name="session_quiz" type="string"/>
             <column name="is_preview" type="boolean"/>
             <column name="is_draft" type="boolean"/>
             <column name="is_approved" type="boolean"/>
             <column name="is_published" type="boolean"/>
+            <column name="session_location" type="string"/>
+            <column name="quiz_link" type="string"/>
             <!-- jhipster-needle-liquibase-add-loadcolumn - JHipster (and/or extensions) can add load columns here -->
         </loadData>
     </changeSet>

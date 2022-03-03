@@ -13,10 +13,10 @@ public class CourseSectionDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 255)
+    @Size(min = 10, max = 42)
     private String sectionTitle;
 
-    @Size(max = 255)
+    @Size(min = 10, max = 400)
     private String sectionDescription;
 
     @NotNull

@@ -104,7 +104,8 @@ export const CourseSessionUpdate = (props: RouteComponentProps<{ id: string }>) 
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
-                  maxLength: { value: 255, message: translate('entity.validation.maxlength', { max: 255 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
                 }}
               />
               <ValidatedField
@@ -114,7 +115,8 @@ export const CourseSessionUpdate = (props: RouteComponentProps<{ id: string }>) 
                 data-cy="sessionDescription"
                 type="text"
                 validate={{
-                  maxLength: { value: 255, message: translate('entity.validation.maxlength', { max: 255 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 400, message: translate('entity.validation.maxlength', { max: 400 }) },
                 }}
               />
               <ValidatedField
@@ -125,7 +127,8 @@ export const CourseSessionUpdate = (props: RouteComponentProps<{ id: string }>) 
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
-                  maxLength: { value: 300, message: translate('entity.validation.maxlength', { max: 300 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
                 }}
               />
               <ValidatedField
@@ -157,17 +160,8 @@ export const CourseSessionUpdate = (props: RouteComponentProps<{ id: string }>) 
                 data-cy="sessionResource"
                 type="text"
                 validate={{
-                  maxLength: { value: 300, message: translate('entity.validation.maxlength', { max: 300 }) },
-                }}
-              />
-              <ValidatedField
-                label={translate('assignmentAdministrationSystemApp.courseSession.sessionQuiz')}
-                id="course-session-sessionQuiz"
-                name="sessionQuiz"
-                data-cy="sessionQuiz"
-                type="text"
-                validate={{
-                  maxLength: { value: 300, message: translate('entity.validation.maxlength', { max: 300 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
                 }}
               />
               <ValidatedField
@@ -201,6 +195,28 @@ export const CourseSessionUpdate = (props: RouteComponentProps<{ id: string }>) 
                 data-cy="isPublished"
                 check
                 type="checkbox"
+              />
+              <ValidatedField
+                label={translate('assignmentAdministrationSystemApp.courseSession.sessionLocation')}
+                id="course-session-sessionLocation"
+                name="sessionLocation"
+                data-cy="sessionLocation"
+                type="text"
+                validate={{
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
+                }}
+              />
+              <ValidatedField
+                label={translate('assignmentAdministrationSystemApp.courseSession.quizLink')}
+                id="course-session-quizLink"
+                name="quizLink"
+                data-cy="quizLink"
+                type="text"
+                validate={{
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
+                }}
               />
               <ValidatedField
                 id="course-session-courseSection"

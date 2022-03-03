@@ -14,10 +14,10 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="title" type="varchar(255)">
+            <column name="course_category_title" type="varchar(42)">
                 <constraints nullable="false" />
             </column>
-            <column name="logo" type="varchar(255)">
+            <column name="logo" type="varchar(42)">
                 <constraints nullable="false" />
             </column>
             <column name="is_parent" type="boolean">
@@ -26,7 +26,7 @@
             <column name="parent_id" type="integer">
                 <constraints nullable="false" />
             </column>
-            <column name="description" type="varchar(100)">
+            <column name="description" type="varchar(400)">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
@@ -50,7 +50,7 @@
                   tableName="course_category"
                   usePreparedStatements="true">
             <column name="id" type="numeric"/>
-            <column name="title" type="string"/>
+            <column name="course_category_title" type="string"/>
             <column name="logo" type="string"/>
             <column name="is_parent" type="boolean"/>
             <column name="parent_id" type="numeric"/>

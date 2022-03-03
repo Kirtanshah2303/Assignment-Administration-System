@@ -13,7 +13,4 @@ import org.springframework.stereotype.Repository;
 public interface CourseRepository extends JpaRepository<Course, Long>, JpaSpecificationExecutor<Course> {
     @Query("select course from Course course where course.user.login = ?#{principal.username}")
     List<Course> findByUserIsCurrentUser();
-
-    @Query("select course from Course course where course.reviewer.login = ?#{principal.username}")
-    List<Course> findByReviewerIsCurrentUser();
 }

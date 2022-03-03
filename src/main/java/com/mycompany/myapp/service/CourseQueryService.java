@@ -168,12 +168,6 @@ public class CourseQueryService extends QueryService<Course> {
                         buildSpecification(criteria.getUserId(), root -> root.join(Course_.user, JoinType.LEFT).get(User_.id))
                     );
             }
-            if (criteria.getReviewerId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(criteria.getReviewerId(), root -> root.join(Course_.reviewer, JoinType.LEFT).get(User_.id))
-                    );
-            }
         }
         return specification;
     }

@@ -7,7 +7,6 @@ import tech.jhipster.service.filter.BooleanFilter;
 import tech.jhipster.service.filter.DoubleFilter;
 import tech.jhipster.service.filter.Filter;
 import tech.jhipster.service.filter.FloatFilter;
-import tech.jhipster.service.filter.InstantFilter;
 import tech.jhipster.service.filter.IntegerFilter;
 import tech.jhipster.service.filter.LongFilter;
 import tech.jhipster.service.filter.StringFilter;
@@ -31,10 +30,6 @@ public class CourseAssignmentCriteria implements Serializable, Criteria {
 
     private StringFilter assignmentDescription;
 
-    private StringFilter sessionVideo;
-
-    private InstantFilter sessionDuration;
-
     private IntegerFilter assignmentOrder;
 
     private StringFilter assignmentResource;
@@ -47,11 +42,7 @@ public class CourseAssignmentCriteria implements Serializable, Criteria {
 
     private BooleanFilter isPublished;
 
-    private LongFilter courseSectionId;
-
-    private LongFilter courseAssignmentInputId;
-
-    private LongFilter courseAssignmentOutputId;
+    private LongFilter courseSessionId;
 
     private Boolean distinct;
 
@@ -61,17 +52,13 @@ public class CourseAssignmentCriteria implements Serializable, Criteria {
         this.id = other.id == null ? null : other.id.copy();
         this.assignmentTitle = other.assignmentTitle == null ? null : other.assignmentTitle.copy();
         this.assignmentDescription = other.assignmentDescription == null ? null : other.assignmentDescription.copy();
-        this.sessionVideo = other.sessionVideo == null ? null : other.sessionVideo.copy();
-        this.sessionDuration = other.sessionDuration == null ? null : other.sessionDuration.copy();
         this.assignmentOrder = other.assignmentOrder == null ? null : other.assignmentOrder.copy();
         this.assignmentResource = other.assignmentResource == null ? null : other.assignmentResource.copy();
         this.isPreview = other.isPreview == null ? null : other.isPreview.copy();
         this.isDraft = other.isDraft == null ? null : other.isDraft.copy();
         this.isApproved = other.isApproved == null ? null : other.isApproved.copy();
         this.isPublished = other.isPublished == null ? null : other.isPublished.copy();
-        this.courseSectionId = other.courseSectionId == null ? null : other.courseSectionId.copy();
-        this.courseAssignmentInputId = other.courseAssignmentInputId == null ? null : other.courseAssignmentInputId.copy();
-        this.courseAssignmentOutputId = other.courseAssignmentOutputId == null ? null : other.courseAssignmentOutputId.copy();
+        this.courseSessionId = other.courseSessionId == null ? null : other.courseSessionId.copy();
         this.distinct = other.distinct;
     }
 
@@ -123,36 +110,6 @@ public class CourseAssignmentCriteria implements Serializable, Criteria {
 
     public void setAssignmentDescription(StringFilter assignmentDescription) {
         this.assignmentDescription = assignmentDescription;
-    }
-
-    public StringFilter getSessionVideo() {
-        return sessionVideo;
-    }
-
-    public StringFilter sessionVideo() {
-        if (sessionVideo == null) {
-            sessionVideo = new StringFilter();
-        }
-        return sessionVideo;
-    }
-
-    public void setSessionVideo(StringFilter sessionVideo) {
-        this.sessionVideo = sessionVideo;
-    }
-
-    public InstantFilter getSessionDuration() {
-        return sessionDuration;
-    }
-
-    public InstantFilter sessionDuration() {
-        if (sessionDuration == null) {
-            sessionDuration = new InstantFilter();
-        }
-        return sessionDuration;
-    }
-
-    public void setSessionDuration(InstantFilter sessionDuration) {
-        this.sessionDuration = sessionDuration;
     }
 
     public IntegerFilter getAssignmentOrder() {
@@ -245,49 +202,19 @@ public class CourseAssignmentCriteria implements Serializable, Criteria {
         this.isPublished = isPublished;
     }
 
-    public LongFilter getCourseSectionId() {
-        return courseSectionId;
+    public LongFilter getCourseSessionId() {
+        return courseSessionId;
     }
 
-    public LongFilter courseSectionId() {
-        if (courseSectionId == null) {
-            courseSectionId = new LongFilter();
+    public LongFilter courseSessionId() {
+        if (courseSessionId == null) {
+            courseSessionId = new LongFilter();
         }
-        return courseSectionId;
+        return courseSessionId;
     }
 
-    public void setCourseSectionId(LongFilter courseSectionId) {
-        this.courseSectionId = courseSectionId;
-    }
-
-    public LongFilter getCourseAssignmentInputId() {
-        return courseAssignmentInputId;
-    }
-
-    public LongFilter courseAssignmentInputId() {
-        if (courseAssignmentInputId == null) {
-            courseAssignmentInputId = new LongFilter();
-        }
-        return courseAssignmentInputId;
-    }
-
-    public void setCourseAssignmentInputId(LongFilter courseAssignmentInputId) {
-        this.courseAssignmentInputId = courseAssignmentInputId;
-    }
-
-    public LongFilter getCourseAssignmentOutputId() {
-        return courseAssignmentOutputId;
-    }
-
-    public LongFilter courseAssignmentOutputId() {
-        if (courseAssignmentOutputId == null) {
-            courseAssignmentOutputId = new LongFilter();
-        }
-        return courseAssignmentOutputId;
-    }
-
-    public void setCourseAssignmentOutputId(LongFilter courseAssignmentOutputId) {
-        this.courseAssignmentOutputId = courseAssignmentOutputId;
+    public void setCourseSessionId(LongFilter courseSessionId) {
+        this.courseSessionId = courseSessionId;
     }
 
     public Boolean getDistinct() {
@@ -311,17 +238,13 @@ public class CourseAssignmentCriteria implements Serializable, Criteria {
             Objects.equals(id, that.id) &&
             Objects.equals(assignmentTitle, that.assignmentTitle) &&
             Objects.equals(assignmentDescription, that.assignmentDescription) &&
-            Objects.equals(sessionVideo, that.sessionVideo) &&
-            Objects.equals(sessionDuration, that.sessionDuration) &&
             Objects.equals(assignmentOrder, that.assignmentOrder) &&
             Objects.equals(assignmentResource, that.assignmentResource) &&
             Objects.equals(isPreview, that.isPreview) &&
             Objects.equals(isDraft, that.isDraft) &&
             Objects.equals(isApproved, that.isApproved) &&
             Objects.equals(isPublished, that.isPublished) &&
-            Objects.equals(courseSectionId, that.courseSectionId) &&
-            Objects.equals(courseAssignmentInputId, that.courseAssignmentInputId) &&
-            Objects.equals(courseAssignmentOutputId, that.courseAssignmentOutputId) &&
+            Objects.equals(courseSessionId, that.courseSessionId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -332,17 +255,13 @@ public class CourseAssignmentCriteria implements Serializable, Criteria {
             id,
             assignmentTitle,
             assignmentDescription,
-            sessionVideo,
-            sessionDuration,
             assignmentOrder,
             assignmentResource,
             isPreview,
             isDraft,
             isApproved,
             isPublished,
-            courseSectionId,
-            courseAssignmentInputId,
-            courseAssignmentOutputId,
+            courseSessionId,
             distinct
         );
     }
@@ -354,17 +273,13 @@ public class CourseAssignmentCriteria implements Serializable, Criteria {
             (id != null ? "id=" + id + ", " : "") +
             (assignmentTitle != null ? "assignmentTitle=" + assignmentTitle + ", " : "") +
             (assignmentDescription != null ? "assignmentDescription=" + assignmentDescription + ", " : "") +
-            (sessionVideo != null ? "sessionVideo=" + sessionVideo + ", " : "") +
-            (sessionDuration != null ? "sessionDuration=" + sessionDuration + ", " : "") +
             (assignmentOrder != null ? "assignmentOrder=" + assignmentOrder + ", " : "") +
             (assignmentResource != null ? "assignmentResource=" + assignmentResource + ", " : "") +
             (isPreview != null ? "isPreview=" + isPreview + ", " : "") +
             (isDraft != null ? "isDraft=" + isDraft + ", " : "") +
             (isApproved != null ? "isApproved=" + isApproved + ", " : "") +
             (isPublished != null ? "isPublished=" + isPublished + ", " : "") +
-            (courseSectionId != null ? "courseSectionId=" + courseSectionId + ", " : "") +
-            (courseAssignmentInputId != null ? "courseAssignmentInputId=" + courseAssignmentInputId + ", " : "") +
-            (courseAssignmentOutputId != null ? "courseAssignmentOutputId=" + courseAssignmentOutputId + ", " : "") +
+            (courseSessionId != null ? "courseSessionId=" + courseSessionId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

@@ -14,14 +14,14 @@ public class CourseSessionDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 255)
+    @Size(min = 10, max = 42)
     private String sessionTitle;
 
-    @Size(max = 255)
+    @Size(min = 10, max = 400)
     private String sessionDescription;
 
     @NotNull
-    @Size(max = 300)
+    @Size(min = 10, max = 42)
     private String sessionVideo;
 
     @NotNull
@@ -30,11 +30,8 @@ public class CourseSessionDTO implements Serializable {
     @NotNull
     private Integer sessionOrder;
 
-    @Size(max = 300)
+    @Size(min = 10, max = 42)
     private String sessionResource;
-
-    @Size(max = 300)
-    private String sessionQuiz;
 
     @NotNull
     private Boolean isPreview;
@@ -47,6 +44,12 @@ public class CourseSessionDTO implements Serializable {
 
     @NotNull
     private Boolean isPublished;
+
+    @Size(min = 10, max = 42)
+    private String sessionLocation;
+
+    @Size(min = 10, max = 42)
+    private String quizLink;
 
     private CourseSectionDTO courseSection;
 
@@ -106,14 +109,6 @@ public class CourseSessionDTO implements Serializable {
         this.sessionResource = sessionResource;
     }
 
-    public String getSessionQuiz() {
-        return sessionQuiz;
-    }
-
-    public void setSessionQuiz(String sessionQuiz) {
-        this.sessionQuiz = sessionQuiz;
-    }
-
     public Boolean getIsPreview() {
         return isPreview;
     }
@@ -144,6 +139,22 @@ public class CourseSessionDTO implements Serializable {
 
     public void setIsPublished(Boolean isPublished) {
         this.isPublished = isPublished;
+    }
+
+    public String getSessionLocation() {
+        return sessionLocation;
+    }
+
+    public void setSessionLocation(String sessionLocation) {
+        this.sessionLocation = sessionLocation;
+    }
+
+    public String getQuizLink() {
+        return quizLink;
+    }
+
+    public void setQuizLink(String quizLink) {
+        this.quizLink = quizLink;
     }
 
     public CourseSectionDTO getCourseSection() {
@@ -186,11 +197,12 @@ public class CourseSessionDTO implements Serializable {
             ", sessionDuration='" + getSessionDuration() + "'" +
             ", sessionOrder=" + getSessionOrder() +
             ", sessionResource='" + getSessionResource() + "'" +
-            ", sessionQuiz='" + getSessionQuiz() + "'" +
             ", isPreview='" + getIsPreview() + "'" +
             ", isDraft='" + getIsDraft() + "'" +
             ", isApproved='" + getIsApproved() + "'" +
             ", isPublished='" + getIsPublished() + "'" +
+            ", sessionLocation='" + getSessionLocation() + "'" +
+            ", quizLink='" + getQuizLink() + "'" +
             ", courseSection=" + getCourseSection() +
             "}";
     }

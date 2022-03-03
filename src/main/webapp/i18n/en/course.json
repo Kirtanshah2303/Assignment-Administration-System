@@ -36,8 +36,7 @@
       "courseLevel": "Course Level",
       "courseCategory": "Course Category",
       "courseType": "Course Type",
-      "user": "User",
-      "reviewer": "Reviewer"
+      "user": "User"
     }
   }
 }

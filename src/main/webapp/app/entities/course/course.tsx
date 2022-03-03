@@ -177,10 +177,6 @@ export const Course = (props: RouteComponentProps<{ url: string }>) => {
                 <th>
                   <Translate contentKey="assignmentAdministrationSystemApp.course.user">User</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th>
-                  <Translate contentKey="assignmentAdministrationSystemApp.course.reviewer">Reviewer</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
-                </th>
                 <th />
               </tr>
             </thead>
@@ -219,17 +215,16 @@ export const Course = (props: RouteComponentProps<{ url: string }>) => {
                       <TextFormat type="date" value={course.courseApprovalDate} format={APP_LOCAL_DATE_FORMAT} />
                     ) : null}
                   </td>
-                  <td>{course.courseLevel ? <Link to={`course-level/${course.courseLevel.id}`}>{course.courseLevel.id}</Link> : ''}</td>
+                  <td>{course.courseLevel ? <Link to={`course-level/${course.courseLevel.id}`}>{course.courseLevel.title}</Link> : ''}</td>
                   <td>
                     {course.courseCategory ? (
-                      <Link to={`course-category/${course.courseCategory.id}`}>{course.courseCategory.id}</Link>
+                      <Link to={`course-category/${course.courseCategory.id}`}>{course.courseCategory.courseCategoryTitle}</Link>
                     ) : (
                       ''
                     )}
                   </td>
-                  <td>{course.courseType ? <Link to={`course-type/${course.courseType.id}`}>{course.courseType.id}</Link> : ''}</td>
+                  <td>{course.courseType ? <Link to={`course-type/${course.courseType.id}`}>{course.courseType.title}</Link> : ''}</td>
                   <td>{course.user ? course.user.login : ''}</td>
-                  <td>{course.reviewer ? course.reviewer.login : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button tag={Link} to={`${match.url}/${course.id}`} color="info" size="sm" data-cy="entityDetailsButton">

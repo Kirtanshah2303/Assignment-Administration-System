@@ -39,8 +39,6 @@ public class CourseSessionCriteria implements Serializable, Criteria {
 
     private StringFilter sessionResource;
 
-    private StringFilter sessionQuiz;
-
     private BooleanFilter isPreview;
 
     private BooleanFilter isDraft;
@@ -49,9 +47,11 @@ public class CourseSessionCriteria implements Serializable, Criteria {
 
     private BooleanFilter isPublished;
 
-    private LongFilter courseSectionId;
+    private StringFilter sessionLocation;
 
-    private LongFilter courseReviewStatusId;
+    private StringFilter quizLink;
+
+    private LongFilter courseSectionId;
 
     private Boolean distinct;
 
@@ -65,13 +65,13 @@ public class CourseSessionCriteria implements Serializable, Criteria {
         this.sessionDuration = other.sessionDuration == null ? null : other.sessionDuration.copy();
         this.sessionOrder = other.sessionOrder == null ? null : other.sessionOrder.copy();
         this.sessionResource = other.sessionResource == null ? null : other.sessionResource.copy();
-        this.sessionQuiz = other.sessionQuiz == null ? null : other.sessionQuiz.copy();
         this.isPreview = other.isPreview == null ? null : other.isPreview.copy();
         this.isDraft = other.isDraft == null ? null : other.isDraft.copy();
         this.isApproved = other.isApproved == null ? null : other.isApproved.copy();
         this.isPublished = other.isPublished == null ? null : other.isPublished.copy();
+        this.sessionLocation = other.sessionLocation == null ? null : other.sessionLocation.copy();
+        this.quizLink = other.quizLink == null ? null : other.quizLink.copy();
         this.courseSectionId = other.courseSectionId == null ? null : other.courseSectionId.copy();
-        this.courseReviewStatusId = other.courseReviewStatusId == null ? null : other.courseReviewStatusId.copy();
         this.distinct = other.distinct;
     }
 
@@ -185,21 +185,6 @@ public class CourseSessionCriteria implements Serializable, Criteria {
         this.sessionResource = sessionResource;
     }
 
-    public StringFilter getSessionQuiz() {
-        return sessionQuiz;
-    }
-
-    public StringFilter sessionQuiz() {
-        if (sessionQuiz == null) {
-            sessionQuiz = new StringFilter();
-        }
-        return sessionQuiz;
-    }
-
-    public void setSessionQuiz(StringFilter sessionQuiz) {
-        this.sessionQuiz = sessionQuiz;
-    }
-
     public BooleanFilter getIsPreview() {
         return isPreview;
     }
@@ -260,6 +245,36 @@ public class CourseSessionCriteria implements Serializable, Criteria {
         this.isPublished = isPublished;
     }
 
+    public StringFilter getSessionLocation() {
+        return sessionLocation;
+    }
+
+    public StringFilter sessionLocation() {
+        if (sessionLocation == null) {
+            sessionLocation = new StringFilter();
+        }
+        return sessionLocation;
+    }
+
+    public void setSessionLocation(StringFilter sessionLocation) {
+        this.sessionLocation = sessionLocation;
+    }
+
+    public StringFilter getQuizLink() {
+        return quizLink;
+    }
+
+    public StringFilter quizLink() {
+        if (quizLink == null) {
+            quizLink = new StringFilter();
+        }
+        return quizLink;
+    }
+
+    public void setQuizLink(StringFilter quizLink) {
+        this.quizLink = quizLink;
+    }
+
     public LongFilter getCourseSectionId() {
         return courseSectionId;
     }
@@ -273,21 +288,6 @@ public class CourseSessionCriteria implements Serializable, Criteria {
 
     public void setCourseSectionId(LongFilter courseSectionId) {
         this.courseSectionId = courseSectionId;
-    }
-
-    public LongFilter getCourseReviewStatusId() {
-        return courseReviewStatusId;
-    }
-
-    public LongFilter courseReviewStatusId() {
-        if (courseReviewStatusId == null) {
-            courseReviewStatusId = new LongFilter();
-        }
-        return courseReviewStatusId;
-    }
-
-    public void setCourseReviewStatusId(LongFilter courseReviewStatusId) {
-        this.courseReviewStatusId = courseReviewStatusId;
     }
 
     public Boolean getDistinct() {
@@ -315,13 +315,13 @@ public class CourseSessionCriteria implements Serializable, Criteria {
             Objects.equals(sessionDuration, that.sessionDuration) &&
             Objects.equals(sessionOrder, that.sessionOrder) &&
             Objects.equals(sessionResource, that.sessionResource) &&
-            Objects.equals(sessionQuiz, that.sessionQuiz) &&
             Objects.equals(isPreview, that.isPreview) &&
             Objects.equals(isDraft, that.isDraft) &&
             Objects.equals(isApproved, that.isApproved) &&
             Objects.equals(isPublished, that.isPublished) &&
+            Objects.equals(sessionLocation, that.sessionLocation) &&
+            Objects.equals(quizLink, that.quizLink) &&
             Objects.equals(courseSectionId, that.courseSectionId) &&
-            Objects.equals(courseReviewStatusId, that.courseReviewStatusId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -336,13 +336,13 @@ public class CourseSessionCriteria implements Serializable, Criteria {
             sessionDuration,
             sessionOrder,
             sessionResource,
-            sessionQuiz,
             isPreview,
             isDraft,
             isApproved,
             isPublished,
+            sessionLocation,
+            quizLink,
             courseSectionId,
-            courseReviewStatusId,
             distinct
         );
     }
@@ -358,13 +358,13 @@ public class CourseSessionCriteria implements Serializable, Criteria {
             (sessionDuration != null ? "sessionDuration=" + sessionDuration + ", " : "") +
             (sessionOrder != null ? "sessionOrder=" + sessionOrder + ", " : "") +
             (sessionResource != null ? "sessionResource=" + sessionResource + ", " : "") +
-            (sessionQuiz != null ? "sessionQuiz=" + sessionQuiz + ", " : "") +
             (isPreview != null ? "isPreview=" + isPreview + ", " : "") +
             (isDraft != null ? "isDraft=" + isDraft + ", " : "") +
             (isApproved != null ? "isApproved=" + isApproved + ", " : "") +
             (isPublished != null ? "isPublished=" + isPublished + ", " : "") +
+            (sessionLocation != null ? "sessionLocation=" + sessionLocation + ", " : "") +
+            (quizLink != null ? "quizLink=" + quizLink + ", " : "") +
             (courseSectionId != null ? "courseSectionId=" + courseSectionId + ", " : "") +
-            (courseReviewStatusId != null ? "courseReviewStatusId=" + courseReviewStatusId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

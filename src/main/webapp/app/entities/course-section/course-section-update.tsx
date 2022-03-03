@@ -99,7 +99,8 @@ export const CourseSectionUpdate = (props: RouteComponentProps<{ id: string }>) 
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
-                  maxLength: { value: 255, message: translate('entity.validation.maxlength', { max: 255 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
                 }}
               />
               <ValidatedField
@@ -109,7 +110,8 @@ export const CourseSectionUpdate = (props: RouteComponentProps<{ id: string }>) 
                 data-cy="sectionDescription"
                 type="text"
                 validate={{
-                  maxLength: { value: 255, message: translate('entity.validation.maxlength', { max: 255 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 400, message: translate('entity.validation.maxlength', { max: 400 }) },
                 }}
               />
               <ValidatedField

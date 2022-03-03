@@ -25,7 +25,7 @@ public class CourseAssignmentInput implements Serializable {
     private String input;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "courseSection", "courseAssignmentInputs", "courseAssignmentOutputs" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "courseSession" }, allowSetters = true)
     private CourseAssignment courseAssignment;
 
     @ManyToOne

@@ -127,10 +127,6 @@ export const CourseSession = (props: RouteComponentProps<{ url: string }>) => {
                   <Translate contentKey="assignmentAdministrationSystemApp.courseSession.sessionResource">Session Resource</Translate>{' '}
                   <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('sessionQuiz')}>
-                  <Translate contentKey="assignmentAdministrationSystemApp.courseSession.sessionQuiz">Session Quiz</Translate>{' '}
-                  <FontAwesomeIcon icon="sort" />
-                </th>
                 <th className="hand" onClick={sort('isPreview')}>
                   <Translate contentKey="assignmentAdministrationSystemApp.courseSession.isPreview">Is Preview</Translate>{' '}
                   <FontAwesomeIcon icon="sort" />
@@ -145,6 +141,14 @@ export const CourseSession = (props: RouteComponentProps<{ url: string }>) => {
                 </th>
                 <th className="hand" onClick={sort('isPublished')}>
                   <Translate contentKey="assignmentAdministrationSystemApp.courseSession.isPublished">Is Published</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('sessionLocation')}>
+                  <Translate contentKey="assignmentAdministrationSystemApp.courseSession.sessionLocation">Session Location</Translate>{' '}
+                  <FontAwesomeIcon icon="sort" />
+                </th>
+                <th className="hand" onClick={sort('quizLink')}>
+                  <Translate contentKey="assignmentAdministrationSystemApp.courseSession.quizLink">Quiz Link</Translate>{' '}
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th>
@@ -172,11 +176,12 @@ export const CourseSession = (props: RouteComponentProps<{ url: string }>) => {
                   </td>
                   <td>{courseSession.sessionOrder}</td>
                   <td>{courseSession.sessionResource}</td>
-                  <td>{courseSession.sessionQuiz}</td>
                   <td>{courseSession.isPreview ? 'true' : 'false'}</td>
                   <td>{courseSession.isDraft ? 'true' : 'false'}</td>
                   <td>{courseSession.isApproved ? 'true' : 'false'}</td>
                   <td>{courseSession.isPublished ? 'true' : 'false'}</td>
+                  <td>{courseSession.sessionLocation}</td>
+                  <td>{courseSession.quizLink}</td>
                   <td>
                     {courseSession.courseSection ? (
                       <Link to={`course-section/${courseSession.courseSection.id}`}>{courseSession.courseSection.sectionTitle}</Link>

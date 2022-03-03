@@ -1,7 +1,6 @@
 package com.mycompany.myapp.service.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 import javax.validation.constraints.*;
 
@@ -14,23 +13,16 @@ public class CourseAssignmentDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 255)
+    @Size(min = 10, max = 42)
     private String assignmentTitle;
 
-    @Size(max = 255)
+    @Size(min = 10, max = 400)
     private String assignmentDescription;
-
-    @NotNull
-    @Size(max = 300)
-    private String sessionVideo;
-
-    @NotNull
-    private Instant sessionDuration;
 
     @NotNull
     private Integer assignmentOrder;
 
-    @Size(max = 300)
+    @Size(min = 10, max = 42)
     private String assignmentResource;
 
     @NotNull
@@ -45,7 +37,7 @@ public class CourseAssignmentDTO implements Serializable {
     @NotNull
     private Boolean isPublished;
 
-    private CourseSectionDTO courseSection;
+    private CourseSessionDTO courseSession;
 
     public Long getId() {
         return id;
@@ -69,22 +61,6 @@ public class CourseAssignmentDTO implements Serializable {
 
     public void setAssignmentDescription(String assignmentDescription) {
         this.assignmentDescription = assignmentDescription;
-    }
-
-    public String getSessionVideo() {
-        return sessionVideo;
-    }
-
-    public void setSessionVideo(String sessionVideo) {
-        this.sessionVideo = sessionVideo;
-    }
-
-    public Instant getSessionDuration() {
-        return sessionDuration;
-    }
-
-    public void setSessionDuration(Instant sessionDuration) {
-        this.sessionDuration = sessionDuration;
     }
 
     public Integer getAssignmentOrder() {
@@ -135,12 +111,12 @@ public class CourseAssignmentDTO implements Serializable {
         this.isPublished = isPublished;
     }
 
-    public CourseSectionDTO getCourseSection() {
-        return courseSection;
+    public CourseSessionDTO getCourseSession() {
+        return courseSession;
     }
 
-    public void setCourseSection(CourseSectionDTO courseSection) {
-        this.courseSection = courseSection;
+    public void setCourseSession(CourseSessionDTO courseSession) {
+        this.courseSession = courseSession;
     }
 
     @Override
@@ -171,15 +147,13 @@ public class CourseAssignmentDTO implements Serializable {
             "id=" + getId() +
             ", assignmentTitle='" + getAssignmentTitle() + "'" +
             ", assignmentDescription='" + getAssignmentDescription() + "'" +
-            ", sessionVideo='" + getSessionVideo() + "'" +
-            ", sessionDuration='" + getSessionDuration() + "'" +
             ", assignmentOrder=" + getAssignmentOrder() +
             ", assignmentResource='" + getAssignmentResource() + "'" +
             ", isPreview='" + getIsPreview() + "'" +
             ", isDraft='" + getIsDraft() + "'" +
             ", isApproved='" + getIsApproved() + "'" +
             ", isPublished='" + getIsPublished() + "'" +
-            ", courseSection=" + getCourseSection() +
+            ", courseSession=" + getCourseSession() +
             "}";
     }
 }

@@ -34,6 +34,7 @@
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "assignmentTitle",
       "otherEntityName": "courseAssignment",
       "otherEntityRelationshipName": "courseAssignmentProgress",
       "relationshipName": "courseAssignment",

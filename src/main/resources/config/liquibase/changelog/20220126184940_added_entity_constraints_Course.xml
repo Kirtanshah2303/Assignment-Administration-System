@@ -31,11 +31,5 @@
                                  constraintName="fk_course__user_id"
                                  referencedColumnNames="id"
                                  referencedTableName="jhi_user"/>
-
-        <addForeignKeyConstraint baseColumnNames="reviewer_id"
-                                 baseTableName="course"
-                                 constraintName="fk_course__reviewer_id"
-                                 referencedColumnNames="id"
-                                 referencedTableName="jhi_user"/>
     </changeSet>
 </databaseChangeLog>

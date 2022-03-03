@@ -27,7 +27,7 @@ public class CourseReviewStatusCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
-    private StringFilter status;
+    private BooleanFilter status;
 
     private LocalDateFilter statusUpdatedOn;
 
@@ -71,18 +71,18 @@ public class CourseReviewStatusCriteria implements Serializable, Criteria {
         this.id = id;
     }
 
-    public StringFilter getStatus() {
+    public BooleanFilter getStatus() {
         return status;
     }
 
-    public StringFilter status() {
+    public BooleanFilter status() {
         if (status == null) {
-            status = new StringFilter();
+            status = new BooleanFilter();
         }
         return status;
     }
 
-    public void setStatus(StringFilter status) {
+    public void setStatus(BooleanFilter status) {
         this.status = status;
     }
 

@@ -135,13 +135,13 @@ export const CourseAssignmentInput = (props: RouteComponentProps<{ url: string }
                   <td>
                     {courseAssignmentInput.courseAssignment ? (
                       <Link to={`course-assignment/${courseAssignmentInput.courseAssignment.id}`}>
-                        {courseAssignmentInput.courseAssignment.id}
+                        {courseAssignmentInput.courseAssignment.assignmentTitle}
                       </Link>
                     ) : (
                       ''
                     )}
                   </td>
-                  <td>{courseAssignmentInput.user ? courseAssignmentInput.user.id : ''}</td>
+                  <td>{courseAssignmentInput.user ? courseAssignmentInput.user.login : ''}</td>
                   <td className="text-end">
                     <div className="btn-group flex-btn-group-container">
                       <Button

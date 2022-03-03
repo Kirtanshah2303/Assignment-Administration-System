@@ -1,6 +1,6 @@
 export interface ICourseCategory {
   id?: number;
-  title?: string;
+  courseCategoryTitle?: string;
   logo?: string;
   isParent?: boolean;
   parentId?: number;

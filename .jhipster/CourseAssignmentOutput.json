@@ -24,6 +24,7 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "assignmentTitle",
       "otherEntityName": "courseAssignment",
       "otherEntityRelationshipName": "courseAssignmentOutput",
       "relationshipName": "courseAssignment",

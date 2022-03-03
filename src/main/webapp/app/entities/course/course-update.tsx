@@ -62,7 +62,6 @@ export const CourseUpdate = (props: RouteComponentProps<{ id: string }>) => {
       courseCategory: courseCategories.find(it => it.id.toString() === values.courseCategory.toString()),
       courseType: courseTypes.find(it => it.id.toString() === values.courseType.toString()),
       user: users.find(it => it.id.toString() === values.user.toString()),
-      reviewer: users.find(it => it.id.toString() === values.reviewer.toString()),
     };
 
     if (isNew) {
@@ -81,7 +80,6 @@ export const CourseUpdate = (props: RouteComponentProps<{ id: string }>) => {
           courseCategory: courseEntity?.courseCategory?.id,
           courseType: courseEntity?.courseType?.id,
           user: courseEntity?.user?.id,
-          reviewer: courseEntity?.reviewer?.id,
         };
 
   return (
@@ -117,7 +115,8 @@ export const CourseUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
-                  maxLength: { value: 600, message: translate('entity.validation.maxlength', { max: 600 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
                 }}
               />
               <ValidatedField
@@ -128,7 +127,8 @@ export const CourseUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
-                  maxLength: { value: 255, message: translate('entity.validation.maxlength', { max: 255 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 400, message: translate('entity.validation.maxlength', { max: 400 }) },
                 }}
               />
               <ValidatedField
@@ -138,7 +138,9 @@ export const CourseUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 data-cy="courseObjectives"
                 type="text"
                 validate={{
-                  maxLength: { value: 255, message: translate('entity.validation.maxlength', { max: 255 }) },
+                  required: { value: true, message: translate('entity.validation.required') },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 400, message: translate('entity.validation.maxlength', { max: 400 }) },
                 }}
               />
               <ValidatedField
@@ -149,7 +151,8 @@ export const CourseUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
-                  maxLength: { value: 120, message: translate('entity.validation.maxlength', { max: 120 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
                 }}
               />
               <ValidatedField
@@ -159,7 +162,8 @@ export const CourseUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 data-cy="coursePreviewURL"
                 type="text"
                 validate={{
-                  maxLength: { value: 1000, message: translate('entity.validation.maxlength', { max: 1000 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
                 }}
               />
               <ValidatedField
@@ -177,7 +181,8 @@ export const CourseUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
-                  maxLength: { value: 255, message: translate('entity.validation.maxlength', { max: 255 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
                 }}
               />
               <ValidatedField
@@ -207,7 +212,8 @@ export const CourseUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 data-cy="courseRootDir"
                 type="text"
                 validate={{
-                  maxLength: { value: 255, message: translate('entity.validation.maxlength', { max: 255 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
                 }}
               />
               <ValidatedField
@@ -259,7 +265,7 @@ export const CourseUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 {courseLevels
                   ? courseLevels.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.title}
                       </option>
                     ))
                   : null}
@@ -275,7 +281,7 @@ export const CourseUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 {courseCategories
                   ? courseCategories.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.courseCategoryTitle}
                       </option>
                     ))
                   : null}
@@ -291,7 +297,7 @@ export const CourseUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 {courseTypes
                   ? courseTypes.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.title}
                       </option>
                     ))
                   : null}
@@ -301,22 +307,6 @@ export const CourseUpdate = (props: RouteComponentProps<{ id: string }>) => {
                 name="user"
                 data-cy="user"
                 label={translate('assignmentAdministrationSystemApp.course.user')}
-                type="select"
-              >
-                <option value="" key="0" />
-                {users
-                  ? users.map(otherEntity => (
-                      <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.login}
-                      </option>
-                    ))
-                  : null}
-              </ValidatedField>
-              <ValidatedField
-                id="course-reviewer"
-                name="reviewer"
-                data-cy="reviewer"
-                label={translate('assignmentAdministrationSystemApp.course.reviewer')}
                 type="select"
               >
                 <option value="" key="0" />

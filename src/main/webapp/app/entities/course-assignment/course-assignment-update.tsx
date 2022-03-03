@@ -4,8 +4,8 @@ import { Button, Row, Col, FormText } from 'reactstrap';
 import { isNumber, Translate, translate, ValidatedField, ValidatedForm } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
-import { ICourseSection } from 'app/shared/model/course-section.model';
-import { getEntities as getCourseSections } from 'app/entities/course-section/course-section.reducer';
+import { ICourseSession } from 'app/shared/model/course-session.model';
+import { getEntities as getCourseSessions } from 'app/entities/course-session/course-session.reducer';
 import { getEntity, updateEntity, createEntity, reset } from './course-assignment.reducer';
 import { ICourseAssignment } from 'app/shared/model/course-assignment.model';
 import { convertDateTimeFromServer, convertDateTimeToServer, displayDefaultDateTime } from 'app/shared/util/date-utils';
@@ -17,7 +17,7 @@ export const CourseAssignmentUpdate = (props: RouteComponentProps<{ id: string }
 
   const [isNew] = useState(!props.match.params || !props.match.params.id);
 
-  const courseSections = useAppSelector(state => state.courseSection.entities);
+  const courseSessions = useAppSelector(state => state.courseSession.entities);
   const courseAssignmentEntity = useAppSelector(state => state.courseAssignment.entity);
   const loading = useAppSelector(state => state.courseAssignment.loading);
   const updating = useAppSelector(state => state.courseAssignment.updating);
@@ -33,7 +33,7 @@ export const CourseAssignmentUpdate = (props: RouteComponentProps<{ id: string }
       dispatch(getEntity(props.match.params.id));
     }
 
-    dispatch(getCourseSections({}));
+    dispatch(getCourseSessions({}));
   }, []);
 
   useEffect(() => {
@@ -43,12 +43,10 @@ export const CourseAssignmentUpdate = (props: RouteComponentProps<{ id: string }
   }, [updateSuccess]);
 
   const saveEntity = values => {
-    values.sessionDuration = convertDateTimeToServer(values.sessionDuration);
-
     const entity = {
       ...courseAssignmentEntity,
       ...values,
-      courseSection: courseSections.find(it => it.id.toString() === values.courseSection.toString()),
+      courseSession: courseSessions.find(it => it.id.toString() === values.courseSession.toString()),
     };
 
     if (isNew) {
@@ -60,13 +58,10 @@ export const CourseAssignmentUpdate = (props: RouteComponentProps<{ id: string }
 
   const defaultValues = () =>
     isNew
-      ? {
-          sessionDuration: displayDefaultDateTime(),
-        }
+      ? {}
       : {
           ...courseAssignmentEntity,
-          sessionDuration: convertDateTimeFromServer(courseAssignmentEntity.sessionDuration),
-          courseSection: courseAssignmentEntity?.courseSection?.id,
+          courseSession: courseAssignmentEntity?.courseSession?.id,
         };
 
   return (
@@ -104,7 +99,8 @@ export const CourseAssignmentUpdate = (props: RouteComponentProps<{ id: string }
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
-                  maxLength: { value: 255, message: translate('entity.validation.maxlength', { max: 255 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
                 }}
               />
               <ValidatedField
@@ -114,29 +110,8 @@ export const CourseAssignmentUpdate = (props: RouteComponentProps<{ id: string }
                 data-cy="assignmentDescription"
                 type="text"
                 validate={{
-                  maxLength: { value: 255, message: translate('entity.validation.maxlength', { max: 255 }) },
-                }}
-              />
-              <ValidatedField
-                label={translate('assignmentAdministrationSystemApp.courseAssignment.sessionVideo')}
-                id="course-assignment-sessionVideo"
-                name="sessionVideo"
-                data-cy="sessionVideo"
-                type="text"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
-                  maxLength: { value: 300, message: translate('entity.validation.maxlength', { max: 300 }) },
-                }}
-              />
-              <ValidatedField
-                label={translate('assignmentAdministrationSystemApp.courseAssignment.sessionDuration')}
-                id="course-assignment-sessionDuration"
-                name="sessionDuration"
-                data-cy="sessionDuration"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
-                validate={{
-                  required: { value: true, message: translate('entity.validation.required') },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 400, message: translate('entity.validation.maxlength', { max: 400 }) },
                 }}
               />
               <ValidatedField
@@ -157,7 +132,8 @@ export const CourseAssignmentUpdate = (props: RouteComponentProps<{ id: string }
                 data-cy="assignmentResource"
                 type="text"
                 validate={{
-                  maxLength: { value: 300, message: translate('entity.validation.maxlength', { max: 300 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
                 }}
               />
               <ValidatedField
@@ -193,17 +169,17 @@ export const CourseAssignmentUpdate = (props: RouteComponentProps<{ id: string }
                 type="checkbox"
               />
               <ValidatedField
-                id="course-assignment-courseSection"
-                name="courseSection"
-                data-cy="courseSection"
-                label={translate('assignmentAdministrationSystemApp.courseAssignment.courseSection')}
+                id="course-assignment-courseSession"
+                name="courseSession"
+                data-cy="courseSession"
+                label={translate('assignmentAdministrationSystemApp.courseAssignment.courseSession')}
                 type="select"
               >
                 <option value="" key="0" />
-                {courseSections
-                  ? courseSections.map(otherEntity => (
+                {courseSessions
+                  ? courseSessions.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.sectionTitle}
+                        {otherEntity.sessionTitle}
                       </option>
                     ))
                   : null}

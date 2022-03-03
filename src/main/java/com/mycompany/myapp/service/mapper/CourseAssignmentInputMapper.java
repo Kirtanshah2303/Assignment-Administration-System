@@ -9,7 +9,7 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring", uses = { CourseAssignmentMapper.class, UserMapper.class })
 public interface CourseAssignmentInputMapper extends EntityMapper<CourseAssignmentInputDTO, CourseAssignmentInput> {
-    @Mapping(target = "courseAssignment", source = "courseAssignment", qualifiedByName = "id")
-    @Mapping(target = "user", source = "user", qualifiedByName = "id")
+    @Mapping(target = "courseAssignment", source = "courseAssignment", qualifiedByName = "assignmentTitle")
+    @Mapping(target = "user", source = "user", qualifiedByName = "login")
     CourseAssignmentInputDTO toDto(CourseAssignmentInput s);
 }

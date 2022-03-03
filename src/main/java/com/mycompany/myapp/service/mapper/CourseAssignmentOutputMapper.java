@@ -9,6 +9,6 @@ import org.mapstruct.*;
  */
 @Mapper(componentModel = "spring", uses = { CourseAssignmentMapper.class })
 public interface CourseAssignmentOutputMapper extends EntityMapper<CourseAssignmentOutputDTO, CourseAssignmentOutput> {
-    @Mapping(target = "courseAssignment", source = "courseAssignment", qualifiedByName = "id")
+    @Mapping(target = "courseAssignment", source = "courseAssignment", qualifiedByName = "assignmentTitle")
     CourseAssignmentOutputDTO toDto(CourseAssignmentOutput s);
 }

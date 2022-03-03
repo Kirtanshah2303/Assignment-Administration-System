@@ -13,14 +13,16 @@
     {
       "fieldName": "title",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "20"
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "50",
+      "fieldValidateRulesMinlength": "10"
     },
     {
       "fieldName": "description",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "100"
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "400",
+      "fieldValidateRulesMinlength": "10"
     }
   ],
   "fluentMethods": true,

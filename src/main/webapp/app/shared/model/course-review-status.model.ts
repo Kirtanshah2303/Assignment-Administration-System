@@ -4,11 +4,13 @@ import { ICourseSession } from 'app/shared/model/course-session.model';
 
 export interface ICourseReviewStatus {
   id?: number;
-  status?: string | null;
+  status?: boolean;
   statusUpdatedOn?: string | null;
   feedback?: string | null;
   user?: IUser | null;
   courseSession?: ICourseSession | null;
 }
 
-export const defaultValue: Readonly<ICourseReviewStatus> = {};
+export const defaultValue: Readonly<ICourseReviewStatus> = {
+  status: false,
+};

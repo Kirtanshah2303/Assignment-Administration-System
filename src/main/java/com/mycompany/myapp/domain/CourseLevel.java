@@ -19,12 +19,12 @@ public class CourseLevel implements Serializable {
     @Column(name = "id", nullable = false)
     private Long id;
 
-    @Size(max = 20)
-    @Column(name = "title", length = 20)
+    @Size(min = 10, max = 50)
+    @Column(name = "title", length = 50)
     private String title;
 
-    @Size(max = 100)
-    @Column(name = "description", length = 100)
+    @Size(min = 10, max = 400)
+    @Column(name = "description", length = 400)
     private String description;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

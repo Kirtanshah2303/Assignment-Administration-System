@@ -90,8 +90,9 @@ public class CourseCategoryQueryService extends QueryService<CourseCategory> {
             if (criteria.getId() != null) {
                 specification = specification.and(buildRangeSpecification(criteria.getId(), CourseCategory_.id));
             }
-            if (criteria.getTitle() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getTitle(), CourseCategory_.title));
+            if (criteria.getCourseCategoryTitle() != null) {
+                specification =
+                    specification.and(buildStringSpecification(criteria.getCourseCategoryTitle(), CourseCategory_.courseCategoryTitle));
             }
             if (criteria.getLogo() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getLogo(), CourseCategory_.logo));

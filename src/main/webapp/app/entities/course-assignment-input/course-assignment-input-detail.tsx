@@ -38,11 +38,11 @@ export const CourseAssignmentInputDetail = (props: RouteComponentProps<{ id: str
           <dt>
             <Translate contentKey="assignmentAdministrationSystemApp.courseAssignmentInput.courseAssignment">Course Assignment</Translate>
           </dt>
-          <dd>{courseAssignmentInputEntity.courseAssignment ? courseAssignmentInputEntity.courseAssignment.id : ''}</dd>
+          <dd>{courseAssignmentInputEntity.courseAssignment ? courseAssignmentInputEntity.courseAssignment.assignmentTitle : ''}</dd>
           <dt>
             <Translate contentKey="assignmentAdministrationSystemApp.courseAssignmentInput.user">User</Translate>
           </dt>
-          <dd>{courseAssignmentInputEntity.user ? courseAssignmentInputEntity.user.id : ''}</dd>
+          <dd>{courseAssignmentInputEntity.user ? courseAssignmentInputEntity.user.login : ''}</dd>
         </dl>
         <Button tag={Link} to="/course-assignment-input" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

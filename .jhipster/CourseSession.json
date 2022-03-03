@@ -13,20 +13,23 @@
     {
       "fieldName": "sessionTitle",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength", "required"],
-      "fieldValidateRulesMaxlength": "255"
+      "fieldValidateRules": ["minlength", "maxlength", "required"],
+      "fieldValidateRulesMaxlength": "42",
+      "fieldValidateRulesMinlength": "10"
     },
     {
       "fieldName": "sessionDescription",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "255"
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "400",
+      "fieldValidateRulesMinlength": "10"
     },
     {
       "fieldName": "sessionVideo",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength", "required"],
-      "fieldValidateRulesMaxlength": "300"
+      "fieldValidateRules": ["minlength", "maxlength", "required"],
+      "fieldValidateRulesMaxlength": "42",
+      "fieldValidateRulesMinlength": "10"
     },
     {
       "fieldName": "sessionDuration",
@@ -41,14 +44,9 @@
     {
       "fieldName": "sessionResource",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "300"
-    },
-    {
-      "fieldName": "sessionQuiz",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "300"
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "42",
+      "fieldValidateRulesMinlength": "10"
     },
     {
       "fieldName": "isPreview",
@@ -69,6 +67,20 @@
       "fieldName": "isPublished",
       "fieldType": "Boolean",
       "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "sessionLocation",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "42",
+      "fieldValidateRulesMinlength": "10"
+    },
+    {
+      "fieldName": "quizLink",
+      "fieldType": "String",
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "42",
+      "fieldValidateRulesMinlength": "10"
     }
   ],
   "fluentMethods": true,
@@ -83,12 +95,6 @@
       "otherEntityRelationshipName": "courseSession",
       "relationshipName": "courseSection",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "courseReviewStatus",
-      "otherEntityRelationshipName": "courseSession",
-      "relationshipName": "courseReviewStatus",
-      "relationshipType": "one-to-many"
     }
   ],
   "service": "serviceImpl"

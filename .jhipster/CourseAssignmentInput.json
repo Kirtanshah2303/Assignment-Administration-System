@@ -24,12 +24,14 @@
   "readOnly": false,
   "relationships": [
     {
+      "otherEntityField": "assignmentTitle",
       "otherEntityName": "courseAssignment",
       "otherEntityRelationshipName": "courseAssignmentInput",
       "relationshipName": "courseAssignment",
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "login",
       "otherEntityName": "user",
       "otherEntityRelationshipName": "courseAssignmentInput",
       "relationshipName": "user",

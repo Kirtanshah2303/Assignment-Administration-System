@@ -109,9 +109,6 @@ public class CourseSessionQueryService extends QueryService<CourseSession> {
             if (criteria.getSessionResource() != null) {
                 specification = specification.and(buildStringSpecification(criteria.getSessionResource(), CourseSession_.sessionResource));
             }
-            if (criteria.getSessionQuiz() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getSessionQuiz(), CourseSession_.sessionQuiz));
-            }
             if (criteria.getIsPreview() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsPreview(), CourseSession_.isPreview));
             }
@@ -124,21 +121,18 @@ public class CourseSessionQueryService extends QueryService<CourseSession> {
             if (criteria.getIsPublished() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsPublished(), CourseSession_.isPublished));
             }
+            if (criteria.getSessionLocation() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getSessionLocation(), CourseSession_.sessionLocation));
+            }
+            if (criteria.getQuizLink() != null) {
+                specification = specification.and(buildStringSpecification(criteria.getQuizLink(), CourseSession_.quizLink));
+            }
             if (criteria.getCourseSectionId() != null) {
                 specification =
                     specification.and(
                         buildSpecification(
                             criteria.getCourseSectionId(),
                             root -> root.join(CourseSession_.courseSection, JoinType.LEFT).get(CourseSection_.id)
-                        )
-                    );
-            }
-            if (criteria.getCourseReviewStatusId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(
-                            criteria.getCourseReviewStatusId(),
-                            root -> root.join(CourseSession_.courseReviewStatuses, JoinType.LEFT).get(CourseReviewStatus_.id)
                         )
                     );
             }

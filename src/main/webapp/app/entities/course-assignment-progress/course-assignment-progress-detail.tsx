@@ -56,7 +56,7 @@ export const CourseAssignmentProgressDetail = (props: RouteComponentProps<{ id: 
               Course Assignment
             </Translate>
           </dt>
-          <dd>{courseAssignmentProgressEntity.courseAssignment ? courseAssignmentProgressEntity.courseAssignment.id : ''}</dd>
+          <dd>{courseAssignmentProgressEntity.courseAssignment ? courseAssignmentProgressEntity.courseAssignment.assignmentTitle : ''}</dd>
         </dl>
         <Button tag={Link} to="/course-assignment-progress" replace color="info" data-cy="entityDetailsBackButton">
           <FontAwesomeIcon icon="arrow-left" />{' '}

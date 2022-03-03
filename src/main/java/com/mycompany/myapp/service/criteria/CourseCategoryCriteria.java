@@ -26,7 +26,7 @@ public class CourseCategoryCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
-    private StringFilter title;
+    private StringFilter courseCategoryTitle;
 
     private StringFilter logo;
 
@@ -42,7 +42,7 @@ public class CourseCategoryCriteria implements Serializable, Criteria {
 
     public CourseCategoryCriteria(CourseCategoryCriteria other) {
         this.id = other.id == null ? null : other.id.copy();
-        this.title = other.title == null ? null : other.title.copy();
+        this.courseCategoryTitle = other.courseCategoryTitle == null ? null : other.courseCategoryTitle.copy();
         this.logo = other.logo == null ? null : other.logo.copy();
         this.isParent = other.isParent == null ? null : other.isParent.copy();
         this.parentId = other.parentId == null ? null : other.parentId.copy();
@@ -70,19 +70,19 @@ public class CourseCategoryCriteria implements Serializable, Criteria {
         this.id = id;
     }
 
-    public StringFilter getTitle() {
-        return title;
+    public StringFilter getCourseCategoryTitle() {
+        return courseCategoryTitle;
     }
 
-    public StringFilter title() {
-        if (title == null) {
-            title = new StringFilter();
+    public StringFilter courseCategoryTitle() {
+        if (courseCategoryTitle == null) {
+            courseCategoryTitle = new StringFilter();
         }
-        return title;
+        return courseCategoryTitle;
     }
 
-    public void setTitle(StringFilter title) {
-        this.title = title;
+    public void setCourseCategoryTitle(StringFilter courseCategoryTitle) {
+        this.courseCategoryTitle = courseCategoryTitle;
     }
 
     public StringFilter getLogo() {
@@ -164,7 +164,7 @@ public class CourseCategoryCriteria implements Serializable, Criteria {
         final CourseCategoryCriteria that = (CourseCategoryCriteria) o;
         return (
             Objects.equals(id, that.id) &&
-            Objects.equals(title, that.title) &&
+            Objects.equals(courseCategoryTitle, that.courseCategoryTitle) &&
             Objects.equals(logo, that.logo) &&
             Objects.equals(isParent, that.isParent) &&
             Objects.equals(parentId, that.parentId) &&
@@ -175,7 +175,7 @@ public class CourseCategoryCriteria implements Serializable, Criteria {
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, title, logo, isParent, parentId, description, distinct);
+        return Objects.hash(id, courseCategoryTitle, logo, isParent, parentId, description, distinct);
     }
 
     // prettier-ignore
@@ -183,7 +183,7 @@ public class CourseCategoryCriteria implements Serializable, Criteria {
     public String toString() {
         return "CourseCategoryCriteria{" +
             (id != null ? "id=" + id + ", " : "") +
-            (title != null ? "title=" + title + ", " : "") +
+            (courseCategoryTitle != null ? "courseCategoryTitle=" + courseCategoryTitle + ", " : "") +
             (logo != null ? "logo=" + logo + ", " : "") +
             (isParent != null ? "isParent=" + isParent + ", " : "") +
             (parentId != null ? "parentId=" + parentId + ", " : "") +

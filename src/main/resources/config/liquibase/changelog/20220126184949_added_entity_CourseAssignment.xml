@@ -14,22 +14,16 @@
             <column name="id" type="bigint" autoIncrement="true">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
-            <column name="assignment_title" type="varchar(255)">
+            <column name="assignment_title" type="varchar(42)">
                 <constraints nullable="false" />
             </column>
-            <column name="assignment_description" type="varchar(255)">
+            <column name="assignment_description" type="varchar(400)">
                 <constraints nullable="true" />
-            </column>
-            <column name="session_video" type="varchar(300)">
-                <constraints nullable="false" />
-            </column>
-            <column name="session_duration" type="${datetimeType}">
-                <constraints nullable="false" />
             </column>
             <column name="assignment_order" type="integer">
                 <constraints nullable="false" />
             </column>
-            <column name="assignment_resource" type="varchar(300)">
+            <column name="assignment_resource" type="varchar(42)">
                 <constraints nullable="true" />
             </column>
             <column name="is_preview" type="boolean">
@@ -44,12 +38,11 @@
             <column name="is_published" type="boolean">
                 <constraints nullable="false" />
             </column>
-            <column name="course_section_id" type="bigint">
+            <column name="course_session_id" type="bigint">
                 <constraints nullable="true" />
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="course_assignment" columnName="session_duration" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -71,8 +64,6 @@
             <column name="id" type="numeric"/>
             <column name="assignment_title" type="string"/>
             <column name="assignment_description" type="string"/>
-            <column name="session_video" type="string"/>
-            <column name="session_duration" type="date"/>
             <column name="assignment_order" type="numeric"/>
             <column name="assignment_resource" type="string"/>
             <column name="is_preview" type="boolean"/>

@@ -85,14 +85,15 @@ export const CourseCategoryUpdate = (props: RouteComponentProps<{ id: string }>)
                 />
               ) : null}
               <ValidatedField
-                label={translate('assignmentAdministrationSystemApp.courseCategory.title')}
-                id="course-category-title"
-                name="title"
-                data-cy="title"
+                label={translate('assignmentAdministrationSystemApp.courseCategory.courseCategoryTitle')}
+                id="course-category-courseCategoryTitle"
+                name="courseCategoryTitle"
+                data-cy="courseCategoryTitle"
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
-                  maxLength: { value: 255, message: translate('entity.validation.maxlength', { max: 255 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
                 }}
               />
               <ValidatedField
@@ -103,7 +104,8 @@ export const CourseCategoryUpdate = (props: RouteComponentProps<{ id: string }>)
                 type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
-                  maxLength: { value: 255, message: translate('entity.validation.maxlength', { max: 255 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 42, message: translate('entity.validation.maxlength', { max: 42 }) },
                 }}
               />
               <ValidatedField
@@ -132,7 +134,8 @@ export const CourseCategoryUpdate = (props: RouteComponentProps<{ id: string }>)
                 data-cy="description"
                 type="text"
                 validate={{
-                  maxLength: { value: 100, message: translate('entity.validation.maxlength', { max: 100 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 400, message: translate('entity.validation.maxlength', { max: 400 }) },
                 }}
               />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/course-category" replace color="info">

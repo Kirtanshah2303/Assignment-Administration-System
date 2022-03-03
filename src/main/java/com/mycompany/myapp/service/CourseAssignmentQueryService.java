@@ -103,13 +103,6 @@ public class CourseAssignmentQueryService extends QueryService<CourseAssignment>
                         buildStringSpecification(criteria.getAssignmentDescription(), CourseAssignment_.assignmentDescription)
                     );
             }
-            if (criteria.getSessionVideo() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getSessionVideo(), CourseAssignment_.sessionVideo));
-            }
-            if (criteria.getSessionDuration() != null) {
-                specification =
-                    specification.and(buildRangeSpecification(criteria.getSessionDuration(), CourseAssignment_.sessionDuration));
-            }
             if (criteria.getAssignmentOrder() != null) {
                 specification =
                     specification.and(buildRangeSpecification(criteria.getAssignmentOrder(), CourseAssignment_.assignmentOrder));
@@ -130,30 +123,12 @@ public class CourseAssignmentQueryService extends QueryService<CourseAssignment>
             if (criteria.getIsPublished() != null) {
                 specification = specification.and(buildSpecification(criteria.getIsPublished(), CourseAssignment_.isPublished));
             }
-            if (criteria.getCourseSectionId() != null) {
+            if (criteria.getCourseSessionId() != null) {
                 specification =
                     specification.and(
                         buildSpecification(
-                            criteria.getCourseSectionId(),
-                            root -> root.join(CourseAssignment_.courseSection, JoinType.LEFT).get(CourseSection_.id)
-                        )
-                    );
-            }
-            if (criteria.getCourseAssignmentInputId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(
-                            criteria.getCourseAssignmentInputId(),
-                            root -> root.join(CourseAssignment_.courseAssignmentInputs, JoinType.LEFT).get(CourseAssignmentInput_.id)
-                        )
-                    );
-            }
-            if (criteria.getCourseAssignmentOutputId() != null) {
-                specification =
-                    specification.and(
-                        buildSpecification(
-                            criteria.getCourseAssignmentOutputId(),
-                            root -> root.join(CourseAssignment_.courseAssignmentOutputs, JoinType.LEFT).get(CourseAssignmentOutput_.id)
+                            criteria.getCourseSessionId(),
+                            root -> root.join(CourseAssignment_.courseSession, JoinType.LEFT).get(CourseSession_.id)
                         )
                     );
             }

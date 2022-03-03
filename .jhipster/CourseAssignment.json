@@ -13,25 +13,16 @@
     {
       "fieldName": "assignmentTitle",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength", "required"],
-      "fieldValidateRulesMaxlength": "255"
+      "fieldValidateRules": ["minlength", "maxlength", "required"],
+      "fieldValidateRulesMaxlength": "42",
+      "fieldValidateRulesMinlength": "10"
     },
     {
       "fieldName": "assignmentDescription",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "255"
-    },
-    {
-      "fieldName": "sessionVideo",
-      "fieldType": "String",
-      "fieldValidateRules": ["maxlength", "required"],
-      "fieldValidateRulesMaxlength": "300"
-    },
-    {
-      "fieldName": "sessionDuration",
-      "fieldType": "Instant",
-      "fieldValidateRules": ["required"]
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "400",
+      "fieldValidateRulesMinlength": "10"
     },
     {
       "fieldName": "assignmentOrder",
@@ -41,8 +32,9 @@
     {
       "fieldName": "assignmentResource",
       "fieldType": "String",
-      "fieldValidateRules": ["maxlength"],
-      "fieldValidateRulesMaxlength": "300"
+      "fieldValidateRules": ["minlength", "maxlength"],
+      "fieldValidateRulesMaxlength": "42",
+      "fieldValidateRulesMinlength": "10"
     },
     {
       "fieldName": "isPreview",
@@ -72,23 +64,11 @@
   "readOnly": false,
   "relationships": [
     {
-      "otherEntityField": "sectionTitle",
-      "otherEntityName": "courseSection",
+      "otherEntityField": "sessionTitle",
+      "otherEntityName": "courseSession",
       "otherEntityRelationshipName": "courseAssignment",
-      "relationshipName": "courseSection",
+      "relationshipName": "courseSession",
       "relationshipType": "many-to-one"
-    },
-    {
-      "otherEntityName": "courseAssignmentInput",
-      "otherEntityRelationshipName": "courseAssignment",
-      "relationshipName": "courseAssignmentInput",
-      "relationshipType": "one-to-many"
-    },
-    {
-      "otherEntityName": "courseAssignmentOutput",
-      "otherEntityRelationshipName": "courseAssignment",
-      "relationshipName": "courseAssignmentOutput",
-      "relationshipType": "one-to-many"
     }
   ],
   "service": "serviceImpl"

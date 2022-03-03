@@ -6,7 +6,6 @@ import static org.springframework.test.web.servlet.request.MockMvcRequestBuilder
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 import com.mycompany.myapp.IntegrationTest;
-import com.mycompany.myapp.domain.CourseReviewStatus;
 import com.mycompany.myapp.domain.CourseSection;
 import com.mycompany.myapp.domain.CourseSession;
 import com.mycompany.myapp.repository.CourseSessionRepository;
@@ -55,9 +54,6 @@ class CourseSessionResourceIT {
     private static final String DEFAULT_SESSION_RESOURCE = "AAAAAAAAAA";
     private static final String UPDATED_SESSION_RESOURCE = "BBBBBBBBBB";
 
-    private static final String DEFAULT_SESSION_QUIZ = "AAAAAAAAAA";
-    private static final String UPDATED_SESSION_QUIZ = "BBBBBBBBBB";
-
     private static final Boolean DEFAULT_IS_PREVIEW = false;
     private static final Boolean UPDATED_IS_PREVIEW = true;
 
@@ -69,6 +65,12 @@ class CourseSessionResourceIT {
 
     private static final Boolean DEFAULT_IS_PUBLISHED = false;
     private static final Boolean UPDATED_IS_PUBLISHED = true;
+
+    private static final String DEFAULT_SESSION_LOCATION = "AAAAAAAAAA";
+    private static final String UPDATED_SESSION_LOCATION = "BBBBBBBBBB";
+
+    private static final String DEFAULT_QUIZ_LINK = "AAAAAAAAAA";
+    private static final String UPDATED_QUIZ_LINK = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/course-sessions";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -104,11 +106,12 @@ class CourseSessionResourceIT {
             .sessionDuration(DEFAULT_SESSION_DURATION)
             .sessionOrder(DEFAULT_SESSION_ORDER)
             .sessionResource(DEFAULT_SESSION_RESOURCE)
-            .sessionQuiz(DEFAULT_SESSION_QUIZ)
             .isPreview(DEFAULT_IS_PREVIEW)
             .isDraft(DEFAULT_IS_DRAFT)
             .isApproved(DEFAULT_IS_APPROVED)
-            .isPublished(DEFAULT_IS_PUBLISHED);
+            .isPublished(DEFAULT_IS_PUBLISHED)
+            .sessionLocation(DEFAULT_SESSION_LOCATION)
+            .quizLink(DEFAULT_QUIZ_LINK);
         return courseSession;
     }
 
@@ -126,11 +129,12 @@ class CourseSessionResourceIT {
             .sessionDuration(UPDATED_SESSION_DURATION)
             .sessionOrder(UPDATED_SESSION_ORDER)
             .sessionResource(UPDATED_SESSION_RESOURCE)
-            .sessionQuiz(UPDATED_SESSION_QUIZ)
             .isPreview(UPDATED_IS_PREVIEW)
             .isDraft(UPDATED_IS_DRAFT)
             .isApproved(UPDATED_IS_APPROVED)
-            .isPublished(UPDATED_IS_PUBLISHED);
+            .isPublished(UPDATED_IS_PUBLISHED)
+            .sessionLocation(UPDATED_SESSION_LOCATION)
+            .quizLink(UPDATED_QUIZ_LINK);
         return courseSession;
     }
 
@@ -161,11 +165,12 @@ class CourseSessionResourceIT {
         assertThat(testCourseSession.getSessionDuration()).isEqualTo(DEFAULT_SESSION_DURATION);
         assertThat(testCourseSession.getSessionOrder()).isEqualTo(DEFAULT_SESSION_ORDER);
         assertThat(testCourseSession.getSessionResource()).isEqualTo(DEFAULT_SESSION_RESOURCE);
-        assertThat(testCourseSession.getSessionQuiz()).isEqualTo(DEFAULT_SESSION_QUIZ);
         assertThat(testCourseSession.getIsPreview()).isEqualTo(DEFAULT_IS_PREVIEW);
         assertThat(testCourseSession.getIsDraft()).isEqualTo(DEFAULT_IS_DRAFT);
         assertThat(testCourseSession.getIsApproved()).isEqualTo(DEFAULT_IS_APPROVED);
         assertThat(testCourseSession.getIsPublished()).isEqualTo(DEFAULT_IS_PUBLISHED);
+        assertThat(testCourseSession.getSessionLocation()).isEqualTo(DEFAULT_SESSION_LOCATION);
+        assertThat(testCourseSession.getQuizLink()).isEqualTo(DEFAULT_QUIZ_LINK);
     }
 
     @Test
@@ -367,11 +372,12 @@ class CourseSessionResourceIT {
             .andExpect(jsonPath("$.[*].sessionDuration").value(hasItem(DEFAULT_SESSION_DURATION.toString())))
             .andExpect(jsonPath("$.[*].sessionOrder").value(hasItem(DEFAULT_SESSION_ORDER)))
             .andExpect(jsonPath("$.[*].sessionResource").value(hasItem(DEFAULT_SESSION_RESOURCE)))
-            .andExpect(jsonPath("$.[*].sessionQuiz").value(hasItem(DEFAULT_SESSION_QUIZ)))
             .andExpect(jsonPath("$.[*].isPreview").value(hasItem(DEFAULT_IS_PREVIEW.booleanValue())))
             .andExpect(jsonPath("$.[*].isDraft").value(hasItem(DEFAULT_IS_DRAFT.booleanValue())))
             .andExpect(jsonPath("$.[*].isApproved").value(hasItem(DEFAULT_IS_APPROVED.booleanValue())))
-            .andExpect(jsonPath("$.[*].isPublished").value(hasItem(DEFAULT_IS_PUBLISHED.booleanValue())));
+            .andExpect(jsonPath("$.[*].isPublished").value(hasItem(DEFAULT_IS_PUBLISHED.booleanValue())))
+            .andExpect(jsonPath("$.[*].sessionLocation").value(hasItem(DEFAULT_SESSION_LOCATION)))
+            .andExpect(jsonPath("$.[*].quizLink").value(hasItem(DEFAULT_QUIZ_LINK)));
     }
 
     @Test
@@ -392,11 +398,12 @@ class CourseSessionResourceIT {
             .andExpect(jsonPath("$.sessionDuration").value(DEFAULT_SESSION_DURATION.toString()))
             .andExpect(jsonPath("$.sessionOrder").value(DEFAULT_SESSION_ORDER))
             .andExpect(jsonPath("$.sessionResource").value(DEFAULT_SESSION_RESOURCE))
-            .andExpect(jsonPath("$.sessionQuiz").value(DEFAULT_SESSION_QUIZ))
             .andExpect(jsonPath("$.isPreview").value(DEFAULT_IS_PREVIEW.booleanValue()))
             .andExpect(jsonPath("$.isDraft").value(DEFAULT_IS_DRAFT.booleanValue()))
             .andExpect(jsonPath("$.isApproved").value(DEFAULT_IS_APPROVED.booleanValue()))
-            .andExpect(jsonPath("$.isPublished").value(DEFAULT_IS_PUBLISHED.booleanValue()));
+            .andExpect(jsonPath("$.isPublished").value(DEFAULT_IS_PUBLISHED.booleanValue()))
+            .andExpect(jsonPath("$.sessionLocation").value(DEFAULT_SESSION_LOCATION))
+            .andExpect(jsonPath("$.quizLink").value(DEFAULT_QUIZ_LINK));
     }
 
     @Test
@@ -887,84 +894,6 @@ class CourseSessionResourceIT {
 
     @Test
     @Transactional
-    void getAllCourseSessionsBySessionQuizIsEqualToSomething() throws Exception {
-        // Initialize the database
-        courseSessionRepository.saveAndFlush(courseSession);
-
-        // Get all the courseSessionList where sessionQuiz equals to DEFAULT_SESSION_QUIZ
-        defaultCourseSessionShouldBeFound("sessionQuiz.equals=" + DEFAULT_SESSION_QUIZ);
-
-        // Get all the courseSessionList where sessionQuiz equals to UPDATED_SESSION_QUIZ
-        defaultCourseSessionShouldNotBeFound("sessionQuiz.equals=" + UPDATED_SESSION_QUIZ);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseSessionsBySessionQuizIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        courseSessionRepository.saveAndFlush(courseSession);
-
-        // Get all the courseSessionList where sessionQuiz not equals to DEFAULT_SESSION_QUIZ
-        defaultCourseSessionShouldNotBeFound("sessionQuiz.notEquals=" + DEFAULT_SESSION_QUIZ);
-
-        // Get all the courseSessionList where sessionQuiz not equals to UPDATED_SESSION_QUIZ
-        defaultCourseSessionShouldBeFound("sessionQuiz.notEquals=" + UPDATED_SESSION_QUIZ);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseSessionsBySessionQuizIsInShouldWork() throws Exception {
-        // Initialize the database
-        courseSessionRepository.saveAndFlush(courseSession);
-
-        // Get all the courseSessionList where sessionQuiz in DEFAULT_SESSION_QUIZ or UPDATED_SESSION_QUIZ
-        defaultCourseSessionShouldBeFound("sessionQuiz.in=" + DEFAULT_SESSION_QUIZ + "," + UPDATED_SESSION_QUIZ);
-
-        // Get all the courseSessionList where sessionQuiz equals to UPDATED_SESSION_QUIZ
-        defaultCourseSessionShouldNotBeFound("sessionQuiz.in=" + UPDATED_SESSION_QUIZ);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseSessionsBySessionQuizIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        courseSessionRepository.saveAndFlush(courseSession);
-
-        // Get all the courseSessionList where sessionQuiz is not null
-        defaultCourseSessionShouldBeFound("sessionQuiz.specified=true");
-
-        // Get all the courseSessionList where sessionQuiz is null
-        defaultCourseSessionShouldNotBeFound("sessionQuiz.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseSessionsBySessionQuizContainsSomething() throws Exception {
-        // Initialize the database
-        courseSessionRepository.saveAndFlush(courseSession);
-
-        // Get all the courseSessionList where sessionQuiz contains DEFAULT_SESSION_QUIZ
-        defaultCourseSessionShouldBeFound("sessionQuiz.contains=" + DEFAULT_SESSION_QUIZ);
-
-        // Get all the courseSessionList where sessionQuiz contains UPDATED_SESSION_QUIZ
-        defaultCourseSessionShouldNotBeFound("sessionQuiz.contains=" + UPDATED_SESSION_QUIZ);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseSessionsBySessionQuizNotContainsSomething() throws Exception {
-        // Initialize the database
-        courseSessionRepository.saveAndFlush(courseSession);
-
-        // Get all the courseSessionList where sessionQuiz does not contain DEFAULT_SESSION_QUIZ
-        defaultCourseSessionShouldNotBeFound("sessionQuiz.doesNotContain=" + DEFAULT_SESSION_QUIZ);
-
-        // Get all the courseSessionList where sessionQuiz does not contain UPDATED_SESSION_QUIZ
-        defaultCourseSessionShouldBeFound("sessionQuiz.doesNotContain=" + UPDATED_SESSION_QUIZ);
-    }
-
-    @Test
-    @Transactional
     void getAllCourseSessionsByIsPreviewIsEqualToSomething() throws Exception {
         // Initialize the database
         courseSessionRepository.saveAndFlush(courseSession);
@@ -1173,6 +1102,162 @@ class CourseSessionResourceIT {
 
     @Test
     @Transactional
+    void getAllCourseSessionsBySessionLocationIsEqualToSomething() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where sessionLocation equals to DEFAULT_SESSION_LOCATION
+        defaultCourseSessionShouldBeFound("sessionLocation.equals=" + DEFAULT_SESSION_LOCATION);
+
+        // Get all the courseSessionList where sessionLocation equals to UPDATED_SESSION_LOCATION
+        defaultCourseSessionShouldNotBeFound("sessionLocation.equals=" + UPDATED_SESSION_LOCATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsBySessionLocationIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where sessionLocation not equals to DEFAULT_SESSION_LOCATION
+        defaultCourseSessionShouldNotBeFound("sessionLocation.notEquals=" + DEFAULT_SESSION_LOCATION);
+
+        // Get all the courseSessionList where sessionLocation not equals to UPDATED_SESSION_LOCATION
+        defaultCourseSessionShouldBeFound("sessionLocation.notEquals=" + UPDATED_SESSION_LOCATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsBySessionLocationIsInShouldWork() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where sessionLocation in DEFAULT_SESSION_LOCATION or UPDATED_SESSION_LOCATION
+        defaultCourseSessionShouldBeFound("sessionLocation.in=" + DEFAULT_SESSION_LOCATION + "," + UPDATED_SESSION_LOCATION);
+
+        // Get all the courseSessionList where sessionLocation equals to UPDATED_SESSION_LOCATION
+        defaultCourseSessionShouldNotBeFound("sessionLocation.in=" + UPDATED_SESSION_LOCATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsBySessionLocationIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where sessionLocation is not null
+        defaultCourseSessionShouldBeFound("sessionLocation.specified=true");
+
+        // Get all the courseSessionList where sessionLocation is null
+        defaultCourseSessionShouldNotBeFound("sessionLocation.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsBySessionLocationContainsSomething() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where sessionLocation contains DEFAULT_SESSION_LOCATION
+        defaultCourseSessionShouldBeFound("sessionLocation.contains=" + DEFAULT_SESSION_LOCATION);
+
+        // Get all the courseSessionList where sessionLocation contains UPDATED_SESSION_LOCATION
+        defaultCourseSessionShouldNotBeFound("sessionLocation.contains=" + UPDATED_SESSION_LOCATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsBySessionLocationNotContainsSomething() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where sessionLocation does not contain DEFAULT_SESSION_LOCATION
+        defaultCourseSessionShouldNotBeFound("sessionLocation.doesNotContain=" + DEFAULT_SESSION_LOCATION);
+
+        // Get all the courseSessionList where sessionLocation does not contain UPDATED_SESSION_LOCATION
+        defaultCourseSessionShouldBeFound("sessionLocation.doesNotContain=" + UPDATED_SESSION_LOCATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsByQuizLinkIsEqualToSomething() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where quizLink equals to DEFAULT_QUIZ_LINK
+        defaultCourseSessionShouldBeFound("quizLink.equals=" + DEFAULT_QUIZ_LINK);
+
+        // Get all the courseSessionList where quizLink equals to UPDATED_QUIZ_LINK
+        defaultCourseSessionShouldNotBeFound("quizLink.equals=" + UPDATED_QUIZ_LINK);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsByQuizLinkIsNotEqualToSomething() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where quizLink not equals to DEFAULT_QUIZ_LINK
+        defaultCourseSessionShouldNotBeFound("quizLink.notEquals=" + DEFAULT_QUIZ_LINK);
+
+        // Get all the courseSessionList where quizLink not equals to UPDATED_QUIZ_LINK
+        defaultCourseSessionShouldBeFound("quizLink.notEquals=" + UPDATED_QUIZ_LINK);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsByQuizLinkIsInShouldWork() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where quizLink in DEFAULT_QUIZ_LINK or UPDATED_QUIZ_LINK
+        defaultCourseSessionShouldBeFound("quizLink.in=" + DEFAULT_QUIZ_LINK + "," + UPDATED_QUIZ_LINK);
+
+        // Get all the courseSessionList where quizLink equals to UPDATED_QUIZ_LINK
+        defaultCourseSessionShouldNotBeFound("quizLink.in=" + UPDATED_QUIZ_LINK);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsByQuizLinkIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where quizLink is not null
+        defaultCourseSessionShouldBeFound("quizLink.specified=true");
+
+        // Get all the courseSessionList where quizLink is null
+        defaultCourseSessionShouldNotBeFound("quizLink.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsByQuizLinkContainsSomething() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where quizLink contains DEFAULT_QUIZ_LINK
+        defaultCourseSessionShouldBeFound("quizLink.contains=" + DEFAULT_QUIZ_LINK);
+
+        // Get all the courseSessionList where quizLink contains UPDATED_QUIZ_LINK
+        defaultCourseSessionShouldNotBeFound("quizLink.contains=" + UPDATED_QUIZ_LINK);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsByQuizLinkNotContainsSomething() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where quizLink does not contain DEFAULT_QUIZ_LINK
+        defaultCourseSessionShouldNotBeFound("quizLink.doesNotContain=" + DEFAULT_QUIZ_LINK);
+
+        // Get all the courseSessionList where quizLink does not contain UPDATED_QUIZ_LINK
+        defaultCourseSessionShouldBeFound("quizLink.doesNotContain=" + UPDATED_QUIZ_LINK);
+    }
+
+    @Test
+    @Transactional
     void getAllCourseSessionsByCourseSectionIsEqualToSomething() throws Exception {
         // Initialize the database
         courseSessionRepository.saveAndFlush(courseSession);
@@ -1197,32 +1282,6 @@ class CourseSessionResourceIT {
         defaultCourseSessionShouldNotBeFound("courseSectionId.equals=" + (courseSectionId + 1));
     }
 
-    @Test
-    @Transactional
-    void getAllCourseSessionsByCourseReviewStatusIsEqualToSomething() throws Exception {
-        // Initialize the database
-        courseSessionRepository.saveAndFlush(courseSession);
-        CourseReviewStatus courseReviewStatus;
-        if (TestUtil.findAll(em, CourseReviewStatus.class).isEmpty()) {
-            courseReviewStatus = CourseReviewStatusResourceIT.createEntity(em);
-            em.persist(courseReviewStatus);
-            em.flush();
-        } else {
-            courseReviewStatus = TestUtil.findAll(em, CourseReviewStatus.class).get(0);
-        }
-        em.persist(courseReviewStatus);
-        em.flush();
-        courseSession.addCourseReviewStatus(courseReviewStatus);
-        courseSessionRepository.saveAndFlush(courseSession);
-        Long courseReviewStatusId = courseReviewStatus.getId();
-
-        // Get all the courseSessionList where courseReviewStatus equals to courseReviewStatusId
-        defaultCourseSessionShouldBeFound("courseReviewStatusId.equals=" + courseReviewStatusId);
-
-        // Get all the courseSessionList where courseReviewStatus equals to (courseReviewStatusId + 1)
-        defaultCourseSessionShouldNotBeFound("courseReviewStatusId.equals=" + (courseReviewStatusId + 1));
-    }
-
     /**
      * Executes the search, and checks that the default entity is returned.
      */
@@ -1238,11 +1297,12 @@ class CourseSessionResourceIT {
             .andExpect(jsonPath("$.[*].sessionDuration").value(hasItem(DEFAULT_SESSION_DURATION.toString())))
             .andExpect(jsonPath("$.[*].sessionOrder").value(hasItem(DEFAULT_SESSION_ORDER)))
             .andExpect(jsonPath("$.[*].sessionResource").value(hasItem(DEFAULT_SESSION_RESOURCE)))
-            .andExpect(jsonPath("$.[*].sessionQuiz").value(hasItem(DEFAULT_SESSION_QUIZ)))
             .andExpect(jsonPath("$.[*].isPreview").value(hasItem(DEFAULT_IS_PREVIEW.booleanValue())))
             .andExpect(jsonPath("$.[*].isDraft").value(hasItem(DEFAULT_IS_DRAFT.booleanValue())))
             .andExpect(jsonPath("$.[*].isApproved").value(hasItem(DEFAULT_IS_APPROVED.booleanValue())))
-            .andExpect(jsonPath("$.[*].isPublished").value(hasItem(DEFAULT_IS_PUBLISHED.booleanValue())));
+            .andExpect(jsonPath("$.[*].isPublished").value(hasItem(DEFAULT_IS_PUBLISHED.booleanValue())))
+            .andExpect(jsonPath("$.[*].sessionLocation").value(hasItem(DEFAULT_SESSION_LOCATION)))
+            .andExpect(jsonPath("$.[*].quizLink").value(hasItem(DEFAULT_QUIZ_LINK)));
 
         // Check, that the count call also returns 1
         restCourseSessionMockMvc
@@ -1297,11 +1357,12 @@ class CourseSessionResourceIT {
             .sessionDuration(UPDATED_SESSION_DURATION)
             .sessionOrder(UPDATED_SESSION_ORDER)
             .sessionResource(UPDATED_SESSION_RESOURCE)
-            .sessionQuiz(UPDATED_SESSION_QUIZ)
             .isPreview(UPDATED_IS_PREVIEW)
             .isDraft(UPDATED_IS_DRAFT)
             .isApproved(UPDATED_IS_APPROVED)
-            .isPublished(UPDATED_IS_PUBLISHED);
+            .isPublished(UPDATED_IS_PUBLISHED)
+            .sessionLocation(UPDATED_SESSION_LOCATION)
+            .quizLink(UPDATED_QUIZ_LINK);
         CourseSessionDTO courseSessionDTO = courseSessionMapper.toDto(updatedCourseSession);
 
         restCourseSessionMockMvc
@@ -1322,11 +1383,12 @@ class CourseSessionResourceIT {
         assertThat(testCourseSession.getSessionDuration()).isEqualTo(UPDATED_SESSION_DURATION);
         assertThat(testCourseSession.getSessionOrder()).isEqualTo(UPDATED_SESSION_ORDER);
         assertThat(testCourseSession.getSessionResource()).isEqualTo(UPDATED_SESSION_RESOURCE);
-        assertThat(testCourseSession.getSessionQuiz()).isEqualTo(UPDATED_SESSION_QUIZ);
         assertThat(testCourseSession.getIsPreview()).isEqualTo(UPDATED_IS_PREVIEW);
         assertThat(testCourseSession.getIsDraft()).isEqualTo(UPDATED_IS_DRAFT);
         assertThat(testCourseSession.getIsApproved()).isEqualTo(UPDATED_IS_APPROVED);
         assertThat(testCourseSession.getIsPublished()).isEqualTo(UPDATED_IS_PUBLISHED);
+        assertThat(testCourseSession.getSessionLocation()).isEqualTo(UPDATED_SESSION_LOCATION);
+        assertThat(testCourseSession.getQuizLink()).isEqualTo(UPDATED_QUIZ_LINK);
     }
 
     @Test
@@ -1412,7 +1474,8 @@ class CourseSessionResourceIT {
             .sessionTitle(UPDATED_SESSION_TITLE)
             .sessionDuration(UPDATED_SESSION_DURATION)
             .sessionResource(UPDATED_SESSION_RESOURCE)
-            .isDraft(UPDATED_IS_DRAFT);
+            .isApproved(UPDATED_IS_APPROVED)
+            .quizLink(UPDATED_QUIZ_LINK);
 
         restCourseSessionMockMvc
             .perform(
@@ -1432,11 +1495,12 @@ class CourseSessionResourceIT {
         assertThat(testCourseSession.getSessionDuration()).isEqualTo(UPDATED_SESSION_DURATION);
         assertThat(testCourseSession.getSessionOrder()).isEqualTo(DEFAULT_SESSION_ORDER);
         assertThat(testCourseSession.getSessionResource()).isEqualTo(UPDATED_SESSION_RESOURCE);
-        assertThat(testCourseSession.getSessionQuiz()).isEqualTo(DEFAULT_SESSION_QUIZ);
         assertThat(testCourseSession.getIsPreview()).isEqualTo(DEFAULT_IS_PREVIEW);
-        assertThat(testCourseSession.getIsDraft()).isEqualTo(UPDATED_IS_DRAFT);
-        assertThat(testCourseSession.getIsApproved()).isEqualTo(DEFAULT_IS_APPROVED);
+        assertThat(testCourseSession.getIsDraft()).isEqualTo(DEFAULT_IS_DRAFT);
+        assertThat(testCourseSession.getIsApproved()).isEqualTo(UPDATED_IS_APPROVED);
         assertThat(testCourseSession.getIsPublished()).isEqualTo(DEFAULT_IS_PUBLISHED);
+        assertThat(testCourseSession.getSessionLocation()).isEqualTo(DEFAULT_SESSION_LOCATION);
+        assertThat(testCourseSession.getQuizLink()).isEqualTo(UPDATED_QUIZ_LINK);
     }
 
     @Test
@@ -1458,11 +1522,12 @@ class CourseSessionResourceIT {
             .sessionDuration(UPDATED_SESSION_DURATION)
             .sessionOrder(UPDATED_SESSION_ORDER)
             .sessionResource(UPDATED_SESSION_RESOURCE)
-            .sessionQuiz(UPDATED_SESSION_QUIZ)
             .isPreview(UPDATED_IS_PREVIEW)
             .isDraft(UPDATED_IS_DRAFT)
             .isApproved(UPDATED_IS_APPROVED)
-            .isPublished(UPDATED_IS_PUBLISHED);
+            .isPublished(UPDATED_IS_PUBLISHED)
+            .sessionLocation(UPDATED_SESSION_LOCATION)
+            .quizLink(UPDATED_QUIZ_LINK);
 
         restCourseSessionMockMvc
             .perform(
@@ -1482,11 +1547,12 @@ class CourseSessionResourceIT {
         assertThat(testCourseSession.getSessionDuration()).isEqualTo(UPDATED_SESSION_DURATION);
         assertThat(testCourseSession.getSessionOrder()).isEqualTo(UPDATED_SESSION_ORDER);
         assertThat(testCourseSession.getSessionResource()).isEqualTo(UPDATED_SESSION_RESOURCE);
-        assertThat(testCourseSession.getSessionQuiz()).isEqualTo(UPDATED_SESSION_QUIZ);
         assertThat(testCourseSession.getIsPreview()).isEqualTo(UPDATED_IS_PREVIEW);
         assertThat(testCourseSession.getIsDraft()).isEqualTo(UPDATED_IS_DRAFT);
         assertThat(testCourseSession.getIsApproved()).isEqualTo(UPDATED_IS_APPROVED);
         assertThat(testCourseSession.getIsPublished()).isEqualTo(UPDATED_IS_PUBLISHED);
+        assertThat(testCourseSession.getSessionLocation()).isEqualTo(UPDATED_SESSION_LOCATION);
+        assertThat(testCourseSession.getQuizLink()).isEqualTo(UPDATED_QUIZ_LINK);
     }
 
     @Test

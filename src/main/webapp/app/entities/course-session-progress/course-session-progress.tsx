@@ -137,7 +137,9 @@ export const CourseSessionProgress = (props: RouteComponentProps<{ url: string }
                   <td>{courseSessionProgress.user ? courseSessionProgress.user.login : ''}</td>
                   <td>
                     {courseSessionProgress.courseSession ? (
-                      <Link to={`course-session/${courseSessionProgress.courseSession.id}`}>{courseSessionProgress.courseSession.id}</Link>
+                      <Link to={`course-session/${courseSessionProgress.courseSession.id}`}>
+                        {courseSessionProgress.courseSession.sessionTitle}
+                      </Link>
                     ) : (
                       ''
                     )}

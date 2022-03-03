@@ -8,7 +8,7 @@ export interface ICourse {
   id?: number;
   courseTitle?: string;
   courseDescription?: string;
-  courseObjectives?: string | null;
+  courseObjectives?: string;
   courseSubTitle?: string;
   coursePreviewURL?: string | null;
   courseLength?: number | null;
@@ -25,7 +25,6 @@ export interface ICourse {
   courseCategory?: ICourseCategory | null;
   courseType?: ICourseType | null;
   user?: IUser | null;
-  reviewer?: IUser | null;
 }
 
 export const defaultValue: Readonly<ICourse> = {

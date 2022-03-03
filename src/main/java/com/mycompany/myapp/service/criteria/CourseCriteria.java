@@ -65,8 +65,6 @@ public class CourseCriteria implements Serializable, Criteria {
 
     private LongFilter userId;
 
-    private LongFilter reviewerId;
-
     private Boolean distinct;
 
     public CourseCriteria() {}
@@ -92,7 +90,6 @@ public class CourseCriteria implements Serializable, Criteria {
         this.courseCategoryId = other.courseCategoryId == null ? null : other.courseCategoryId.copy();
         this.courseTypeId = other.courseTypeId == null ? null : other.courseTypeId.copy();
         this.userId = other.userId == null ? null : other.userId.copy();
-        this.reviewerId = other.reviewerId == null ? null : other.reviewerId.copy();
         this.distinct = other.distinct;
     }
 
@@ -401,21 +398,6 @@ public class CourseCriteria implements Serializable, Criteria {
         this.userId = userId;
     }
 
-    public LongFilter getReviewerId() {
-        return reviewerId;
-    }
-
-    public LongFilter reviewerId() {
-        if (reviewerId == null) {
-            reviewerId = new LongFilter();
-        }
-        return reviewerId;
-    }
-
-    public void setReviewerId(LongFilter reviewerId) {
-        this.reviewerId = reviewerId;
-    }
-
     public Boolean getDistinct() {
         return distinct;
     }
@@ -454,7 +436,6 @@ public class CourseCriteria implements Serializable, Criteria {
             Objects.equals(courseCategoryId, that.courseCategoryId) &&
             Objects.equals(courseTypeId, that.courseTypeId) &&
             Objects.equals(userId, that.userId) &&
-            Objects.equals(reviewerId, that.reviewerId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -482,7 +463,6 @@ public class CourseCriteria implements Serializable, Criteria {
             courseCategoryId,
             courseTypeId,
             userId,
-            reviewerId,
             distinct
         );
     }
@@ -511,7 +491,6 @@ public class CourseCriteria implements Serializable, Criteria {
             (courseCategoryId != null ? "courseCategoryId=" + courseCategoryId + ", " : "") +
             (courseTypeId != null ? "courseTypeId=" + courseTypeId + ", " : "") +
             (userId != null ? "userId=" + userId + ", " : "") +
-            (reviewerId != null ? "reviewerId=" + reviewerId + ", " : "") +
             (distinct != null ? "distinct=" + distinct + ", " : "") +
             "}";
     }

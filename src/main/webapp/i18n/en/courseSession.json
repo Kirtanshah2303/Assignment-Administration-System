@@ -24,13 +24,13 @@
       "sessionDuration": "Session Duration",
       "sessionOrder": "Session Order",
       "sessionResource": "Session Resource",
-      "sessionQuiz": "Session Quiz",
       "isPreview": "Is Preview",
       "isDraft": "Is Draft",
       "isApproved": "Is Approved",
       "isPublished": "Is Published",
-      "courseSection": "Course Section",
-      "courseReviewStatus": "Course Review Status"
+      "sessionLocation": "Session Location",
+      "quizLink": "Quiz Link",
+      "courseSection": "Course Section"
     }
   }
 }

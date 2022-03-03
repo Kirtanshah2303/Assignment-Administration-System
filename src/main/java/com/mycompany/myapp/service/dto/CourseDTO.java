@@ -14,27 +14,28 @@ public class CourseDTO implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 600)
+    @Size(min = 10, max = 42)
     private String courseTitle;
 
     @NotNull
-    @Size(max = 255)
+    @Size(min = 10, max = 400)
     private String courseDescription;
 
-    @Size(max = 255)
+    @NotNull
+    @Size(min = 10, max = 400)
     private String courseObjectives;
 
     @NotNull
-    @Size(max = 120)
+    @Size(min = 10, max = 42)
     private String courseSubTitle;
 
-    @Size(max = 1000)
+    @Size(min = 10, max = 42)
     private String coursePreviewURL;
 
     private Integer courseLength;
 
     @NotNull
-    @Size(max = 255)
+    @Size(min = 10, max = 42)
     private String courseLogo;
 
     @NotNull
@@ -43,7 +44,7 @@ public class CourseDTO implements Serializable {
     @NotNull
     private LocalDate courseUpdatedOn;
 
-    @Size(max = 255)
+    @Size(min = 10, max = 42)
     private String courseRootDir;
 
     private Double amount;
@@ -66,8 +67,6 @@ public class CourseDTO implements Serializable {
     private CourseTypeDTO courseType;
 
     private UserDTO user;
-
-    private UserDTO reviewer;
 
     public Long getId() {
         return id;
@@ -229,14 +228,6 @@ public class CourseDTO implements Serializable {
         this.user = user;
     }
 
-    public UserDTO getReviewer() {
-        return reviewer;
-    }
-
-    public void setReviewer(UserDTO reviewer) {
-        this.reviewer = reviewer;
-    }
-
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -282,7 +273,6 @@ public class CourseDTO implements Serializable {
             ", courseCategory=" + getCourseCategory() +
             ", courseType=" + getCourseType() +
             ", user=" + getUser() +
-            ", reviewer=" + getReviewer() +
             "}";
     }
 }

@@ -30,6 +30,7 @@
       "relationshipType": "many-to-one"
     },
     {
+      "otherEntityField": "sessionTitle",
       "otherEntityName": "courseSession",
       "otherEntityRelationshipName": "courseSessionProgress",
       "relationshipName": "courseSession",

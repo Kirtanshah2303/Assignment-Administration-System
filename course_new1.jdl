@@ -1,0 +1,144 @@
+DEFAULT_MIN_LENGTH = 10
+DEFAULT_MAX_LENGTH = 42
+
+entity Course {
+       id Long required,
+       courseTitle String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required,
+       courseDescription String minlength(DEFAULT_MIN_LENGTH) maxlength(400) required,
+       courseObjectives String minlength(DEFAULT_MIN_LENGTH) maxlength(400) required,
+       courseSubTitle String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required,
+        coursePreviewURL String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
+       courseLength Integer,
+       courseLogo String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required,
+       courseCreatedOn LocalDate required,
+       courseUpdatedOn LocalDate required,
+       courseRootDir String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
+       amount Double,
+       isDraft Boolean required,
+       isApproved Boolean required,
+       isPublished Boolean required,
+       courseApprovalDate LocalDate
+}
+
+entity CourseCategory {
+   id Long required,
+   courseCategoryTitle String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required,
+    logo String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required
+   isParent Boolean required,
+   parentId Integer required,
+    description String minlength(DEFAULT_MIN_LENGTH) maxlength(400)
+}
+
+entity CourseEnrollment {
+   id Long required,
+   enrollementDate LocalDate required,
+   lastAccessedDate LocalDate required,
+}
+
+entity CourseLevel {
+   id Long required,
+   title String minlength(DEFAULT_MIN_LENGTH) maxlength(50),
+   description String minlength(DEFAULT_MIN_LENGTH) maxlength(400)
+}
+
+entity CourseSessionProgress {
+   id Long required,
+   watchSeconds Instant required,
+   watchSeconds Instant required
+}
+
+entity CourseAssignmentProgress {
+   id Long required,
+   completed Boolean required,
+   completedDate LocalDate
+}
+
+entity CourseReviewStatus{
+   id Long required,
+   status Boolean required,
+   statusUpdatedOn LocalDate,
+   feedback String minlength(DEFAULT_MIN_LENGTH) maxlength(400)
+}
+
+entity CourseSection {
+   id Long required,
+   sectionTitle String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required,
+   sectionDescription String minlength(DEFAULT_MIN_LENGTH) maxlength(400),
+   sectionOrder Integer required,
+   isDraft Boolean required,
+   isApproved Boolean required
+}
+
+entity CourseSession {
+       id Long required,
+       sessionTitle String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required,
+       sessionDescription String minlength(DEFAULT_MIN_LENGTH) maxlength(400),
+       sessionVideo String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required,
+       sessionDuration Instant required,
+       sessionOrder Integer required,
+       sessionResource String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
+       isPreview Boolean required,
+       isDraft Boolean required,
+       isApproved Boolean required,
+       isPublished Boolean required,
+        sessionLocation String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
+        quizLink String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
+}
+
+entity CourseAssignment {
+       id Long required,
+       assignmentTitle String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required,
+       assignmentDescription String minlength(DEFAULT_MIN_LENGTH) maxlength(400),
+       assignmentOrder Integer required,
+       assignmentResource String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
+       isPreview Boolean required,
+       isDraft Boolean required,
+       isApproved Boolean required,
+       isPublished Boolean required
+}
+
+entity CourseAssignmentInput{
+   id Long required,
+   input String maxlength(200)
+}
+
+entity CourseAssignmentOutput{
+   id Long required,
+   output String maxlength(200)
+}
+
+entity CourseType {
+   id Long required,
+       title String maxlength(50) required,
+       description String maxlength(100)
+}
+
+
+relationship ManyToOne {
+   Course{courseLevel(title)} to CourseLevel
+   Course{courseCategory(courseCategoryTitle)} to CourseCategory
+    Course{courseType(title)} to CourseType
+   Course{user(login)} to User
+   CourseSection{course(courseTitle)} to Course
+    CourseSession{courseSection(sectionTitle)} to CourseSection
+   CourseSessionProgress{user(login)} to User
+   CourseSessionProgress{courseSession(sessionTitle)} to CourseSession
+   CourseAssignment{courseSession(sessionTitle)} to CourseSession
+   CourseAssignmentProgress{user(login)} to User
+   CourseAssignmentProgress{courseAssignment(assignmentTitle)} to CourseAssignment
+    CourseEnrollment{user(login)} to User
+    CourseEnrollment{course} to Course
+    Course{user(login)} to User
+   CourseAssignmentInput{courseAssignment(assignmentTitle)} to CourseAssignment
+    CourseAssignmentInput{user(login)} to User
+   CourseAssignmentOutput{courseAssignment(assignmentTitle)} to CourseAssignment
+    CourseReviewStatus{user(login)} to User
+    CourseReviewStatus{courseSession(sessionTitle)} to CourseSession
+}
+
+
+// Options
+service * with serviceImpl
+paginate * with pagination
+dto * with mapstruct
+filter *

@@ -91,7 +91,8 @@ export const CourseLevelUpdate = (props: RouteComponentProps<{ id: string }>) =>
                 data-cy="title"
                 type="text"
                 validate={{
-                  maxLength: { value: 20, message: translate('entity.validation.maxlength', { max: 20 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 50, message: translate('entity.validation.maxlength', { max: 50 }) },
                 }}
               />
               <ValidatedField
@@ -101,7 +102,8 @@ export const CourseLevelUpdate = (props: RouteComponentProps<{ id: string }>) =>
                 data-cy="description"
                 type="text"
                 validate={{
-                  maxLength: { value: 100, message: translate('entity.validation.maxlength', { max: 100 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 400, message: translate('entity.validation.maxlength', { max: 400 }) },
                 }}
               />
               <Button tag={Link} id="cancel-save" data-cy="entityCreateCancelButton" to="/course-level" replace color="info">

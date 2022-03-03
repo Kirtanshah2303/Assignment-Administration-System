@@ -12,8 +12,9 @@ public interface CourseSessionMapper extends EntityMapper<CourseSessionDTO, Cour
     @Mapping(target = "courseSection", source = "courseSection", qualifiedByName = "sectionTitle")
     CourseSessionDTO toDto(CourseSession s);
 
-    @Named("id")
+    @Named("sessionTitle")
     @BeanMapping(ignoreByDefault = true)
     @Mapping(target = "id", source = "id")
-    CourseSessionDTO toDtoId(CourseSession courseSession);
+    @Mapping(target = "sessionTitle", source = "sessionTitle")
+    CourseSessionDTO toDtoSessionTitle(CourseSession courseSession);
 }

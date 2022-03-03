@@ -36,8 +36,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class CourseReviewStatusResourceIT {
 
-    private static final String DEFAULT_STATUS = "AAAAAAAAAA";
-    private static final String UPDATED_STATUS = "BBBBBBBBBB";
+    private static final Boolean DEFAULT_STATUS = false;
+    private static final Boolean UPDATED_STATUS = true;
 
     private static final LocalDate DEFAULT_STATUS_UPDATED_ON = LocalDate.ofEpochDay(0L);
     private static final LocalDate UPDATED_STATUS_UPDATED_ON = LocalDate.now(ZoneId.systemDefault());
@@ -147,6 +147,28 @@ class CourseReviewStatusResourceIT {
 
     @Test
     @Transactional
+    void checkStatusIsRequired() throws Exception {
+        int databaseSizeBeforeTest = courseReviewStatusRepository.findAll().size();
+        // set the field null
+        courseReviewStatus.setStatus(null);
+
+        // Create the CourseReviewStatus, which fails.
+        CourseReviewStatusDTO courseReviewStatusDTO = courseReviewStatusMapper.toDto(courseReviewStatus);
+
+        restCourseReviewStatusMockMvc
+            .perform(
+                post(ENTITY_API_URL)
+                    .contentType(MediaType.APPLICATION_JSON)
+                    .content(TestUtil.convertObjectToJsonBytes(courseReviewStatusDTO))
+            )
+            .andExpect(status().isBadRequest());
+
+        List<CourseReviewStatus> courseReviewStatusList = courseReviewStatusRepository.findAll();
+        assertThat(courseReviewStatusList).hasSize(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void getAllCourseReviewStatuses() throws Exception {
         // Initialize the database
         courseReviewStatusRepository.saveAndFlush(courseReviewStatus);
@@ -157,7 +179,7 @@ class CourseReviewStatusResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(courseReviewStatus.getId().intValue())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.booleanValue())))
             .andExpect(jsonPath("$.[*].statusUpdatedOn").value(hasItem(DEFAULT_STATUS_UPDATED_ON.toString())))
             .andExpect(jsonPath("$.[*].feedback").value(hasItem(DEFAULT_FEEDBACK)));
     }
@@ -174,7 +196,7 @@ class CourseReviewStatusResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(courseReviewStatus.getId().intValue()))
-            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS))
+            .andExpect(jsonPath("$.status").value(DEFAULT_STATUS.booleanValue()))
             .andExpect(jsonPath("$.statusUpdatedOn").value(DEFAULT_STATUS_UPDATED_ON.toString()))
             .andExpect(jsonPath("$.feedback").value(DEFAULT_FEEDBACK));
     }
@@ -247,32 +269,6 @@ class CourseReviewStatusResourceIT {
 
         // Get all the courseReviewStatusList where status is null
         defaultCourseReviewStatusShouldNotBeFound("status.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseReviewStatusesByStatusContainsSomething() throws Exception {
-        // Initialize the database
-        courseReviewStatusRepository.saveAndFlush(courseReviewStatus);
-
-        // Get all the courseReviewStatusList where status contains DEFAULT_STATUS
-        defaultCourseReviewStatusShouldBeFound("status.contains=" + DEFAULT_STATUS);
-
-        // Get all the courseReviewStatusList where status contains UPDATED_STATUS
-        defaultCourseReviewStatusShouldNotBeFound("status.contains=" + UPDATED_STATUS);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseReviewStatusesByStatusNotContainsSomething() throws Exception {
-        // Initialize the database
-        courseReviewStatusRepository.saveAndFlush(courseReviewStatus);
-
-        // Get all the courseReviewStatusList where status does not contain DEFAULT_STATUS
-        defaultCourseReviewStatusShouldNotBeFound("status.doesNotContain=" + DEFAULT_STATUS);
-
-        // Get all the courseReviewStatusList where status does not contain UPDATED_STATUS
-        defaultCourseReviewStatusShouldBeFound("status.doesNotContain=" + UPDATED_STATUS);
     }
 
     @Test
@@ -518,7 +514,7 @@ class CourseReviewStatusResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(courseReviewStatus.getId().intValue())))
-            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS)))
+            .andExpect(jsonPath("$.[*].status").value(hasItem(DEFAULT_STATUS.booleanValue())))
             .andExpect(jsonPath("$.[*].statusUpdatedOn").value(hasItem(DEFAULT_STATUS_UPDATED_ON.toString())))
             .andExpect(jsonPath("$.[*].feedback").value(hasItem(DEFAULT_FEEDBACK)));
 

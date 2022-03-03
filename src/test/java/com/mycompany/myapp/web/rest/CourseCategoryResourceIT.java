@@ -32,8 +32,8 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class CourseCategoryResourceIT {
 
-    private static final String DEFAULT_TITLE = "AAAAAAAAAA";
-    private static final String UPDATED_TITLE = "BBBBBBBBBB";
+    private static final String DEFAULT_COURSE_CATEGORY_TITLE = "AAAAAAAAAA";
+    private static final String UPDATED_COURSE_CATEGORY_TITLE = "BBBBBBBBBB";
 
     private static final String DEFAULT_LOGO = "AAAAAAAAAA";
     private static final String UPDATED_LOGO = "BBBBBBBBBB";
@@ -76,7 +76,7 @@ class CourseCategoryResourceIT {
      */
     public static CourseCategory createEntity(EntityManager em) {
         CourseCategory courseCategory = new CourseCategory()
-            .title(DEFAULT_TITLE)
+            .courseCategoryTitle(DEFAULT_COURSE_CATEGORY_TITLE)
             .logo(DEFAULT_LOGO)
             .isParent(DEFAULT_IS_PARENT)
             .parentId(DEFAULT_PARENT_ID)
@@ -92,7 +92,7 @@ class CourseCategoryResourceIT {
      */
     public static CourseCategory createUpdatedEntity(EntityManager em) {
         CourseCategory courseCategory = new CourseCategory()
-            .title(UPDATED_TITLE)
+            .courseCategoryTitle(UPDATED_COURSE_CATEGORY_TITLE)
             .logo(UPDATED_LOGO)
             .isParent(UPDATED_IS_PARENT)
             .parentId(UPDATED_PARENT_ID)
@@ -121,7 +121,7 @@ class CourseCategoryResourceIT {
         List<CourseCategory> courseCategoryList = courseCategoryRepository.findAll();
         assertThat(courseCategoryList).hasSize(databaseSizeBeforeCreate + 1);
         CourseCategory testCourseCategory = courseCategoryList.get(courseCategoryList.size() - 1);
-        assertThat(testCourseCategory.getTitle()).isEqualTo(DEFAULT_TITLE);
+        assertThat(testCourseCategory.getCourseCategoryTitle()).isEqualTo(DEFAULT_COURSE_CATEGORY_TITLE);
         assertThat(testCourseCategory.getLogo()).isEqualTo(DEFAULT_LOGO);
         assertThat(testCourseCategory.getIsParent()).isEqualTo(DEFAULT_IS_PARENT);
         assertThat(testCourseCategory.getParentId()).isEqualTo(DEFAULT_PARENT_ID);
@@ -151,10 +151,10 @@ class CourseCategoryResourceIT {
 
     @Test
     @Transactional
-    void checkTitleIsRequired() throws Exception {
+    void checkCourseCategoryTitleIsRequired() throws Exception {
         int databaseSizeBeforeTest = courseCategoryRepository.findAll().size();
         // set the field null
-        courseCategory.setTitle(null);
+        courseCategory.setCourseCategoryTitle(null);
 
         // Create the CourseCategory, which fails.
         CourseCategoryDTO courseCategoryDTO = courseCategoryMapper.toDto(courseCategory);
@@ -241,7 +241,7 @@ class CourseCategoryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(courseCategory.getId().intValue())))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+            .andExpect(jsonPath("$.[*].courseCategoryTitle").value(hasItem(DEFAULT_COURSE_CATEGORY_TITLE)))
             .andExpect(jsonPath("$.[*].logo").value(hasItem(DEFAULT_LOGO)))
             .andExpect(jsonPath("$.[*].isParent").value(hasItem(DEFAULT_IS_PARENT.booleanValue())))
             .andExpect(jsonPath("$.[*].parentId").value(hasItem(DEFAULT_PARENT_ID)))
@@ -260,7 +260,7 @@ class CourseCategoryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(courseCategory.getId().intValue()))
-            .andExpect(jsonPath("$.title").value(DEFAULT_TITLE))
+            .andExpect(jsonPath("$.courseCategoryTitle").value(DEFAULT_COURSE_CATEGORY_TITLE))
             .andExpect(jsonPath("$.logo").value(DEFAULT_LOGO))
             .andExpect(jsonPath("$.isParent").value(DEFAULT_IS_PARENT.booleanValue()))
             .andExpect(jsonPath("$.parentId").value(DEFAULT_PARENT_ID))
@@ -287,80 +287,80 @@ class CourseCategoryResourceIT {
 
     @Test
     @Transactional
-    void getAllCourseCategoriesByTitleIsEqualToSomething() throws Exception {
+    void getAllCourseCategoriesByCourseCategoryTitleIsEqualToSomething() throws Exception {
         // Initialize the database
         courseCategoryRepository.saveAndFlush(courseCategory);
 
-        // Get all the courseCategoryList where title equals to DEFAULT_TITLE
-        defaultCourseCategoryShouldBeFound("title.equals=" + DEFAULT_TITLE);
+        // Get all the courseCategoryList where courseCategoryTitle equals to DEFAULT_COURSE_CATEGORY_TITLE
+        defaultCourseCategoryShouldBeFound("courseCategoryTitle.equals=" + DEFAULT_COURSE_CATEGORY_TITLE);
 
-        // Get all the courseCategoryList where title equals to UPDATED_TITLE
-        defaultCourseCategoryShouldNotBeFound("title.equals=" + UPDATED_TITLE);
+        // Get all the courseCategoryList where courseCategoryTitle equals to UPDATED_COURSE_CATEGORY_TITLE
+        defaultCourseCategoryShouldNotBeFound("courseCategoryTitle.equals=" + UPDATED_COURSE_CATEGORY_TITLE);
     }
 
     @Test
     @Transactional
-    void getAllCourseCategoriesByTitleIsNotEqualToSomething() throws Exception {
+    void getAllCourseCategoriesByCourseCategoryTitleIsNotEqualToSomething() throws Exception {
         // Initialize the database
         courseCategoryRepository.saveAndFlush(courseCategory);
 
-        // Get all the courseCategoryList where title not equals to DEFAULT_TITLE
-        defaultCourseCategoryShouldNotBeFound("title.notEquals=" + DEFAULT_TITLE);
+        // Get all the courseCategoryList where courseCategoryTitle not equals to DEFAULT_COURSE_CATEGORY_TITLE
+        defaultCourseCategoryShouldNotBeFound("courseCategoryTitle.notEquals=" + DEFAULT_COURSE_CATEGORY_TITLE);
 
-        // Get all the courseCategoryList where title not equals to UPDATED_TITLE
-        defaultCourseCategoryShouldBeFound("title.notEquals=" + UPDATED_TITLE);
+        // Get all the courseCategoryList where courseCategoryTitle not equals to UPDATED_COURSE_CATEGORY_TITLE
+        defaultCourseCategoryShouldBeFound("courseCategoryTitle.notEquals=" + UPDATED_COURSE_CATEGORY_TITLE);
     }
 
     @Test
     @Transactional
-    void getAllCourseCategoriesByTitleIsInShouldWork() throws Exception {
+    void getAllCourseCategoriesByCourseCategoryTitleIsInShouldWork() throws Exception {
         // Initialize the database
         courseCategoryRepository.saveAndFlush(courseCategory);
 
-        // Get all the courseCategoryList where title in DEFAULT_TITLE or UPDATED_TITLE
-        defaultCourseCategoryShouldBeFound("title.in=" + DEFAULT_TITLE + "," + UPDATED_TITLE);
+        // Get all the courseCategoryList where courseCategoryTitle in DEFAULT_COURSE_CATEGORY_TITLE or UPDATED_COURSE_CATEGORY_TITLE
+        defaultCourseCategoryShouldBeFound("courseCategoryTitle.in=" + DEFAULT_COURSE_CATEGORY_TITLE + "," + UPDATED_COURSE_CATEGORY_TITLE);
 
-        // Get all the courseCategoryList where title equals to UPDATED_TITLE
-        defaultCourseCategoryShouldNotBeFound("title.in=" + UPDATED_TITLE);
+        // Get all the courseCategoryList where courseCategoryTitle equals to UPDATED_COURSE_CATEGORY_TITLE
+        defaultCourseCategoryShouldNotBeFound("courseCategoryTitle.in=" + UPDATED_COURSE_CATEGORY_TITLE);
     }
 
     @Test
     @Transactional
-    void getAllCourseCategoriesByTitleIsNullOrNotNull() throws Exception {
+    void getAllCourseCategoriesByCourseCategoryTitleIsNullOrNotNull() throws Exception {
         // Initialize the database
         courseCategoryRepository.saveAndFlush(courseCategory);
 
-        // Get all the courseCategoryList where title is not null
-        defaultCourseCategoryShouldBeFound("title.specified=true");
+        // Get all the courseCategoryList where courseCategoryTitle is not null
+        defaultCourseCategoryShouldBeFound("courseCategoryTitle.specified=true");
 
-        // Get all the courseCategoryList where title is null
-        defaultCourseCategoryShouldNotBeFound("title.specified=false");
+        // Get all the courseCategoryList where courseCategoryTitle is null
+        defaultCourseCategoryShouldNotBeFound("courseCategoryTitle.specified=false");
     }
 
     @Test
     @Transactional
-    void getAllCourseCategoriesByTitleContainsSomething() throws Exception {
+    void getAllCourseCategoriesByCourseCategoryTitleContainsSomething() throws Exception {
         // Initialize the database
         courseCategoryRepository.saveAndFlush(courseCategory);
 
-        // Get all the courseCategoryList where title contains DEFAULT_TITLE
-        defaultCourseCategoryShouldBeFound("title.contains=" + DEFAULT_TITLE);
+        // Get all the courseCategoryList where courseCategoryTitle contains DEFAULT_COURSE_CATEGORY_TITLE
+        defaultCourseCategoryShouldBeFound("courseCategoryTitle.contains=" + DEFAULT_COURSE_CATEGORY_TITLE);
 
-        // Get all the courseCategoryList where title contains UPDATED_TITLE
-        defaultCourseCategoryShouldNotBeFound("title.contains=" + UPDATED_TITLE);
+        // Get all the courseCategoryList where courseCategoryTitle contains UPDATED_COURSE_CATEGORY_TITLE
+        defaultCourseCategoryShouldNotBeFound("courseCategoryTitle.contains=" + UPDATED_COURSE_CATEGORY_TITLE);
     }
 
     @Test
     @Transactional
-    void getAllCourseCategoriesByTitleNotContainsSomething() throws Exception {
+    void getAllCourseCategoriesByCourseCategoryTitleNotContainsSomething() throws Exception {
         // Initialize the database
         courseCategoryRepository.saveAndFlush(courseCategory);
 
-        // Get all the courseCategoryList where title does not contain DEFAULT_TITLE
-        defaultCourseCategoryShouldNotBeFound("title.doesNotContain=" + DEFAULT_TITLE);
+        // Get all the courseCategoryList where courseCategoryTitle does not contain DEFAULT_COURSE_CATEGORY_TITLE
+        defaultCourseCategoryShouldNotBeFound("courseCategoryTitle.doesNotContain=" + DEFAULT_COURSE_CATEGORY_TITLE);
 
-        // Get all the courseCategoryList where title does not contain UPDATED_TITLE
-        defaultCourseCategoryShouldBeFound("title.doesNotContain=" + UPDATED_TITLE);
+        // Get all the courseCategoryList where courseCategoryTitle does not contain UPDATED_COURSE_CATEGORY_TITLE
+        defaultCourseCategoryShouldBeFound("courseCategoryTitle.doesNotContain=" + UPDATED_COURSE_CATEGORY_TITLE);
     }
 
     @Test
@@ -684,7 +684,7 @@ class CourseCategoryResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(courseCategory.getId().intValue())))
-            .andExpect(jsonPath("$.[*].title").value(hasItem(DEFAULT_TITLE)))
+            .andExpect(jsonPath("$.[*].courseCategoryTitle").value(hasItem(DEFAULT_COURSE_CATEGORY_TITLE)))
             .andExpect(jsonPath("$.[*].logo").value(hasItem(DEFAULT_LOGO)))
             .andExpect(jsonPath("$.[*].isParent").value(hasItem(DEFAULT_IS_PARENT.booleanValue())))
             .andExpect(jsonPath("$.[*].parentId").value(hasItem(DEFAULT_PARENT_ID)))
@@ -737,7 +737,7 @@ class CourseCategoryResourceIT {
         // Disconnect from session so that the updates on updatedCourseCategory are not directly saved in db
         em.detach(updatedCourseCategory);
         updatedCourseCategory
-            .title(UPDATED_TITLE)
+            .courseCategoryTitle(UPDATED_COURSE_CATEGORY_TITLE)
             .logo(UPDATED_LOGO)
             .isParent(UPDATED_IS_PARENT)
             .parentId(UPDATED_PARENT_ID)
@@ -756,7 +756,7 @@ class CourseCategoryResourceIT {
         List<CourseCategory> courseCategoryList = courseCategoryRepository.findAll();
         assertThat(courseCategoryList).hasSize(databaseSizeBeforeUpdate);
         CourseCategory testCourseCategory = courseCategoryList.get(courseCategoryList.size() - 1);
-        assertThat(testCourseCategory.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testCourseCategory.getCourseCategoryTitle()).isEqualTo(UPDATED_COURSE_CATEGORY_TITLE);
         assertThat(testCourseCategory.getLogo()).isEqualTo(UPDATED_LOGO);
         assertThat(testCourseCategory.getIsParent()).isEqualTo(UPDATED_IS_PARENT);
         assertThat(testCourseCategory.getParentId()).isEqualTo(UPDATED_PARENT_ID);
@@ -842,7 +842,10 @@ class CourseCategoryResourceIT {
         CourseCategory partialUpdatedCourseCategory = new CourseCategory();
         partialUpdatedCourseCategory.setId(courseCategory.getId());
 
-        partialUpdatedCourseCategory.title(UPDATED_TITLE).isParent(UPDATED_IS_PARENT).parentId(UPDATED_PARENT_ID);
+        partialUpdatedCourseCategory
+            .courseCategoryTitle(UPDATED_COURSE_CATEGORY_TITLE)
+            .isParent(UPDATED_IS_PARENT)
+            .parentId(UPDATED_PARENT_ID);
 
         restCourseCategoryMockMvc
             .perform(
@@ -856,7 +859,7 @@ class CourseCategoryResourceIT {
         List<CourseCategory> courseCategoryList = courseCategoryRepository.findAll();
         assertThat(courseCategoryList).hasSize(databaseSizeBeforeUpdate);
         CourseCategory testCourseCategory = courseCategoryList.get(courseCategoryList.size() - 1);
-        assertThat(testCourseCategory.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testCourseCategory.getCourseCategoryTitle()).isEqualTo(UPDATED_COURSE_CATEGORY_TITLE);
         assertThat(testCourseCategory.getLogo()).isEqualTo(DEFAULT_LOGO);
         assertThat(testCourseCategory.getIsParent()).isEqualTo(UPDATED_IS_PARENT);
         assertThat(testCourseCategory.getParentId()).isEqualTo(UPDATED_PARENT_ID);
@@ -876,7 +879,7 @@ class CourseCategoryResourceIT {
         partialUpdatedCourseCategory.setId(courseCategory.getId());
 
         partialUpdatedCourseCategory
-            .title(UPDATED_TITLE)
+            .courseCategoryTitle(UPDATED_COURSE_CATEGORY_TITLE)
             .logo(UPDATED_LOGO)
             .isParent(UPDATED_IS_PARENT)
             .parentId(UPDATED_PARENT_ID)
@@ -894,7 +897,7 @@ class CourseCategoryResourceIT {
         List<CourseCategory> courseCategoryList = courseCategoryRepository.findAll();
         assertThat(courseCategoryList).hasSize(databaseSizeBeforeUpdate);
         CourseCategory testCourseCategory = courseCategoryList.get(courseCategoryList.size() - 1);
-        assertThat(testCourseCategory.getTitle()).isEqualTo(UPDATED_TITLE);
+        assertThat(testCourseCategory.getCourseCategoryTitle()).isEqualTo(UPDATED_COURSE_CATEGORY_TITLE);
         assertThat(testCourseCategory.getLogo()).isEqualTo(UPDATED_LOGO);
         assertThat(testCourseCategory.getIsParent()).isEqualTo(UPDATED_IS_PARENT);
         assertThat(testCourseCategory.getParentId()).isEqualTo(UPDATED_PARENT_ID);

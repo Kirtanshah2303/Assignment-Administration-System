@@ -94,7 +94,7 @@ public class CourseReviewStatusQueryService extends QueryService<CourseReviewSta
                 specification = specification.and(buildRangeSpecification(criteria.getId(), CourseReviewStatus_.id));
             }
             if (criteria.getStatus() != null) {
-                specification = specification.and(buildStringSpecification(criteria.getStatus(), CourseReviewStatus_.status));
+                specification = specification.and(buildSpecification(criteria.getStatus(), CourseReviewStatus_.status));
             }
             if (criteria.getStatusUpdatedOn() != null) {
                 specification =

@@ -20,13 +20,13 @@ public class CourseCategory implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 255)
-    @Column(name = "title", length = 255, nullable = false)
-    private String title;
+    @Size(min = 10, max = 42)
+    @Column(name = "course_category_title", length = 42, nullable = false)
+    private String courseCategoryTitle;
 
     @NotNull
-    @Size(max = 255)
-    @Column(name = "logo", length = 255, nullable = false)
+    @Size(min = 10, max = 42)
+    @Column(name = "logo", length = 42, nullable = false)
     private String logo;
 
     @NotNull
@@ -37,8 +37,8 @@ public class CourseCategory implements Serializable {
     @Column(name = "parent_id", nullable = false)
     private Integer parentId;
 
-    @Size(max = 100)
-    @Column(name = "description", length = 100)
+    @Size(min = 10, max = 400)
+    @Column(name = "description", length = 400)
     private String description;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
@@ -56,17 +56,17 @@ public class CourseCategory implements Serializable {
         this.id = id;
     }
 
-    public String getTitle() {
-        return this.title;
+    public String getCourseCategoryTitle() {
+        return this.courseCategoryTitle;
     }
 
-    public CourseCategory title(String title) {
-        this.setTitle(title);
+    public CourseCategory courseCategoryTitle(String courseCategoryTitle) {
+        this.setCourseCategoryTitle(courseCategoryTitle);
         return this;
     }
 
-    public void setTitle(String title) {
-        this.title = title;
+    public void setCourseCategoryTitle(String courseCategoryTitle) {
+        this.courseCategoryTitle = courseCategoryTitle;
     }
 
     public String getLogo() {
@@ -145,7 +145,7 @@ public class CourseCategory implements Serializable {
     public String toString() {
         return "CourseCategory{" +
             "id=" + getId() +
-            ", title='" + getTitle() + "'" +
+            ", courseCategoryTitle='" + getCourseCategoryTitle() + "'" +
             ", logo='" + getLogo() + "'" +
             ", isParent='" + getIsParent() + "'" +
             ", parentId=" + getParentId() +

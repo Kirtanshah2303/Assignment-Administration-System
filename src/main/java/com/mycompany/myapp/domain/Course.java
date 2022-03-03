@@ -21,34 +21,35 @@ public class Course implements Serializable {
     private Long id;
 
     @NotNull
-    @Size(max = 600)
-    @Column(name = "course_title", length = 600, nullable = false)
+    @Size(min = 10, max = 42)
+    @Column(name = "course_title", length = 42, nullable = false)
     private String courseTitle;
 
     @NotNull
-    @Size(max = 255)
-    @Column(name = "course_description", length = 255, nullable = false)
+    @Size(min = 10, max = 400)
+    @Column(name = "course_description", length = 400, nullable = false)
     private String courseDescription;
 
-    @Size(max = 255)
-    @Column(name = "course_objectives", length = 255)
+    @NotNull
+    @Size(min = 10, max = 400)
+    @Column(name = "course_objectives", length = 400, nullable = false)
     private String courseObjectives;
 
     @NotNull
-    @Size(max = 120)
-    @Column(name = "course_sub_title", length = 120, nullable = false)
+    @Size(min = 10, max = 42)
+    @Column(name = "course_sub_title", length = 42, nullable = false)
     private String courseSubTitle;
 
-    @Size(max = 1000)
-    @Column(name = "course_preview_url", length = 1000)
+    @Size(min = 10, max = 42)
+    @Column(name = "course_preview_url", length = 42)
     private String coursePreviewURL;
 
     @Column(name = "course_length")
     private Integer courseLength;
 
     @NotNull
-    @Size(max = 255)
-    @Column(name = "course_logo", length = 255, nullable = false)
+    @Size(min = 10, max = 42)
+    @Column(name = "course_logo", length = 42, nullable = false)
     private String courseLogo;
 
     @NotNull
@@ -59,8 +60,8 @@ public class Course implements Serializable {
     @Column(name = "course_updated_on", nullable = false)
     private LocalDate courseUpdatedOn;
 
-    @Size(max = 255)
-    @Column(name = "course_root_dir", length = 255)
+    @Size(min = 10, max = 42)
+    @Column(name = "course_root_dir", length = 42)
     private String courseRootDir;
 
     @Column(name = "amount")
@@ -92,9 +93,6 @@ public class Course implements Serializable {
 
     @ManyToOne
     private User user;
-
-    @ManyToOne
-    private User reviewer;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -355,19 +353,6 @@ public class Course implements Serializable {
 
     public Course user(User user) {
         this.setUser(user);
-        return this;
-    }
-
-    public User getReviewer() {
-        return this.reviewer;
-    }
-
-    public void setReviewer(User user) {
-        this.reviewer = user;
-    }
-
-    public Course reviewer(User user) {
-        this.setReviewer(user);
         return this;
     }
 

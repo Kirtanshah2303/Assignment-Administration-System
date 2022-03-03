@@ -142,7 +142,7 @@ export const CourseAssignmentProgressUpdate = (props: RouteComponentProps<{ id: 
                 {courseAssignments
                   ? courseAssignments.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.assignmentTitle}
                       </option>
                     ))
                   : null}

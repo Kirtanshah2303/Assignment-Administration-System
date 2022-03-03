@@ -103,8 +103,10 @@ export const CourseCategory = (props: RouteComponentProps<{ url: string }>) => {
                 <th className="hand" onClick={sort('id')}>
                   <Translate contentKey="assignmentAdministrationSystemApp.courseCategory.id">Id</Translate> <FontAwesomeIcon icon="sort" />
                 </th>
-                <th className="hand" onClick={sort('title')}>
-                  <Translate contentKey="assignmentAdministrationSystemApp.courseCategory.title">Title</Translate>{' '}
+                <th className="hand" onClick={sort('courseCategoryTitle')}>
+                  <Translate contentKey="assignmentAdministrationSystemApp.courseCategory.courseCategoryTitle">
+                    Course Category Title
+                  </Translate>{' '}
                   <FontAwesomeIcon icon="sort" />
                 </th>
                 <th className="hand" onClick={sort('logo')}>
@@ -134,7 +136,7 @@ export const CourseCategory = (props: RouteComponentProps<{ url: string }>) => {
                       {courseCategory.id}
                     </Button>
                   </td>
-                  <td>{courseCategory.title}</td>
+                  <td>{courseCategory.courseCategoryTitle}</td>
                   <td>{courseCategory.logo}</td>
                   <td>{courseCategory.isParent ? 'true' : 'false'}</td>
                   <td>{courseCategory.parentId}</td>

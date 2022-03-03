@@ -105,10 +105,8 @@ export const CourseReviewStatusUpdate = (props: RouteComponentProps<{ id: string
                 id="course-review-status-status"
                 name="status"
                 data-cy="status"
-                type="text"
-                validate={{
-                  maxLength: { value: 20, message: translate('entity.validation.maxlength', { max: 20 }) },
-                }}
+                check
+                type="checkbox"
               />
               <ValidatedField
                 label={translate('assignmentAdministrationSystemApp.courseReviewStatus.statusUpdatedOn')}
@@ -124,7 +122,8 @@ export const CourseReviewStatusUpdate = (props: RouteComponentProps<{ id: string
                 data-cy="feedback"
                 type="text"
                 validate={{
-                  maxLength: { value: 200, message: translate('entity.validation.maxlength', { max: 200 }) },
+                  minLength: { value: 10, message: translate('entity.validation.minlength', { min: 10 }) },
+                  maxLength: { value: 400, message: translate('entity.validation.maxlength', { max: 400 }) },
                 }}
               />
               <ValidatedField
@@ -138,7 +137,7 @@ export const CourseReviewStatusUpdate = (props: RouteComponentProps<{ id: string
                 {users
                   ? users.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.login}
                       </option>
                     ))
                   : null}
@@ -154,7 +153,7 @@ export const CourseReviewStatusUpdate = (props: RouteComponentProps<{ id: string
                 {courseSessions
                   ? courseSessions.map(otherEntity => (
                       <option value={otherEntity.id} key={otherEntity.id}>
-                        {otherEntity.id}
+                        {otherEntity.sessionTitle}
                       </option>
                     ))
                   : null}

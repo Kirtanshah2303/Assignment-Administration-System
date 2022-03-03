@@ -29,7 +29,7 @@ public class CourseSessionProgress implements Serializable {
     private User user;
 
     @ManyToOne
-    @JsonIgnoreProperties(value = { "courseSection", "courseReviewStatuses" }, allowSetters = true)
+    @JsonIgnoreProperties(value = { "courseSection" }, allowSetters = true)
     private CourseSession courseSession;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

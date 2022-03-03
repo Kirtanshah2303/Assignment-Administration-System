@@ -7,15 +7,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 
 import com.mycompany.myapp.IntegrationTest;
 import com.mycompany.myapp.domain.CourseAssignment;
-import com.mycompany.myapp.domain.CourseAssignmentInput;
-import com.mycompany.myapp.domain.CourseAssignmentOutput;
-import com.mycompany.myapp.domain.CourseSection;
+import com.mycompany.myapp.domain.CourseSession;
 import com.mycompany.myapp.repository.CourseAssignmentRepository;
 import com.mycompany.myapp.service.criteria.CourseAssignmentCriteria;
 import com.mycompany.myapp.service.dto.CourseAssignmentDTO;
 import com.mycompany.myapp.service.mapper.CourseAssignmentMapper;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -42,12 +38,6 @@ class CourseAssignmentResourceIT {
 
     private static final String DEFAULT_ASSIGNMENT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_ASSIGNMENT_DESCRIPTION = "BBBBBBBBBB";
-
-    private static final String DEFAULT_SESSION_VIDEO = "AAAAAAAAAA";
-    private static final String UPDATED_SESSION_VIDEO = "BBBBBBBBBB";
-
-    private static final Instant DEFAULT_SESSION_DURATION = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_SESSION_DURATION = Instant.now().truncatedTo(ChronoUnit.MILLIS);
 
     private static final Integer DEFAULT_ASSIGNMENT_ORDER = 1;
     private static final Integer UPDATED_ASSIGNMENT_ORDER = 2;
@@ -98,8 +88,6 @@ class CourseAssignmentResourceIT {
         CourseAssignment courseAssignment = new CourseAssignment()
             .assignmentTitle(DEFAULT_ASSIGNMENT_TITLE)
             .assignmentDescription(DEFAULT_ASSIGNMENT_DESCRIPTION)
-            .sessionVideo(DEFAULT_SESSION_VIDEO)
-            .sessionDuration(DEFAULT_SESSION_DURATION)
             .assignmentOrder(DEFAULT_ASSIGNMENT_ORDER)
             .assignmentResource(DEFAULT_ASSIGNMENT_RESOURCE)
             .isPreview(DEFAULT_IS_PREVIEW)
@@ -119,8 +107,6 @@ class CourseAssignmentResourceIT {
         CourseAssignment courseAssignment = new CourseAssignment()
             .assignmentTitle(UPDATED_ASSIGNMENT_TITLE)
             .assignmentDescription(UPDATED_ASSIGNMENT_DESCRIPTION)
-            .sessionVideo(UPDATED_SESSION_VIDEO)
-            .sessionDuration(UPDATED_SESSION_DURATION)
             .assignmentOrder(UPDATED_ASSIGNMENT_ORDER)
             .assignmentResource(UPDATED_ASSIGNMENT_RESOURCE)
             .isPreview(UPDATED_IS_PREVIEW)
@@ -153,8 +139,6 @@ class CourseAssignmentResourceIT {
         CourseAssignment testCourseAssignment = courseAssignmentList.get(courseAssignmentList.size() - 1);
         assertThat(testCourseAssignment.getAssignmentTitle()).isEqualTo(DEFAULT_ASSIGNMENT_TITLE);
         assertThat(testCourseAssignment.getAssignmentDescription()).isEqualTo(DEFAULT_ASSIGNMENT_DESCRIPTION);
-        assertThat(testCourseAssignment.getSessionVideo()).isEqualTo(DEFAULT_SESSION_VIDEO);
-        assertThat(testCourseAssignment.getSessionDuration()).isEqualTo(DEFAULT_SESSION_DURATION);
         assertThat(testCourseAssignment.getAssignmentOrder()).isEqualTo(DEFAULT_ASSIGNMENT_ORDER);
         assertThat(testCourseAssignment.getAssignmentResource()).isEqualTo(DEFAULT_ASSIGNMENT_RESOURCE);
         assertThat(testCourseAssignment.getIsPreview()).isEqualTo(DEFAULT_IS_PREVIEW);
@@ -190,46 +174,6 @@ class CourseAssignmentResourceIT {
         int databaseSizeBeforeTest = courseAssignmentRepository.findAll().size();
         // set the field null
         courseAssignment.setAssignmentTitle(null);
-
-        // Create the CourseAssignment, which fails.
-        CourseAssignmentDTO courseAssignmentDTO = courseAssignmentMapper.toDto(courseAssignment);
-
-        restCourseAssignmentMockMvc
-            .perform(
-                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(courseAssignmentDTO))
-            )
-            .andExpect(status().isBadRequest());
-
-        List<CourseAssignment> courseAssignmentList = courseAssignmentRepository.findAll();
-        assertThat(courseAssignmentList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkSessionVideoIsRequired() throws Exception {
-        int databaseSizeBeforeTest = courseAssignmentRepository.findAll().size();
-        // set the field null
-        courseAssignment.setSessionVideo(null);
-
-        // Create the CourseAssignment, which fails.
-        CourseAssignmentDTO courseAssignmentDTO = courseAssignmentMapper.toDto(courseAssignment);
-
-        restCourseAssignmentMockMvc
-            .perform(
-                post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(TestUtil.convertObjectToJsonBytes(courseAssignmentDTO))
-            )
-            .andExpect(status().isBadRequest());
-
-        List<CourseAssignment> courseAssignmentList = courseAssignmentRepository.findAll();
-        assertThat(courseAssignmentList).hasSize(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkSessionDurationIsRequired() throws Exception {
-        int databaseSizeBeforeTest = courseAssignmentRepository.findAll().size();
-        // set the field null
-        courseAssignment.setSessionDuration(null);
 
         // Create the CourseAssignment, which fails.
         CourseAssignmentDTO courseAssignmentDTO = courseAssignmentMapper.toDto(courseAssignment);
@@ -358,8 +302,6 @@ class CourseAssignmentResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(courseAssignment.getId().intValue())))
             .andExpect(jsonPath("$.[*].assignmentTitle").value(hasItem(DEFAULT_ASSIGNMENT_TITLE)))
             .andExpect(jsonPath("$.[*].assignmentDescription").value(hasItem(DEFAULT_ASSIGNMENT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].sessionVideo").value(hasItem(DEFAULT_SESSION_VIDEO)))
-            .andExpect(jsonPath("$.[*].sessionDuration").value(hasItem(DEFAULT_SESSION_DURATION.toString())))
             .andExpect(jsonPath("$.[*].assignmentOrder").value(hasItem(DEFAULT_ASSIGNMENT_ORDER)))
             .andExpect(jsonPath("$.[*].assignmentResource").value(hasItem(DEFAULT_ASSIGNMENT_RESOURCE)))
             .andExpect(jsonPath("$.[*].isPreview").value(hasItem(DEFAULT_IS_PREVIEW.booleanValue())))
@@ -382,8 +324,6 @@ class CourseAssignmentResourceIT {
             .andExpect(jsonPath("$.id").value(courseAssignment.getId().intValue()))
             .andExpect(jsonPath("$.assignmentTitle").value(DEFAULT_ASSIGNMENT_TITLE))
             .andExpect(jsonPath("$.assignmentDescription").value(DEFAULT_ASSIGNMENT_DESCRIPTION))
-            .andExpect(jsonPath("$.sessionVideo").value(DEFAULT_SESSION_VIDEO))
-            .andExpect(jsonPath("$.sessionDuration").value(DEFAULT_SESSION_DURATION.toString()))
             .andExpect(jsonPath("$.assignmentOrder").value(DEFAULT_ASSIGNMENT_ORDER))
             .andExpect(jsonPath("$.assignmentResource").value(DEFAULT_ASSIGNMENT_RESOURCE))
             .andExpect(jsonPath("$.isPreview").value(DEFAULT_IS_PREVIEW.booleanValue()))
@@ -566,136 +506,6 @@ class CourseAssignmentResourceIT {
 
         // Get all the courseAssignmentList where assignmentDescription does not contain UPDATED_ASSIGNMENT_DESCRIPTION
         defaultCourseAssignmentShouldBeFound("assignmentDescription.doesNotContain=" + UPDATED_ASSIGNMENT_DESCRIPTION);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseAssignmentsBySessionVideoIsEqualToSomething() throws Exception {
-        // Initialize the database
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-
-        // Get all the courseAssignmentList where sessionVideo equals to DEFAULT_SESSION_VIDEO
-        defaultCourseAssignmentShouldBeFound("sessionVideo.equals=" + DEFAULT_SESSION_VIDEO);
-
-        // Get all the courseAssignmentList where sessionVideo equals to UPDATED_SESSION_VIDEO
-        defaultCourseAssignmentShouldNotBeFound("sessionVideo.equals=" + UPDATED_SESSION_VIDEO);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseAssignmentsBySessionVideoIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-
-        // Get all the courseAssignmentList where sessionVideo not equals to DEFAULT_SESSION_VIDEO
-        defaultCourseAssignmentShouldNotBeFound("sessionVideo.notEquals=" + DEFAULT_SESSION_VIDEO);
-
-        // Get all the courseAssignmentList where sessionVideo not equals to UPDATED_SESSION_VIDEO
-        defaultCourseAssignmentShouldBeFound("sessionVideo.notEquals=" + UPDATED_SESSION_VIDEO);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseAssignmentsBySessionVideoIsInShouldWork() throws Exception {
-        // Initialize the database
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-
-        // Get all the courseAssignmentList where sessionVideo in DEFAULT_SESSION_VIDEO or UPDATED_SESSION_VIDEO
-        defaultCourseAssignmentShouldBeFound("sessionVideo.in=" + DEFAULT_SESSION_VIDEO + "," + UPDATED_SESSION_VIDEO);
-
-        // Get all the courseAssignmentList where sessionVideo equals to UPDATED_SESSION_VIDEO
-        defaultCourseAssignmentShouldNotBeFound("sessionVideo.in=" + UPDATED_SESSION_VIDEO);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseAssignmentsBySessionVideoIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-
-        // Get all the courseAssignmentList where sessionVideo is not null
-        defaultCourseAssignmentShouldBeFound("sessionVideo.specified=true");
-
-        // Get all the courseAssignmentList where sessionVideo is null
-        defaultCourseAssignmentShouldNotBeFound("sessionVideo.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseAssignmentsBySessionVideoContainsSomething() throws Exception {
-        // Initialize the database
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-
-        // Get all the courseAssignmentList where sessionVideo contains DEFAULT_SESSION_VIDEO
-        defaultCourseAssignmentShouldBeFound("sessionVideo.contains=" + DEFAULT_SESSION_VIDEO);
-
-        // Get all the courseAssignmentList where sessionVideo contains UPDATED_SESSION_VIDEO
-        defaultCourseAssignmentShouldNotBeFound("sessionVideo.contains=" + UPDATED_SESSION_VIDEO);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseAssignmentsBySessionVideoNotContainsSomething() throws Exception {
-        // Initialize the database
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-
-        // Get all the courseAssignmentList where sessionVideo does not contain DEFAULT_SESSION_VIDEO
-        defaultCourseAssignmentShouldNotBeFound("sessionVideo.doesNotContain=" + DEFAULT_SESSION_VIDEO);
-
-        // Get all the courseAssignmentList where sessionVideo does not contain UPDATED_SESSION_VIDEO
-        defaultCourseAssignmentShouldBeFound("sessionVideo.doesNotContain=" + UPDATED_SESSION_VIDEO);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseAssignmentsBySessionDurationIsEqualToSomething() throws Exception {
-        // Initialize the database
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-
-        // Get all the courseAssignmentList where sessionDuration equals to DEFAULT_SESSION_DURATION
-        defaultCourseAssignmentShouldBeFound("sessionDuration.equals=" + DEFAULT_SESSION_DURATION);
-
-        // Get all the courseAssignmentList where sessionDuration equals to UPDATED_SESSION_DURATION
-        defaultCourseAssignmentShouldNotBeFound("sessionDuration.equals=" + UPDATED_SESSION_DURATION);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseAssignmentsBySessionDurationIsNotEqualToSomething() throws Exception {
-        // Initialize the database
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-
-        // Get all the courseAssignmentList where sessionDuration not equals to DEFAULT_SESSION_DURATION
-        defaultCourseAssignmentShouldNotBeFound("sessionDuration.notEquals=" + DEFAULT_SESSION_DURATION);
-
-        // Get all the courseAssignmentList where sessionDuration not equals to UPDATED_SESSION_DURATION
-        defaultCourseAssignmentShouldBeFound("sessionDuration.notEquals=" + UPDATED_SESSION_DURATION);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseAssignmentsBySessionDurationIsInShouldWork() throws Exception {
-        // Initialize the database
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-
-        // Get all the courseAssignmentList where sessionDuration in DEFAULT_SESSION_DURATION or UPDATED_SESSION_DURATION
-        defaultCourseAssignmentShouldBeFound("sessionDuration.in=" + DEFAULT_SESSION_DURATION + "," + UPDATED_SESSION_DURATION);
-
-        // Get all the courseAssignmentList where sessionDuration equals to UPDATED_SESSION_DURATION
-        defaultCourseAssignmentShouldNotBeFound("sessionDuration.in=" + UPDATED_SESSION_DURATION);
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseAssignmentsBySessionDurationIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-
-        // Get all the courseAssignmentList where sessionDuration is not null
-        defaultCourseAssignmentShouldBeFound("sessionDuration.specified=true");
-
-        // Get all the courseAssignmentList where sessionDuration is null
-        defaultCourseAssignmentShouldNotBeFound("sessionDuration.specified=false");
     }
 
     @Test
@@ -1090,80 +900,28 @@ class CourseAssignmentResourceIT {
 
     @Test
     @Transactional
-    void getAllCourseAssignmentsByCourseSectionIsEqualToSomething() throws Exception {
+    void getAllCourseAssignmentsByCourseSessionIsEqualToSomething() throws Exception {
         // Initialize the database
         courseAssignmentRepository.saveAndFlush(courseAssignment);
-        CourseSection courseSection;
-        if (TestUtil.findAll(em, CourseSection.class).isEmpty()) {
-            courseSection = CourseSectionResourceIT.createEntity(em);
-            em.persist(courseSection);
+        CourseSession courseSession;
+        if (TestUtil.findAll(em, CourseSession.class).isEmpty()) {
+            courseSession = CourseSessionResourceIT.createEntity(em);
+            em.persist(courseSession);
             em.flush();
         } else {
-            courseSection = TestUtil.findAll(em, CourseSection.class).get(0);
+            courseSession = TestUtil.findAll(em, CourseSession.class).get(0);
         }
-        em.persist(courseSection);
+        em.persist(courseSession);
         em.flush();
-        courseAssignment.setCourseSection(courseSection);
+        courseAssignment.setCourseSession(courseSession);
         courseAssignmentRepository.saveAndFlush(courseAssignment);
-        Long courseSectionId = courseSection.getId();
+        Long courseSessionId = courseSession.getId();
 
-        // Get all the courseAssignmentList where courseSection equals to courseSectionId
-        defaultCourseAssignmentShouldBeFound("courseSectionId.equals=" + courseSectionId);
+        // Get all the courseAssignmentList where courseSession equals to courseSessionId
+        defaultCourseAssignmentShouldBeFound("courseSessionId.equals=" + courseSessionId);
 
-        // Get all the courseAssignmentList where courseSection equals to (courseSectionId + 1)
-        defaultCourseAssignmentShouldNotBeFound("courseSectionId.equals=" + (courseSectionId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseAssignmentsByCourseAssignmentInputIsEqualToSomething() throws Exception {
-        // Initialize the database
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-        CourseAssignmentInput courseAssignmentInput;
-        if (TestUtil.findAll(em, CourseAssignmentInput.class).isEmpty()) {
-            courseAssignmentInput = CourseAssignmentInputResourceIT.createEntity(em);
-            em.persist(courseAssignmentInput);
-            em.flush();
-        } else {
-            courseAssignmentInput = TestUtil.findAll(em, CourseAssignmentInput.class).get(0);
-        }
-        em.persist(courseAssignmentInput);
-        em.flush();
-        courseAssignment.addCourseAssignmentInput(courseAssignmentInput);
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-        Long courseAssignmentInputId = courseAssignmentInput.getId();
-
-        // Get all the courseAssignmentList where courseAssignmentInput equals to courseAssignmentInputId
-        defaultCourseAssignmentShouldBeFound("courseAssignmentInputId.equals=" + courseAssignmentInputId);
-
-        // Get all the courseAssignmentList where courseAssignmentInput equals to (courseAssignmentInputId + 1)
-        defaultCourseAssignmentShouldNotBeFound("courseAssignmentInputId.equals=" + (courseAssignmentInputId + 1));
-    }
-
-    @Test
-    @Transactional
-    void getAllCourseAssignmentsByCourseAssignmentOutputIsEqualToSomething() throws Exception {
-        // Initialize the database
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-        CourseAssignmentOutput courseAssignmentOutput;
-        if (TestUtil.findAll(em, CourseAssignmentOutput.class).isEmpty()) {
-            courseAssignmentOutput = CourseAssignmentOutputResourceIT.createEntity(em);
-            em.persist(courseAssignmentOutput);
-            em.flush();
-        } else {
-            courseAssignmentOutput = TestUtil.findAll(em, CourseAssignmentOutput.class).get(0);
-        }
-        em.persist(courseAssignmentOutput);
-        em.flush();
-        courseAssignment.addCourseAssignmentOutput(courseAssignmentOutput);
-        courseAssignmentRepository.saveAndFlush(courseAssignment);
-        Long courseAssignmentOutputId = courseAssignmentOutput.getId();
-
-        // Get all the courseAssignmentList where courseAssignmentOutput equals to courseAssignmentOutputId
-        defaultCourseAssignmentShouldBeFound("courseAssignmentOutputId.equals=" + courseAssignmentOutputId);
-
-        // Get all the courseAssignmentList where courseAssignmentOutput equals to (courseAssignmentOutputId + 1)
-        defaultCourseAssignmentShouldNotBeFound("courseAssignmentOutputId.equals=" + (courseAssignmentOutputId + 1));
+        // Get all the courseAssignmentList where courseSession equals to (courseSessionId + 1)
+        defaultCourseAssignmentShouldNotBeFound("courseSessionId.equals=" + (courseSessionId + 1));
     }
 
     /**
@@ -1177,8 +935,6 @@ class CourseAssignmentResourceIT {
             .andExpect(jsonPath("$.[*].id").value(hasItem(courseAssignment.getId().intValue())))
             .andExpect(jsonPath("$.[*].assignmentTitle").value(hasItem(DEFAULT_ASSIGNMENT_TITLE)))
             .andExpect(jsonPath("$.[*].assignmentDescription").value(hasItem(DEFAULT_ASSIGNMENT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].sessionVideo").value(hasItem(DEFAULT_SESSION_VIDEO)))
-            .andExpect(jsonPath("$.[*].sessionDuration").value(hasItem(DEFAULT_SESSION_DURATION.toString())))
             .andExpect(jsonPath("$.[*].assignmentOrder").value(hasItem(DEFAULT_ASSIGNMENT_ORDER)))
             .andExpect(jsonPath("$.[*].assignmentResource").value(hasItem(DEFAULT_ASSIGNMENT_RESOURCE)))
             .andExpect(jsonPath("$.[*].isPreview").value(hasItem(DEFAULT_IS_PREVIEW.booleanValue())))
@@ -1235,8 +991,6 @@ class CourseAssignmentResourceIT {
         updatedCourseAssignment
             .assignmentTitle(UPDATED_ASSIGNMENT_TITLE)
             .assignmentDescription(UPDATED_ASSIGNMENT_DESCRIPTION)
-            .sessionVideo(UPDATED_SESSION_VIDEO)
-            .sessionDuration(UPDATED_SESSION_DURATION)
             .assignmentOrder(UPDATED_ASSIGNMENT_ORDER)
             .assignmentResource(UPDATED_ASSIGNMENT_RESOURCE)
             .isPreview(UPDATED_IS_PREVIEW)
@@ -1259,8 +1013,6 @@ class CourseAssignmentResourceIT {
         CourseAssignment testCourseAssignment = courseAssignmentList.get(courseAssignmentList.size() - 1);
         assertThat(testCourseAssignment.getAssignmentTitle()).isEqualTo(UPDATED_ASSIGNMENT_TITLE);
         assertThat(testCourseAssignment.getAssignmentDescription()).isEqualTo(UPDATED_ASSIGNMENT_DESCRIPTION);
-        assertThat(testCourseAssignment.getSessionVideo()).isEqualTo(UPDATED_SESSION_VIDEO);
-        assertThat(testCourseAssignment.getSessionDuration()).isEqualTo(UPDATED_SESSION_DURATION);
         assertThat(testCourseAssignment.getAssignmentOrder()).isEqualTo(UPDATED_ASSIGNMENT_ORDER);
         assertThat(testCourseAssignment.getAssignmentResource()).isEqualTo(UPDATED_ASSIGNMENT_RESOURCE);
         assertThat(testCourseAssignment.getIsPreview()).isEqualTo(UPDATED_IS_PREVIEW);
@@ -1351,12 +1103,10 @@ class CourseAssignmentResourceIT {
         partialUpdatedCourseAssignment
             .assignmentTitle(UPDATED_ASSIGNMENT_TITLE)
             .assignmentDescription(UPDATED_ASSIGNMENT_DESCRIPTION)
-            .sessionVideo(UPDATED_SESSION_VIDEO)
-            .sessionDuration(UPDATED_SESSION_DURATION)
             .assignmentOrder(UPDATED_ASSIGNMENT_ORDER)
+            .assignmentResource(UPDATED_ASSIGNMENT_RESOURCE)
             .isPreview(UPDATED_IS_PREVIEW)
-            .isApproved(UPDATED_IS_APPROVED)
-            .isPublished(UPDATED_IS_PUBLISHED);
+            .isApproved(UPDATED_IS_APPROVED);
 
         restCourseAssignmentMockMvc
             .perform(
@@ -1372,14 +1122,12 @@ class CourseAssignmentResourceIT {
         CourseAssignment testCourseAssignment = courseAssignmentList.get(courseAssignmentList.size() - 1);
         assertThat(testCourseAssignment.getAssignmentTitle()).isEqualTo(UPDATED_ASSIGNMENT_TITLE);
         assertThat(testCourseAssignment.getAssignmentDescription()).isEqualTo(UPDATED_ASSIGNMENT_DESCRIPTION);
-        assertThat(testCourseAssignment.getSessionVideo()).isEqualTo(UPDATED_SESSION_VIDEO);
-        assertThat(testCourseAssignment.getSessionDuration()).isEqualTo(UPDATED_SESSION_DURATION);
         assertThat(testCourseAssignment.getAssignmentOrder()).isEqualTo(UPDATED_ASSIGNMENT_ORDER);
-        assertThat(testCourseAssignment.getAssignmentResource()).isEqualTo(DEFAULT_ASSIGNMENT_RESOURCE);
+        assertThat(testCourseAssignment.getAssignmentResource()).isEqualTo(UPDATED_ASSIGNMENT_RESOURCE);
         assertThat(testCourseAssignment.getIsPreview()).isEqualTo(UPDATED_IS_PREVIEW);
         assertThat(testCourseAssignment.getIsDraft()).isEqualTo(DEFAULT_IS_DRAFT);
         assertThat(testCourseAssignment.getIsApproved()).isEqualTo(UPDATED_IS_APPROVED);
-        assertThat(testCourseAssignment.getIsPublished()).isEqualTo(UPDATED_IS_PUBLISHED);
+        assertThat(testCourseAssignment.getIsPublished()).isEqualTo(DEFAULT_IS_PUBLISHED);
     }
 
     @Test
@@ -1397,8 +1145,6 @@ class CourseAssignmentResourceIT {
         partialUpdatedCourseAssignment
             .assignmentTitle(UPDATED_ASSIGNMENT_TITLE)
             .assignmentDescription(UPDATED_ASSIGNMENT_DESCRIPTION)
-            .sessionVideo(UPDATED_SESSION_VIDEO)
-            .sessionDuration(UPDATED_SESSION_DURATION)
             .assignmentOrder(UPDATED_ASSIGNMENT_ORDER)
             .assignmentResource(UPDATED_ASSIGNMENT_RESOURCE)
             .isPreview(UPDATED_IS_PREVIEW)
@@ -1420,8 +1166,6 @@ class CourseAssignmentResourceIT {
         CourseAssignment testCourseAssignment = courseAssignmentList.get(courseAssignmentList.size() - 1);
         assertThat(testCourseAssignment.getAssignmentTitle()).isEqualTo(UPDATED_ASSIGNMENT_TITLE);
         assertThat(testCourseAssignment.getAssignmentDescription()).isEqualTo(UPDATED_ASSIGNMENT_DESCRIPTION);
-        assertThat(testCourseAssignment.getSessionVideo()).isEqualTo(UPDATED_SESSION_VIDEO);
-        assertThat(testCourseAssignment.getSessionDuration()).isEqualTo(UPDATED_SESSION_DURATION);
         assertThat(testCourseAssignment.getAssignmentOrder()).isEqualTo(UPDATED_ASSIGNMENT_ORDER);
         assertThat(testCourseAssignment.getAssignmentResource()).isEqualTo(UPDATED_ASSIGNMENT_RESOURCE);
         assertThat(testCourseAssignment.getIsPreview()).isEqualTo(UPDATED_IS_PREVIEW);

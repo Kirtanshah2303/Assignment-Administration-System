@@ -18,7 +18,7 @@
         "title": "Course Category"
       },
       "id": "Id",
-      "title": "Title",
+      "courseCategoryTitle": "Course Category Title",
       "logo": "Logo",
       "isParent": "Is Parent",
       "parentId": "Parent Id",

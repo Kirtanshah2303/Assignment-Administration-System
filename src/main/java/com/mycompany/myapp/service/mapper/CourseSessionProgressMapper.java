@@ -10,6 +10,6 @@ import org.mapstruct.*;
 @Mapper(componentModel = "spring", uses = { UserMapper.class, CourseSessionMapper.class })
 public interface CourseSessionProgressMapper extends EntityMapper<CourseSessionProgressDTO, CourseSessionProgress> {
     @Mapping(target = "user", source = "user", qualifiedByName = "login")
-    @Mapping(target = "courseSession", source = "courseSession", qualifiedByName = "id")
+    @Mapping(target = "courseSession", source = "courseSession", qualifiedByName = "sessionTitle")
     CourseSessionProgressDTO toDto(CourseSessionProgress s);
 }

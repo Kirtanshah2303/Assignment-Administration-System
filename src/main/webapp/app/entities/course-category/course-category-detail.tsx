@@ -30,11 +30,11 @@ export const CourseCategoryDetail = (props: RouteComponentProps<{ id: string }>)
           </dt>
           <dd>{courseCategoryEntity.id}</dd>
           <dt>
-            <span id="title">
-              <Translate contentKey="assignmentAdministrationSystemApp.courseCategory.title">Title</Translate>
+            <span id="courseCategoryTitle">
+              <Translate contentKey="assignmentAdministrationSystemApp.courseCategory.courseCategoryTitle">Course Category Title</Translate>
             </span>
           </dt>
-          <dd>{courseCategoryEntity.title}</dd>
+          <dd>{courseCategoryEntity.courseCategoryTitle}</dd>
           <dt>
             <span id="logo">
               <Translate contentKey="assignmentAdministrationSystemApp.courseCategory.logo">Logo</Translate>
