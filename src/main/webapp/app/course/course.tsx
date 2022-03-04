@@ -1,15 +1,10 @@
 import './course.scss';
 
-import React, { Component, useEffect } from 'react';
-import { useHistory } from 'react-router-dom';
-
-import { Card, Button } from 'react-bootstrap';
-
-import { REDIRECT_URL } from 'app/shared/util/url-utils';
-import { useAppSelector } from 'app/config/store';
-import { Row } from 'reactstrap';
+import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-import CourseCard from './courseCard';
+
+import { Button, Card } from 'react-bootstrap';
+import { Row } from 'reactstrap';
 // export const Course = () => {
 //   const history = useHistory();
 //   const account = useAppSelector(state => state.authentication.account);
@@ -56,6 +51,10 @@ class Course extends Component {
     super(props);
   }
 
+  onbuttonclick(courseID) {
+    return '/courseSection/' + courseID;
+  }
+
   componentDidMount() {
     let bearer = 'Bearer ';
     let token = sessionStorage.getItem('jhi-authenticationToken');
@@ -98,7 +97,11 @@ class Course extends Component {
                 <i className="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;<span>Parth Shah</span>
               </p>
               <Link to="/assignments" className="btn btn-primary">
-                <Button>
+                <Button
+                  onClick={e => {
+                    window.location.href = this.onbuttonclick(course.id);
+                  }}
+                >
                   <h6>View Assignments</h6>
                 </Button>
               </Link>

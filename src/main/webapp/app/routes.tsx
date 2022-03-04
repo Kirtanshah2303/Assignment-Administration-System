@@ -17,6 +17,7 @@ import { AUTHORITIES } from 'app/config/constants';
 import findUsername from 'app/modules/account/find-username/findUsername';
 import Course from 'app/course/course';
 import video from 'app/videoSession/video';
+import courseSection from 'app/courseSection/courseSection';
 
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
@@ -42,6 +43,7 @@ const Routes = () => {
         <PrivateRoute path="/admin" component={Admin} hasAnyAuthorities={[AUTHORITIES.ADMIN]} />
         <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
         <PrivateRoute path="/home" component={Course} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
+        <PrivateRoute path="/courseSection/:id?" component={courseSection} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
         <PrivateRoute path="/videoSession" component={video} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
         <ErrorBoundaryRoute path="/" exact component={Home} />
         <PrivateRoute path="/" component={Entities} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
