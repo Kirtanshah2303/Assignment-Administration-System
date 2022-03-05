@@ -106,11 +106,11 @@ class courseSection extends Component<match> {
     // const value = id.get("id");
     // console.log("JAHAHA-->" + id)
 
-    // const link = `http://localhost:8080/api/course-sections/${this.state.id}`;
-    const link = `http://localhost:8080/api/course-sections/${this.props.match.params.id}`;
+    // const link = `http://localhost:8080/api/course-section/${this.state.id}`;
+    const link = `http://localhost:8080/api/course-section/${this.props.match.params.id}`;
     // const demo = this.state.id
     // console.log(demo);
-    // const link = `/api/course-sections/${this.state.id}`;
+    // const link = `/api/course-section/4`;
     // const link = `http://localhost:8080/api/course-sections/${this.state.id}`;
     console.log(link);
 
@@ -137,30 +137,46 @@ class courseSection extends Component<match> {
     // const content = this.state.courseSection.map(course => {
     //   <h1>{course.sectionTitle}</h1>
     // })
-    const content = Object.keys(this.state.courseSection).map(key => {
-      return (
-        <Card key={key} className="coursedetail" style={{ width: '18rem' }}>
-          <Card.Img variant="top" width="276px" height="180px" src="content/images/img.png" />
-          <Card.Body>
-            <Card.Title>
-              <h5>{this.state.courseSection['sectionTitle']}</h5>
-            </Card.Title>
-            <p>
-              <i className="fas fa-calendar-day"></i>&nbsp;&nbsp;<span>{this.state.courseSection['sectionDescription']}</span>
-            </p>
-            <p>
-              <i className="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;<span>Parth Shah</span>
-            </p>
-            <Link to="/assignments" className="btn btn-primary">
-              <Button>
-                <h6>View Assignments</h6>
-              </Button>
-            </Link>
-          </Card.Body>
-        </Card>
-        // <h1 key={key}>{key}</h1>
-      );
-    });
+
+    // Working Code for list of attributes.
+
+    // const content = Object.keys(this.state.courseSection).map(key => {
+    //   return (
+    //     <Card key={key} className="coursedetail" style={{ width: '18rem' }}>
+    //       <Card.Img variant="top" width="276px" height="180px" src="content/images/img.png" />
+    //       <Card.Body>
+    //         <Card.Title>
+    //           <h5>{this.state.courseSection['sectionTitle']}</h5>
+    //         </Card.Title>
+    //         <p>
+    //           <i className="fas fa-calendar-day"></i>&nbsp;&nbsp;<span>{this.state.courseSection['sectionDescription']}</span>
+    //         </p>
+    //         <p>
+    //           <i className="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;<span>Parth Shah</span>
+    //         </p>
+    //         <Link to="/assignments" className="btn btn-primary">
+    //           <Button>
+    //             <h6>View Assignments</h6>
+    //           </Button>
+    //         </Link>
+    //       </Card.Body>
+    //     </Card>
+    //     // <h1 key={key}>{key}</h1>
+    //   );
+    // });
+
+    // code for map function
+
+    // const content = (props) => {
+    //   console.log("Kirtan Shah")
+    //   this.state.courseSection.map(course => {
+    //     <div key={course.id}>
+    //       <h1>{course.sectionTitle}</h1>
+    //     </div>
+    //   })
+
+    // }
+
     // if (this.state.courseSection && this.state.courseSection.length){
     //   return (
     //     <div>
@@ -192,9 +208,31 @@ class courseSection extends Component<match> {
     //   );
     // }else {
     return (
-      <div>
-        <Row>{content}</Row>
-      </div>
+      <Row>
+        {this.state.courseSection.map(course => (
+          <Card key={course.id} className="coursedetail" style={{ width: '18rem' }}>
+            <Card.Img variant="top" width="276px" height="180px" src="content/images/img.png" />
+            <Card.Body>
+              <Card.Title>
+                <h5>{course.sectionTitle}</h5>
+              </Card.Title>
+              <p>
+                <i className="fas fa-calendar-day"></i>&nbsp;&nbsp;<span>{course.sectionDescription}</span>
+              </p>
+              <p>
+                <i className="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;<span>Parth Shah</span>
+              </p>
+              <Button
+                onClick={e => {
+                  window.location.href = '/videoSession/' + course.id;
+                }}
+              >
+                <h6>View Assignments</h6>
+              </Button>
+            </Card.Body>
+          </Card>
+        ))}
+      </Row>
     );
   }
 }

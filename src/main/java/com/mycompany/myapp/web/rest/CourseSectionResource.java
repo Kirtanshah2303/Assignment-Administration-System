@@ -1,5 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
+import com.mycompany.myapp.domain.CourseSection;
 import com.mycompany.myapp.repository.CourseSectionRepository;
 import com.mycompany.myapp.service.CourseSectionQueryService;
 import com.mycompany.myapp.service.CourseSectionService;
@@ -188,6 +189,11 @@ public class CourseSectionResource {
         log.debug("REST request to get CourseSection : {}", id);
         Optional<CourseSectionDTO> courseSectionDTO = courseSectionService.findOne(id);
         return ResponseUtil.wrapOrNotFound(courseSectionDTO);
+    }
+
+    @GetMapping("/course-section/{id}")
+    public List getCourseSectionByID(@PathVariable Long id) {
+        return (List) courseSectionService.findSectionsByCourse(id);
     }
 
     /**

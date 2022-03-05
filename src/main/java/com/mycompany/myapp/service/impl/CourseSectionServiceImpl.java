@@ -1,10 +1,13 @@
 package com.mycompany.myapp.service.impl;
 
 import com.mycompany.myapp.domain.CourseSection;
+import com.mycompany.myapp.repository.CourseRepository;
 import com.mycompany.myapp.repository.CourseSectionRepository;
 import com.mycompany.myapp.service.CourseSectionService;
 import com.mycompany.myapp.service.dto.CourseSectionDTO;
+import com.mycompany.myapp.service.mapper.CourseMapper;
 import com.mycompany.myapp.service.mapper.CourseSectionMapper;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,9 +29,20 @@ public class CourseSectionServiceImpl implements CourseSectionService {
 
     private final CourseSectionMapper courseSectionMapper;
 
-    public CourseSectionServiceImpl(CourseSectionRepository courseSectionRepository, CourseSectionMapper courseSectionMapper) {
+    private final CourseMapper courseMapper;
+
+    private final CourseRepository courseRepository;
+
+    public CourseSectionServiceImpl(
+        CourseSectionRepository courseSectionRepository,
+        CourseSectionMapper courseSectionMapper,
+        CourseMapper courseMapper,
+        CourseRepository courseRepository
+    ) {
         this.courseSectionRepository = courseSectionRepository;
         this.courseSectionMapper = courseSectionMapper;
+        this.courseMapper = courseMapper;
+        this.courseRepository = courseRepository;
     }
 
     @Override
@@ -66,6 +80,11 @@ public class CourseSectionServiceImpl implements CourseSectionService {
     public Optional<CourseSectionDTO> findOne(Long id) {
         log.debug("Request to get CourseSection : {}", id);
         return courseSectionRepository.findById(id).map(courseSectionMapper::toDto);
+    }
+
+    @Override
+    public List<CourseSection> findSectionsByCourse(Long id) {
+        return courseSectionRepository.findCourseSectionByCourse(courseRepository.findById(id));
     }
 
     @Override

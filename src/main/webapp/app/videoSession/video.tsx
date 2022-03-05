@@ -17,8 +17,9 @@ class video extends Component {
     token = token.slice(1, -1);
 
     bearer = bearer + token;
+    const link = `http://localhost:8080/api/course-sessions`;
 
-    fetch('/api/course-sessions', {
+    fetch(link, {
       method: 'GET',
       headers: {
         accept: '*/*',

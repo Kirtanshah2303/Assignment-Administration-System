@@ -1,6 +1,9 @@
 package com.mycompany.myapp.service;
 
+import com.mycompany.myapp.domain.CourseSection;
 import com.mycompany.myapp.service.dto.CourseSectionDTO;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -40,6 +43,8 @@ public interface CourseSectionService {
      * @return the entity.
      */
     Optional<CourseSectionDTO> findOne(Long id);
+
+    List<CourseSection> findSectionsByCourse(Long id);
 
     /**
      * Delete the "id" courseSection.

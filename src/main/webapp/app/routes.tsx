@@ -44,7 +44,7 @@ const Routes = () => {
         <PrivateRoute path="/account" component={Account} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
         <PrivateRoute path="/home" component={Course} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
         <PrivateRoute path="/courseSection/:id?" component={courseSection} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
-        <PrivateRoute path="/videoSession" component={video} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
+        <PrivateRoute path="/videoSession/:id?" component={video} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
         <ErrorBoundaryRoute path="/" exact component={Home} />
         <PrivateRoute path="/" component={Entities} hasAnyAuthorities={[AUTHORITIES.STUDENT]} />
         <ErrorBoundaryRoute component={PageNotFound} />

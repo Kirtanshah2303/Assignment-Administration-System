@@ -96,15 +96,13 @@ class Course extends Component {
               <p>
                 <i className="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;<span>Parth Shah</span>
               </p>
-              <Link to="/assignments" className="btn btn-primary">
-                <Button
-                  onClick={e => {
-                    window.location.href = this.onbuttonclick(course.id);
-                  }}
-                >
-                  <h6>View Assignments</h6>
-                </Button>
-              </Link>
+              <Button
+                onClick={e => {
+                  window.location.href = this.onbuttonclick(course.id);
+                }}
+              >
+                <h6>View Assignments</h6>
+              </Button>
             </Card.Body>
           </Card>
         ))}
