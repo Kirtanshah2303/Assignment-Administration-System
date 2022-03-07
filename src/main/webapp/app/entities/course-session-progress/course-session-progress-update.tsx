@@ -47,8 +47,6 @@ export const CourseSessionProgressUpdate = (props: RouteComponentProps<{ id: str
   }, [updateSuccess]);
 
   const saveEntity = values => {
-    values.watchSeconds = convertDateTimeToServer(values.watchSeconds);
-
     const entity = {
       ...courseSessionProgressEntity,
       ...values,
@@ -65,12 +63,9 @@ export const CourseSessionProgressUpdate = (props: RouteComponentProps<{ id: str
 
   const defaultValues = () =>
     isNew
-      ? {
-          watchSeconds: displayDefaultDateTime(),
-        }
+      ? {}
       : {
           ...courseSessionProgressEntity,
-          watchSeconds: convertDateTimeFromServer(courseSessionProgressEntity.watchSeconds),
           user: courseSessionProgressEntity?.user?.id,
           courseSession: courseSessionProgressEntity?.courseSession?.id,
         };
@@ -110,10 +105,10 @@ export const CourseSessionProgressUpdate = (props: RouteComponentProps<{ id: str
                 id="course-session-progress-watchSeconds"
                 name="watchSeconds"
                 data-cy="watchSeconds"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
+                type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
+                  validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
               />
               <ValidatedField

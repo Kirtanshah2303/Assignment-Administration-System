@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { getEntity } from './course-session.reducer';
@@ -52,11 +52,7 @@ export const CourseSessionDetail = (props: RouteComponentProps<{ id: string }>) 
               <Translate contentKey="assignmentAdministrationSystemApp.courseSession.sessionDuration">Session Duration</Translate>
             </span>
           </dt>
-          <dd>
-            {courseSessionEntity.sessionDuration ? (
-              <TextFormat value={courseSessionEntity.sessionDuration} type="date" format={APP_DATE_FORMAT} />
-            ) : null}
-          </dd>
+          <dd>{courseSessionEntity.sessionDuration}</dd>
           <dt>
             <span id="sessionOrder">
               <Translate contentKey="assignmentAdministrationSystemApp.courseSession.sessionOrder">Session Order</Translate>

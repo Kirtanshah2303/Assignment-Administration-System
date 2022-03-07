@@ -12,8 +12,6 @@ import com.mycompany.myapp.repository.CourseSessionRepository;
 import com.mycompany.myapp.service.criteria.CourseSessionCriteria;
 import com.mycompany.myapp.service.dto.CourseSessionDTO;
 import com.mycompany.myapp.service.mapper.CourseSessionMapper;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -44,8 +42,9 @@ class CourseSessionResourceIT {
     private static final String DEFAULT_SESSION_VIDEO = "AAAAAAAAAA";
     private static final String UPDATED_SESSION_VIDEO = "BBBBBBBBBB";
 
-    private static final Instant DEFAULT_SESSION_DURATION = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_SESSION_DURATION = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Long DEFAULT_SESSION_DURATION = 1L;
+    private static final Long UPDATED_SESSION_DURATION = 2L;
+    private static final Long SMALLER_SESSION_DURATION = 1L - 1L;
 
     private static final Integer DEFAULT_SESSION_ORDER = 1;
     private static final Integer UPDATED_SESSION_ORDER = 2;
@@ -369,7 +368,7 @@ class CourseSessionResourceIT {
             .andExpect(jsonPath("$.[*].sessionTitle").value(hasItem(DEFAULT_SESSION_TITLE)))
             .andExpect(jsonPath("$.[*].sessionDescription").value(hasItem(DEFAULT_SESSION_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].sessionVideo").value(hasItem(DEFAULT_SESSION_VIDEO)))
-            .andExpect(jsonPath("$.[*].sessionDuration").value(hasItem(DEFAULT_SESSION_DURATION.toString())))
+            .andExpect(jsonPath("$.[*].sessionDuration").value(hasItem(DEFAULT_SESSION_DURATION.intValue())))
             .andExpect(jsonPath("$.[*].sessionOrder").value(hasItem(DEFAULT_SESSION_ORDER)))
             .andExpect(jsonPath("$.[*].sessionResource").value(hasItem(DEFAULT_SESSION_RESOURCE)))
             .andExpect(jsonPath("$.[*].isPreview").value(hasItem(DEFAULT_IS_PREVIEW.booleanValue())))
@@ -395,7 +394,7 @@ class CourseSessionResourceIT {
             .andExpect(jsonPath("$.sessionTitle").value(DEFAULT_SESSION_TITLE))
             .andExpect(jsonPath("$.sessionDescription").value(DEFAULT_SESSION_DESCRIPTION))
             .andExpect(jsonPath("$.sessionVideo").value(DEFAULT_SESSION_VIDEO))
-            .andExpect(jsonPath("$.sessionDuration").value(DEFAULT_SESSION_DURATION.toString()))
+            .andExpect(jsonPath("$.sessionDuration").value(DEFAULT_SESSION_DURATION.intValue()))
             .andExpect(jsonPath("$.sessionOrder").value(DEFAULT_SESSION_ORDER))
             .andExpect(jsonPath("$.sessionResource").value(DEFAULT_SESSION_RESOURCE))
             .andExpect(jsonPath("$.isPreview").value(DEFAULT_IS_PREVIEW.booleanValue()))
@@ -708,6 +707,58 @@ class CourseSessionResourceIT {
 
         // Get all the courseSessionList where sessionDuration is null
         defaultCourseSessionShouldNotBeFound("sessionDuration.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsBySessionDurationIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where sessionDuration is greater than or equal to DEFAULT_SESSION_DURATION
+        defaultCourseSessionShouldBeFound("sessionDuration.greaterThanOrEqual=" + DEFAULT_SESSION_DURATION);
+
+        // Get all the courseSessionList where sessionDuration is greater than or equal to UPDATED_SESSION_DURATION
+        defaultCourseSessionShouldNotBeFound("sessionDuration.greaterThanOrEqual=" + UPDATED_SESSION_DURATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsBySessionDurationIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where sessionDuration is less than or equal to DEFAULT_SESSION_DURATION
+        defaultCourseSessionShouldBeFound("sessionDuration.lessThanOrEqual=" + DEFAULT_SESSION_DURATION);
+
+        // Get all the courseSessionList where sessionDuration is less than or equal to SMALLER_SESSION_DURATION
+        defaultCourseSessionShouldNotBeFound("sessionDuration.lessThanOrEqual=" + SMALLER_SESSION_DURATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsBySessionDurationIsLessThanSomething() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where sessionDuration is less than DEFAULT_SESSION_DURATION
+        defaultCourseSessionShouldNotBeFound("sessionDuration.lessThan=" + DEFAULT_SESSION_DURATION);
+
+        // Get all the courseSessionList where sessionDuration is less than UPDATED_SESSION_DURATION
+        defaultCourseSessionShouldBeFound("sessionDuration.lessThan=" + UPDATED_SESSION_DURATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionsBySessionDurationIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        courseSessionRepository.saveAndFlush(courseSession);
+
+        // Get all the courseSessionList where sessionDuration is greater than DEFAULT_SESSION_DURATION
+        defaultCourseSessionShouldNotBeFound("sessionDuration.greaterThan=" + DEFAULT_SESSION_DURATION);
+
+        // Get all the courseSessionList where sessionDuration is greater than SMALLER_SESSION_DURATION
+        defaultCourseSessionShouldBeFound("sessionDuration.greaterThan=" + SMALLER_SESSION_DURATION);
     }
 
     @Test
@@ -1294,7 +1345,7 @@ class CourseSessionResourceIT {
             .andExpect(jsonPath("$.[*].sessionTitle").value(hasItem(DEFAULT_SESSION_TITLE)))
             .andExpect(jsonPath("$.[*].sessionDescription").value(hasItem(DEFAULT_SESSION_DESCRIPTION)))
             .andExpect(jsonPath("$.[*].sessionVideo").value(hasItem(DEFAULT_SESSION_VIDEO)))
-            .andExpect(jsonPath("$.[*].sessionDuration").value(hasItem(DEFAULT_SESSION_DURATION.toString())))
+            .andExpect(jsonPath("$.[*].sessionDuration").value(hasItem(DEFAULT_SESSION_DURATION.intValue())))
             .andExpect(jsonPath("$.[*].sessionOrder").value(hasItem(DEFAULT_SESSION_ORDER)))
             .andExpect(jsonPath("$.[*].sessionResource").value(hasItem(DEFAULT_SESSION_RESOURCE)))
             .andExpect(jsonPath("$.[*].isPreview").value(hasItem(DEFAULT_IS_PREVIEW.booleanValue())))

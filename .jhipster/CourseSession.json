@@ -33,7 +33,7 @@
     },
     {
       "fieldName": "sessionDuration",
-      "fieldType": "Instant",
+      "fieldType": "Long",
       "fieldValidateRules": ["required"]
     },
     {

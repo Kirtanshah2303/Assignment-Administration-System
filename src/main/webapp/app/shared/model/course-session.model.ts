@@ -1,4 +1,3 @@
-import dayjs from 'dayjs';
 import { ICourseSection } from 'app/shared/model/course-section.model';
 
 export interface ICourseSession {
@@ -6,7 +5,7 @@ export interface ICourseSession {
   sessionTitle?: string;
   sessionDescription?: string | null;
   sessionVideo?: string;
-  sessionDuration?: string;
+  sessionDuration?: number;
   sessionOrder?: number;
   sessionResource?: string | null;
   isPreview?: boolean;

@@ -2,7 +2,6 @@ package com.mycompany.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.Instant;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -23,7 +22,7 @@ public class CourseSessionProgress implements Serializable {
 
     @NotNull
     @Column(name = "watch_seconds", nullable = false)
-    private Instant watchSeconds;
+    private Long watchSeconds;
 
     @ManyToOne
     private User user;
@@ -47,16 +46,16 @@ public class CourseSessionProgress implements Serializable {
         this.id = id;
     }
 
-    public Instant getWatchSeconds() {
+    public Long getWatchSeconds() {
         return this.watchSeconds;
     }
 
-    public CourseSessionProgress watchSeconds(Instant watchSeconds) {
+    public CourseSessionProgress watchSeconds(Long watchSeconds) {
         this.setWatchSeconds(watchSeconds);
         return this;
     }
 
-    public void setWatchSeconds(Instant watchSeconds) {
+    public void setWatchSeconds(Long watchSeconds) {
         this.watchSeconds = watchSeconds;
     }
 
@@ -110,7 +109,7 @@ public class CourseSessionProgress implements Serializable {
     public String toString() {
         return "CourseSessionProgress{" +
             "id=" + getId() +
-            ", watchSeconds='" + getWatchSeconds() + "'" +
+            ", watchSeconds=" + getWatchSeconds() +
             "}";
     }
 }

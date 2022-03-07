@@ -43,8 +43,6 @@ export const CourseSessionUpdate = (props: RouteComponentProps<{ id: string }>) 
   }, [updateSuccess]);
 
   const saveEntity = values => {
-    values.sessionDuration = convertDateTimeToServer(values.sessionDuration);
-
     const entity = {
       ...courseSessionEntity,
       ...values,
@@ -60,12 +58,9 @@ export const CourseSessionUpdate = (props: RouteComponentProps<{ id: string }>) 
 
   const defaultValues = () =>
     isNew
-      ? {
-          sessionDuration: displayDefaultDateTime(),
-        }
+      ? {}
       : {
           ...courseSessionEntity,
-          sessionDuration: convertDateTimeFromServer(courseSessionEntity.sessionDuration),
           courseSection: courseSessionEntity?.courseSection?.id,
         };
 
@@ -136,10 +131,10 @@ export const CourseSessionUpdate = (props: RouteComponentProps<{ id: string }>) 
                 id="course-session-sessionDuration"
                 name="sessionDuration"
                 data-cy="sessionDuration"
-                type="datetime-local"
-                placeholder="YYYY-MM-DD HH:mm"
+                type="text"
                 validate={{
                   required: { value: true, message: translate('entity.validation.required') },
+                  validate: v => isNumber(v) || translate('entity.validation.number'),
                 }}
               />
               <ValidatedField

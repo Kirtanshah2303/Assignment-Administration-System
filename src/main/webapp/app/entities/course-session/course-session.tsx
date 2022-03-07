@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { Translate, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { getEntities } from './course-session.reducer';
@@ -169,11 +169,7 @@ export const CourseSession = (props: RouteComponentProps<{ url: string }>) => {
                   <td>{courseSession.sessionTitle}</td>
                   <td>{courseSession.sessionDescription}</td>
                   <td>{courseSession.sessionVideo}</td>
-                  <td>
-                    {courseSession.sessionDuration ? (
-                      <TextFormat type="date" value={courseSession.sessionDuration} format={APP_DATE_FORMAT} />
-                    ) : null}
-                  </td>
+                  <td>{courseSession.sessionDuration}</td>
                   <td>{courseSession.sessionOrder}</td>
                   <td>{courseSession.sessionResource}</td>
                   <td>{courseSession.isPreview ? 'true' : 'false'}</td>

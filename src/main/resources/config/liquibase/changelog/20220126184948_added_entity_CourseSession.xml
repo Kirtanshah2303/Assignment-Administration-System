@@ -23,7 +23,7 @@
             <column name="session_video" type="varchar(42)">
                 <constraints nullable="false" />
             </column>
-            <column name="session_duration" type="${datetimeType}">
+            <column name="session_duration" type="bigint">
                 <constraints nullable="false" />
             </column>
             <column name="session_order" type="integer">
@@ -55,7 +55,6 @@
             </column>
             <!-- jhipster-needle-liquibase-add-column - JHipster will add columns here -->
         </createTable>
-        <dropDefaultValue tableName="course_session" columnName="session_duration" columnDataType="${datetimeType}"/>
     </changeSet>
 
     <!-- jhipster-needle-liquibase-add-changeset - JHipster will add changesets here -->
@@ -78,7 +77,7 @@
             <column name="session_title" type="string"/>
             <column name="session_description" type="string"/>
             <column name="session_video" type="string"/>
-            <column name="session_duration" type="date"/>
+            <column name="session_duration" type="numeric"/>
             <column name="session_order" type="numeric"/>
             <column name="session_resource" type="string"/>
             <column name="is_preview" type="boolean"/>

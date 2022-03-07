@@ -12,7 +12,7 @@
     },
     {
       "fieldName": "watchSeconds",
-      "fieldType": "Instant",
+      "fieldType": "Long",
       "fieldValidateRules": ["required"]
     }
   ],

@@ -1,7 +1,12 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
 
-class video extends Component {
+interface match {
+  match?: any;
+  // id?:any
+}
+
+class video extends Component<match> {
   state = {
     session: [],
   };
@@ -17,7 +22,7 @@ class video extends Component {
     token = token.slice(1, -1);
 
     bearer = bearer + token;
-    const link = `http://localhost:8080/api/course-sessions`;
+    const link = `http://localhost:8080/api/videoSession/${this.props.match.params.id}`;
 
     fetch(link, {
       method: 'GET',

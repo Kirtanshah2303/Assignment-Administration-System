@@ -1,6 +1,8 @@
 package com.mycompany.myapp.service;
 
+import com.mycompany.myapp.domain.CourseSession;
 import com.mycompany.myapp.service.dto.CourseSessionDTO;
+import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,4 +49,6 @@ public interface CourseSessionService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<CourseSession> findSessionByCourseSection(Long id);
 }

@@ -13,8 +13,6 @@ import com.mycompany.myapp.repository.CourseSessionProgressRepository;
 import com.mycompany.myapp.service.criteria.CourseSessionProgressCriteria;
 import com.mycompany.myapp.service.dto.CourseSessionProgressDTO;
 import com.mycompany.myapp.service.mapper.CourseSessionProgressMapper;
-import java.time.Instant;
-import java.time.temporal.ChronoUnit;
 import java.util.List;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
@@ -36,8 +34,9 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class CourseSessionProgressResourceIT {
 
-    private static final Instant DEFAULT_WATCH_SECONDS = Instant.ofEpochMilli(0L);
-    private static final Instant UPDATED_WATCH_SECONDS = Instant.now().truncatedTo(ChronoUnit.MILLIS);
+    private static final Long DEFAULT_WATCH_SECONDS = 1L;
+    private static final Long UPDATED_WATCH_SECONDS = 2L;
+    private static final Long SMALLER_WATCH_SECONDS = 1L - 1L;
 
     private static final String ENTITY_API_URL = "/api/course-session-progresses";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -164,7 +163,7 @@ class CourseSessionProgressResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(courseSessionProgress.getId().intValue())))
-            .andExpect(jsonPath("$.[*].watchSeconds").value(hasItem(DEFAULT_WATCH_SECONDS.toString())));
+            .andExpect(jsonPath("$.[*].watchSeconds").value(hasItem(DEFAULT_WATCH_SECONDS.intValue())));
     }
 
     @Test
@@ -179,7 +178,7 @@ class CourseSessionProgressResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(courseSessionProgress.getId().intValue()))
-            .andExpect(jsonPath("$.watchSeconds").value(DEFAULT_WATCH_SECONDS.toString()));
+            .andExpect(jsonPath("$.watchSeconds").value(DEFAULT_WATCH_SECONDS.intValue()));
     }
 
     @Test
@@ -254,6 +253,58 @@ class CourseSessionProgressResourceIT {
 
     @Test
     @Transactional
+    void getAllCourseSessionProgressesByWatchSecondsIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        courseSessionProgressRepository.saveAndFlush(courseSessionProgress);
+
+        // Get all the courseSessionProgressList where watchSeconds is greater than or equal to DEFAULT_WATCH_SECONDS
+        defaultCourseSessionProgressShouldBeFound("watchSeconds.greaterThanOrEqual=" + DEFAULT_WATCH_SECONDS);
+
+        // Get all the courseSessionProgressList where watchSeconds is greater than or equal to UPDATED_WATCH_SECONDS
+        defaultCourseSessionProgressShouldNotBeFound("watchSeconds.greaterThanOrEqual=" + UPDATED_WATCH_SECONDS);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionProgressesByWatchSecondsIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        courseSessionProgressRepository.saveAndFlush(courseSessionProgress);
+
+        // Get all the courseSessionProgressList where watchSeconds is less than or equal to DEFAULT_WATCH_SECONDS
+        defaultCourseSessionProgressShouldBeFound("watchSeconds.lessThanOrEqual=" + DEFAULT_WATCH_SECONDS);
+
+        // Get all the courseSessionProgressList where watchSeconds is less than or equal to SMALLER_WATCH_SECONDS
+        defaultCourseSessionProgressShouldNotBeFound("watchSeconds.lessThanOrEqual=" + SMALLER_WATCH_SECONDS);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionProgressesByWatchSecondsIsLessThanSomething() throws Exception {
+        // Initialize the database
+        courseSessionProgressRepository.saveAndFlush(courseSessionProgress);
+
+        // Get all the courseSessionProgressList where watchSeconds is less than DEFAULT_WATCH_SECONDS
+        defaultCourseSessionProgressShouldNotBeFound("watchSeconds.lessThan=" + DEFAULT_WATCH_SECONDS);
+
+        // Get all the courseSessionProgressList where watchSeconds is less than UPDATED_WATCH_SECONDS
+        defaultCourseSessionProgressShouldBeFound("watchSeconds.lessThan=" + UPDATED_WATCH_SECONDS);
+    }
+
+    @Test
+    @Transactional
+    void getAllCourseSessionProgressesByWatchSecondsIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        courseSessionProgressRepository.saveAndFlush(courseSessionProgress);
+
+        // Get all the courseSessionProgressList where watchSeconds is greater than DEFAULT_WATCH_SECONDS
+        defaultCourseSessionProgressShouldNotBeFound("watchSeconds.greaterThan=" + DEFAULT_WATCH_SECONDS);
+
+        // Get all the courseSessionProgressList where watchSeconds is greater than SMALLER_WATCH_SECONDS
+        defaultCourseSessionProgressShouldBeFound("watchSeconds.greaterThan=" + SMALLER_WATCH_SECONDS);
+    }
+
+    @Test
+    @Transactional
     void getAllCourseSessionProgressesByUserIsEqualToSomething() throws Exception {
         // Initialize the database
         courseSessionProgressRepository.saveAndFlush(courseSessionProgress);
@@ -313,7 +364,7 @@ class CourseSessionProgressResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(courseSessionProgress.getId().intValue())))
-            .andExpect(jsonPath("$.[*].watchSeconds").value(hasItem(DEFAULT_WATCH_SECONDS.toString())));
+            .andExpect(jsonPath("$.[*].watchSeconds").value(hasItem(DEFAULT_WATCH_SECONDS.intValue())));
 
         // Check, that the count call also returns 1
         restCourseSessionProgressMockMvc

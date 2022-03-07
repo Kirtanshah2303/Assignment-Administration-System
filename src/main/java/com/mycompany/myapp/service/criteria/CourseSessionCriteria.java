@@ -7,7 +7,6 @@ import tech.jhipster.service.filter.BooleanFilter;
 import tech.jhipster.service.filter.DoubleFilter;
 import tech.jhipster.service.filter.Filter;
 import tech.jhipster.service.filter.FloatFilter;
-import tech.jhipster.service.filter.InstantFilter;
 import tech.jhipster.service.filter.IntegerFilter;
 import tech.jhipster.service.filter.LongFilter;
 import tech.jhipster.service.filter.StringFilter;
@@ -33,7 +32,7 @@ public class CourseSessionCriteria implements Serializable, Criteria {
 
     private StringFilter sessionVideo;
 
-    private InstantFilter sessionDuration;
+    private LongFilter sessionDuration;
 
     private IntegerFilter sessionOrder;
 
@@ -140,18 +139,18 @@ public class CourseSessionCriteria implements Serializable, Criteria {
         this.sessionVideo = sessionVideo;
     }
 
-    public InstantFilter getSessionDuration() {
+    public LongFilter getSessionDuration() {
         return sessionDuration;
     }
 
-    public InstantFilter sessionDuration() {
+    public LongFilter sessionDuration() {
         if (sessionDuration == null) {
-            sessionDuration = new InstantFilter();
+            sessionDuration = new LongFilter();
         }
         return sessionDuration;
     }
 
-    public void setSessionDuration(InstantFilter sessionDuration) {
+    public void setSessionDuration(LongFilter sessionDuration) {
         this.sessionDuration = sessionDuration;
     }
 

@@ -43,8 +43,7 @@ entity CourseLevel {
 
 entity CourseSessionProgress {
    id Long required,
-   watchSeconds Instant required,
-   watchSeconds Instant required
+   watchSeconds Long required
 }
 
 entity CourseAssignmentProgress {
@@ -74,7 +73,7 @@ entity CourseSession {
        sessionTitle String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required,
        sessionDescription String minlength(DEFAULT_MIN_LENGTH) maxlength(400),
        sessionVideo String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH) required,
-       sessionDuration Instant required,
+       sessionDuration Long required,
        sessionOrder Integer required,
        sessionResource String minlength(DEFAULT_MIN_LENGTH) maxlength(DEFAULT_MAX_LENGTH),
        isPreview Boolean required,

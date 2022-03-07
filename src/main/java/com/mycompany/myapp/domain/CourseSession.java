@@ -2,7 +2,6 @@ package com.mycompany.myapp.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import java.io.Serializable;
-import java.time.Instant;
 import javax.persistence.*;
 import javax.validation.constraints.*;
 
@@ -37,7 +36,7 @@ public class CourseSession implements Serializable {
 
     @NotNull
     @Column(name = "session_duration", nullable = false)
-    private Instant sessionDuration;
+    private Long sessionDuration;
 
     @NotNull
     @Column(name = "session_order", nullable = false)
@@ -129,16 +128,16 @@ public class CourseSession implements Serializable {
         this.sessionVideo = sessionVideo;
     }
 
-    public Instant getSessionDuration() {
+    public Long getSessionDuration() {
         return this.sessionDuration;
     }
 
-    public CourseSession sessionDuration(Instant sessionDuration) {
+    public CourseSession sessionDuration(Long sessionDuration) {
         this.setSessionDuration(sessionDuration);
         return this;
     }
 
-    public void setSessionDuration(Instant sessionDuration) {
+    public void setSessionDuration(Long sessionDuration) {
         this.sessionDuration = sessionDuration;
     }
 
@@ -286,7 +285,7 @@ public class CourseSession implements Serializable {
             ", sessionTitle='" + getSessionTitle() + "'" +
             ", sessionDescription='" + getSessionDescription() + "'" +
             ", sessionVideo='" + getSessionVideo() + "'" +
-            ", sessionDuration='" + getSessionDuration() + "'" +
+            ", sessionDuration=" + getSessionDuration() +
             ", sessionOrder=" + getSessionOrder() +
             ", sessionResource='" + getSessionResource() + "'" +
             ", isPreview='" + getIsPreview() + "'" +

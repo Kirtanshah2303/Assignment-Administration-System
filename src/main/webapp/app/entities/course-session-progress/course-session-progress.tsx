@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Table } from 'reactstrap';
-import { Translate, TextFormat, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
+import { Translate, getSortState, JhiPagination, JhiItemCount } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { getEntities } from './course-session-progress.reducer';
@@ -129,11 +129,7 @@ export const CourseSessionProgress = (props: RouteComponentProps<{ url: string }
                       {courseSessionProgress.id}
                     </Button>
                   </td>
-                  <td>
-                    {courseSessionProgress.watchSeconds ? (
-                      <TextFormat type="date" value={courseSessionProgress.watchSeconds} format={APP_DATE_FORMAT} />
-                    ) : null}
-                  </td>
+                  <td>{courseSessionProgress.watchSeconds}</td>
                   <td>{courseSessionProgress.user ? courseSessionProgress.user.login : ''}</td>
                   <td>
                     {courseSessionProgress.courseSession ? (

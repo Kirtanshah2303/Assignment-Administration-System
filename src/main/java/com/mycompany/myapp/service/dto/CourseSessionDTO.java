@@ -1,7 +1,6 @@
 package com.mycompany.myapp.service.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 import javax.validation.constraints.*;
 
@@ -25,7 +24,7 @@ public class CourseSessionDTO implements Serializable {
     private String sessionVideo;
 
     @NotNull
-    private Instant sessionDuration;
+    private Long sessionDuration;
 
     @NotNull
     private Integer sessionOrder;
@@ -85,11 +84,11 @@ public class CourseSessionDTO implements Serializable {
         this.sessionVideo = sessionVideo;
     }
 
-    public Instant getSessionDuration() {
+    public Long getSessionDuration() {
         return sessionDuration;
     }
 
-    public void setSessionDuration(Instant sessionDuration) {
+    public void setSessionDuration(Long sessionDuration) {
         this.sessionDuration = sessionDuration;
     }
 
@@ -194,7 +193,7 @@ public class CourseSessionDTO implements Serializable {
             ", sessionTitle='" + getSessionTitle() + "'" +
             ", sessionDescription='" + getSessionDescription() + "'" +
             ", sessionVideo='" + getSessionVideo() + "'" +
-            ", sessionDuration='" + getSessionDuration() + "'" +
+            ", sessionDuration=" + getSessionDuration() +
             ", sessionOrder=" + getSessionOrder() +
             ", sessionResource='" + getSessionResource() + "'" +
             ", isPreview='" + getIsPreview() + "'" +

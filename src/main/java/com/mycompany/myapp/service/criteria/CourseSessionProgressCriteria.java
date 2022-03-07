@@ -7,7 +7,6 @@ import tech.jhipster.service.filter.BooleanFilter;
 import tech.jhipster.service.filter.DoubleFilter;
 import tech.jhipster.service.filter.Filter;
 import tech.jhipster.service.filter.FloatFilter;
-import tech.jhipster.service.filter.InstantFilter;
 import tech.jhipster.service.filter.IntegerFilter;
 import tech.jhipster.service.filter.LongFilter;
 import tech.jhipster.service.filter.StringFilter;
@@ -27,7 +26,7 @@ public class CourseSessionProgressCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
-    private InstantFilter watchSeconds;
+    private LongFilter watchSeconds;
 
     private LongFilter userId;
 
@@ -65,18 +64,18 @@ public class CourseSessionProgressCriteria implements Serializable, Criteria {
         this.id = id;
     }
 
-    public InstantFilter getWatchSeconds() {
+    public LongFilter getWatchSeconds() {
         return watchSeconds;
     }
 
-    public InstantFilter watchSeconds() {
+    public LongFilter watchSeconds() {
         if (watchSeconds == null) {
-            watchSeconds = new InstantFilter();
+            watchSeconds = new LongFilter();
         }
         return watchSeconds;
     }
 
-    public void setWatchSeconds(InstantFilter watchSeconds) {
+    public void setWatchSeconds(LongFilter watchSeconds) {
         this.watchSeconds = watchSeconds;
     }
 

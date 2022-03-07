@@ -1,7 +1,6 @@
 package com.mycompany.myapp.service.dto;
 
 import java.io.Serializable;
-import java.time.Instant;
 import java.util.Objects;
 import javax.validation.constraints.*;
 
@@ -14,7 +13,7 @@ public class CourseSessionProgressDTO implements Serializable {
     private Long id;
 
     @NotNull
-    private Instant watchSeconds;
+    private Long watchSeconds;
 
     private UserDTO user;
 
@@ -28,11 +27,11 @@ public class CourseSessionProgressDTO implements Serializable {
         this.id = id;
     }
 
-    public Instant getWatchSeconds() {
+    public Long getWatchSeconds() {
         return watchSeconds;
     }
 
-    public void setWatchSeconds(Instant watchSeconds) {
+    public void setWatchSeconds(Long watchSeconds) {
         this.watchSeconds = watchSeconds;
     }
 
@@ -78,7 +77,7 @@ public class CourseSessionProgressDTO implements Serializable {
     public String toString() {
         return "CourseSessionProgressDTO{" +
             "id=" + getId() +
-            ", watchSeconds='" + getWatchSeconds() + "'" +
+            ", watchSeconds=" + getWatchSeconds() +
             ", user=" + getUser() +
             ", courseSession=" + getCourseSession() +
             "}";

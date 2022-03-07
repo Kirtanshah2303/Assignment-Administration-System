@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { Link, RouteComponentProps } from 'react-router-dom';
 import { Button, Row, Col } from 'reactstrap';
-import { Translate, TextFormat } from 'react-jhipster';
+import { Translate } from 'react-jhipster';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 
 import { getEntity } from './course-session-progress.reducer';
@@ -34,11 +34,7 @@ export const CourseSessionProgressDetail = (props: RouteComponentProps<{ id: str
               <Translate contentKey="assignmentAdministrationSystemApp.courseSessionProgress.watchSeconds">Watch Seconds</Translate>
             </span>
           </dt>
-          <dd>
-            {courseSessionProgressEntity.watchSeconds ? (
-              <TextFormat value={courseSessionProgressEntity.watchSeconds} type="date" format={APP_DATE_FORMAT} />
-            ) : null}
-          </dd>
+          <dd>{courseSessionProgressEntity.watchSeconds}</dd>
           <dt>
             <Translate contentKey="assignmentAdministrationSystemApp.courseSessionProgress.user">User</Translate>
           </dt>
