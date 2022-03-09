@@ -1,5 +1,17 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
+// import {Collapse} from "antd";
+// const { Panel } = Collapse;
+// import {Button} from "@mui/material";
+import { Row } from 'reactstrap';
+import TreeView from '@mui/lab/TreeView';
+// import {TreeView} from "devextreme-react";
+// import DataSource from "devextreme/data/data_source"
+// import ODataStore from 'devextreme/data/odata/store';
+import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
+import ChevronRightIcon from '@mui/icons-material/ChevronRight';
+import TreeItem from '@mui/lab/TreeItem';
+import { Button, Card } from 'react-bootstrap';
 
 interface match {
   match?: any;
@@ -9,6 +21,7 @@ interface match {
 class video extends Component<match> {
   state = {
     session: [],
+    videoLink: '',
   };
 
   constructor(props) {
@@ -33,8 +46,10 @@ class video extends Component<match> {
     })
       .then(response => response.json())
       .then(result => {
-        // this.setState({ course: result });
+        this.setState({ session: result });
+        this.setState({ videoLink: result[0].sessionVideo });
         console.log(result);
+        console.log(result[0].sessionVideo);
       })
       .catch(error => {
         console.log(error);
@@ -43,44 +58,29 @@ class video extends Component<match> {
 
   render() {
     return (
-      <div className="App">
-        <>
-          <meta charSet="utf-8" />
-          <title>Udemy</title>
-          {/* {/<link rel="stylesheet" href="./styles.css" />/} */}
-          <link rel="stylesheet" href="./style.css" />
-          <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css" />
-          <link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
-
-          <div className="grid-container">
-            <div className="grid-item1">
-              <div className="player-wrapper">
-                <ReactPlayer className="react-player" url="https://youtu.be/4d8m59ct2wQ" width="900px" height="500px" controls={true} />
-              </div>
+      // <Row>
+      <div className="row">
+        <div className="col-sm-8">
+          <ReactPlayer url={this.state.videoLink} width="100%" height="100%" />
+        </div>
+        <div className="col-sm-4">
+          {this.state.session.map(session => (
+            <div className="alert-info" role="alert" key={session.id} style={{ margin: '10px' }}>
+              <Button
+                variant="contained"
+                onClick={() => {
+                  this.setState({ videoLink: session.sessionVideo });
+                }}
+              >
+                {' '}
+                {session.sessionDescription}{' '}
+              </Button>
             </div>
-            <div className="grid-item2">
-              <h2>Course content</h2>
-              <div className="vertical-menu">
-                <a href="#" className="active">
-                  Home
-                </a>
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
-                <a href="#">Link 4</a>
-                <a href="#">Link 5</a>
-                <a href="#">Link 6</a>
-                <a href="#">Link 1</a>
-                <a href="#">Link 2</a>
-                <a href="#">Link 3</a>
-                <a href="#">Link 4</a>
-                <a href="#">Link 5</a>
-                <a href="#">Link 6</a>
-              </div>
-            </div>
-          </div>
-        </>
+          ))}
+        </div>
       </div>
+
+      // </Row>
     );
   }
 }
