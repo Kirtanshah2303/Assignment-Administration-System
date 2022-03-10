@@ -1,7 +1,9 @@
 package com.mycompany.myapp.service;
 
+import com.mycompany.myapp.domain.CourseSection;
 import com.mycompany.myapp.domain.CourseSession;
 import com.mycompany.myapp.service.dto.CourseSessionDTO;
+import java.util.Collection;
 import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
@@ -51,4 +53,6 @@ public interface CourseSessionService {
     void delete(Long id);
 
     List<CourseSession> findSessionByCourseSection(Long id);
+
+    List<CourseSession> findCourseSessionsByCourseSectionIn(Long id);
 }

@@ -98,7 +98,8 @@ class Course extends Component {
               </p>
               <Button
                 onClick={e => {
-                  window.location.href = this.onbuttonclick(course.id);
+                  // window.location.href = this.onbuttonclick(course.id);
+                  window.location.href = '/videoSession/' + course.id;
                 }}
               >
                 <h6>View Assignments</h6>

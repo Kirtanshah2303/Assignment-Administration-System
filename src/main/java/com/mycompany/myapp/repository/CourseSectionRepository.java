@@ -16,4 +16,6 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface CourseSectionRepository extends JpaRepository<CourseSection, Long>, JpaSpecificationExecutor<CourseSection> {
     List<CourseSection> findCourseSectionByCourse(Optional<Course> course);
+
+    List<CourseSection> findCourseSectionsByCourse(Optional<Course> course);
 }

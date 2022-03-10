@@ -88,6 +88,11 @@ public class CourseSectionServiceImpl implements CourseSectionService {
     }
 
     @Override
+    public List<CourseSection> findCourseSectionsByCourse(Long id) {
+        return courseSectionRepository.findCourseSectionsByCourse(courseRepository.findById(id));
+    }
+
+    @Override
     public void delete(Long id) {
         log.debug("Request to delete CourseSection : {}", id);
         courseSectionRepository.deleteById(id);

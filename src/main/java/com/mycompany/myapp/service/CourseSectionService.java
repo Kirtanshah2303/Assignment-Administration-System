@@ -45,6 +45,8 @@ public interface CourseSectionService {
 
     List<CourseSection> findSectionsByCourse(Long id);
 
+    List<CourseSection> findCourseSectionsByCourse(Long id);
+
     /**
      * Delete the "id" courseSection.
      *

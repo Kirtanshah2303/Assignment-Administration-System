@@ -171,6 +171,12 @@ public class CourseSessionResource {
         return (List) courseSessionService.findSessionByCourseSection(id);
     }
 
+    // Getting session by section
+    @GetMapping("/videoSessions/{id}")
+    public List getCourseSessionByID(@PathVariable Long id) {
+        return (List) courseSessionService.findCourseSessionsByCourseSectionIn(id);
+    }
+
     /**
      * {@code GET  /course-sessions/count} : count all the courseSessions.
      *

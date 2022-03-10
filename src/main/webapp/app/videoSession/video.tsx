@@ -1,17 +1,13 @@
 import React, { Component } from 'react';
 import ReactPlayer from 'react-player';
-// import {Collapse} from "antd";
-// const { Panel } = Collapse;
+import { Collapse } from 'antd';
+const { Panel } = Collapse;
 // import {Button} from "@mui/material";
-import { Row } from 'reactstrap';
+import { Button, Card } from 'react-bootstrap';
 import TreeView from '@mui/lab/TreeView';
-// import {TreeView} from "devextreme-react";
-// import DataSource from "devextreme/data/data_source"
-// import ODataStore from 'devextreme/data/odata/store';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import TreeItem from '@mui/lab/TreeItem';
-import { Button, Card } from 'react-bootstrap';
 
 interface match {
   match?: any;
@@ -22,10 +18,17 @@ class video extends Component<match> {
   state = {
     session: [],
     videoLink: '',
+    videoSection: [],
   };
 
   constructor(props) {
     super(props);
+  }
+
+  callback(nodeId) {
+    {
+      this.state.videoSection.map(session => <TreeItem nodeId={session.id} key={session.id} label={session.sessionTitle} />);
+    }
   }
 
   componentDidMount() {
@@ -35,9 +38,30 @@ class video extends Component<match> {
     token = token.slice(1, -1);
 
     bearer = bearer + token;
-    const link = `http://localhost:8080/api/videoSession/${this.props.match.params.id}`;
+    const link1 = `http://localhost:8080/api/course-section/${this.props.match.params.id}`;
+    const link2 = `http://localhost:8080/api/videoSessions/${this.props.match.params.id}`;
+    // const link = `http://localhost:8080/api/course-section/${this.props.match.params.id}`;
 
-    fetch(link, {
+    fetch(link1, {
+      method: 'GET',
+      headers: {
+        accept: '*/*',
+        Authorization: bearer,
+      },
+    })
+      .then(response => response.json())
+      .then(result => {
+        this.setState({ videoSection: result });
+        // this.setState({ videoLink: result[0].sessionVideo });
+        console.log('Section Details are..');
+        console.log(result);
+        // console.log(result[0].sessionVideo);
+      })
+      .catch(error => {
+        console.log(error);
+      });
+
+    fetch(link2, {
       method: 'GET',
       headers: {
         accept: '*/*',
@@ -47,9 +71,10 @@ class video extends Component<match> {
       .then(response => response.json())
       .then(result => {
         this.setState({ session: result });
-        this.setState({ videoLink: result[0].sessionVideo });
+        // this.setState({ videoLink: result[0].sessionVideo });
+        console.log('Session Details are..');
         console.log(result);
-        console.log(result[0].sessionVideo);
+        // console.log(result[0].sessionVideo);
       })
       .catch(error => {
         console.log(error);
@@ -61,22 +86,45 @@ class video extends Component<match> {
       // <Row>
       <div className="row">
         <div className="col-sm-8">
-          <ReactPlayer url={this.state.videoLink} width="100%" height="100%" />
+          <ReactPlayer url={this.state.videoLink} width="100%" height="100%" controls={true} />
         </div>
         <div className="col-sm-4">
-          {this.state.session.map(session => (
-            <div className="alert-info" role="alert" key={session.id} style={{ margin: '10px' }}>
-              <Button
-                variant="contained"
+          <TreeView
+            aria-label="file system navigator"
+            defaultCollapseIcon={<ExpandMoreIcon />}
+            defaultExpandIcon={<ChevronRightIcon />}
+            sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
+          >
+            {this.state.videoSection.map(section => (
+              <TreeItem
+                key={section.id}
+                nodeId={section.id}
+                label={section.sectionTitle}
                 onClick={() => {
-                  this.setState({ videoLink: session.sessionVideo });
+                  this.callback(section.id);
                 }}
               >
-                {' '}
-                {session.sessionDescription}{' '}
-              </Button>
-            </div>
-          ))}
+                {this.state.session.map(session => (
+                  <TreeItem
+                    nodeId={session.id}
+                    key={session.id}
+                    label={
+                      <Button
+                        variant="contained"
+                        onClick={() => {
+                          this.setState({ videoLink: session.sessionVideo });
+                        }}
+                      >
+                        {session.sessionTitle}
+                      </Button>
+                    }
+                  />
+
+                  // <h1 key={session.id}>{session.sessionTitle}</h1>
+                ))}
+              </TreeItem>
+            ))}
+          </TreeView>
         </div>
       </div>
 

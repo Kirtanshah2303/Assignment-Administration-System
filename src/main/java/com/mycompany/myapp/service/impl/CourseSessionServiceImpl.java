@@ -1,6 +1,7 @@
 package com.mycompany.myapp.service.impl;
 
 import com.mycompany.myapp.domain.CourseSession;
+import com.mycompany.myapp.repository.CourseRepository;
 import com.mycompany.myapp.repository.CourseSectionRepository;
 import com.mycompany.myapp.repository.CourseSessionRepository;
 import com.mycompany.myapp.service.CourseSessionService;
@@ -26,16 +27,19 @@ public class CourseSessionServiceImpl implements CourseSessionService {
 
     private final CourseSessionRepository courseSessionRepository;
     private final CourseSectionRepository courseSectionRepository;
+    private final CourseRepository courseRepository;
 
     private final CourseSessionMapper courseSessionMapper;
 
     public CourseSessionServiceImpl(
         CourseSessionRepository courseSessionRepository,
         CourseSectionRepository courseSectionRepository,
+        CourseRepository courseRepository,
         CourseSessionMapper courseSessionMapper
     ) {
         this.courseSessionRepository = courseSessionRepository;
         this.courseSectionRepository = courseSectionRepository;
+        this.courseRepository = courseRepository;
         this.courseSessionMapper = courseSessionMapper;
     }
 
@@ -85,5 +89,12 @@ public class CourseSessionServiceImpl implements CourseSessionService {
     @Override
     public List<CourseSession> findSessionByCourseSection(Long id) {
         return courseSessionRepository.findCourseSessionsByCourseSection(courseSectionRepository.findById(id));
+    }
+
+    @Override
+    public List<CourseSession> findCourseSessionsByCourseSectionIn(Long id) {
+        return courseSessionRepository.findCourseSessionsByCourseSectionIn(
+            courseSectionRepository.findCourseSectionsByCourse(courseRepository.findById(id))
+        );
     }
 }
