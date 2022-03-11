@@ -71,7 +71,7 @@ class video extends Component<match> {
       .then(response => response.json())
       .then(result => {
         this.setState({ session: result });
-        // this.setState({ videoLink: result[0].sessionVideo });
+        this.setState({ videoLink: result[0].sessionVideo });
         console.log('Session Details are..');
         console.log(result);
         // console.log(result[0].sessionVideo);
@@ -104,24 +104,27 @@ class video extends Component<match> {
                   this.callback(section.id);
                 }}
               >
-                {this.state.session.map(session => (
-                  <TreeItem
-                    nodeId={session.id}
-                    key={session.id}
-                    label={
-                      <Button
-                        variant="contained"
-                        onClick={() => {
-                          this.setState({ videoLink: session.sessionVideo });
-                        }}
-                      >
-                        {session.sessionTitle}
-                      </Button>
-                    }
-                  />
+                {this.state.session
+                  .filter(list => list.courseSection.id === section.id)
+                  .map(session => (
+                    <TreeItem
+                      nodeId={session.id}
+                      key={session.id}
+                      label={
+                        <Button
+                          variant="contained"
+                          onClick={() => {
+                            this.setState({ videoLink: session.sessionVideo });
+                            console.log('Session Link is --> ' + this.state.videoLink);
+                          }}
+                        >
+                          {session.sessionTitle}
+                        </Button>
+                      }
+                    />
 
-                  // <h1 key={session.id}>{session.sessionTitle}</h1>
-                ))}
+                    // <h1 key={session.id}>{session.sessionTitle}</h1>
+                  ))}
               </TreeItem>
             ))}
           </TreeView>
