@@ -151,13 +151,13 @@ public class CourseResource {
      */
     @GetMapping("/courses")
     public ResponseEntity<List<CourseDTO>> getAllCourses(
-        CourseCriteria criteria,
-        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+        CourseCriteria criteria
+        //        @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get Courses by criteria: {}", criteria);
-        Page<CourseDTO> page = courseQueryService.findByCriteria(criteria, pageable);
-        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
-        return ResponseEntity.ok().headers(headers).body(page.getContent());
+        List<CourseDTO> list = courseQueryService.findByCriteria(criteria);
+        //        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        return ResponseEntity.ok().body(list);
     }
 
     /**

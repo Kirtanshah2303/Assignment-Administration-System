@@ -84,8 +84,8 @@ class Course extends Component {
     return (
       <Row>
         {this.state.course.map(course => (
-          <Card key={course.id} className="coursedetail" style={{ width: '18rem' }}>
-            <Card.Img variant="top" width="276px" height="180px" src="content/images/img.png" />
+          <Card key={course.id} className="coursedetail" style={{ width: '18rem', margin: '2px' }}>
+            <Card.Img style={{ border: '1px solid black' }} variant="top" width="276px" height="180px" src={course.courseLogo} />
             <Card.Body>
               <Card.Title>
                 <h5>{course.courseTitle}</h5>
@@ -94,7 +94,7 @@ class Course extends Component {
                 <i className="fas fa-calendar-day"></i>&nbsp;&nbsp;<span>{course.courseCreatedOn}</span>
               </p>
               <p>
-                <i className="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;<span>Parth Shah</span>
+                <i className="fas fa-chalkboard-teacher"></i>&nbsp;&nbsp;<span>{course.user.firstName}</span>
               </p>
               <Button
                 onClick={e => {
@@ -102,7 +102,7 @@ class Course extends Component {
                   window.location.href = '/videoSession/' + course.id;
                 }}
               >
-                <h6>View Assignments</h6>
+                <h6>View Course</h6>
               </Button>
             </Card.Body>
           </Card>

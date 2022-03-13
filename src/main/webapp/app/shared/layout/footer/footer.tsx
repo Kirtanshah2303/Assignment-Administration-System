@@ -5,14 +5,13 @@ import { Translate } from 'react-jhipster';
 import { Col, Row } from 'reactstrap';
 
 const Footer = () => (
-  <div className="footer page-content">
-    <Row>
-      <Col md="12">
-        <p>
-          <Translate contentKey="footer">Your footer</Translate>
-        </p>
-      </Col>
-    </Row>
+  <div className="footer">
+    <p style={{ textAlign: 'center' }}>
+      <b>© Copyright CHARUSAT | All rights reserved</b>
+    </p>
+    <div className="logo-img">
+      <img src="../../../content/images/Charusat-logo.png" style={{ height: '15%', width: '15%' }} />
+    </div>
   </div>
 );
 
