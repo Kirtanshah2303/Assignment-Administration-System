@@ -25,11 +25,11 @@ class video extends Component<match> {
     super(props);
   }
 
-  callback(nodeId) {
-    {
-      this.state.videoSection.map(session => <TreeItem nodeId={session.id} key={session.id} label={session.sessionTitle} />);
-    }
-  }
+  // callback(nodeId) {
+  //   {
+  //     this.state.videoSection.map(session => <TreeItem nodeId={session.id} key={session.id} label={session.sessionTitle} />);
+  //   }
+  // }
 
   componentDidMount() {
     let bearer = 'Bearer ';
@@ -85,6 +85,10 @@ class video extends Component<match> {
     return (
       // <Row>
       <div className="row">
+        <meta
+          httpEquiv="Content-Security-Policy"
+          content="default-src 'none'; connect-src 'self'; media-src 'https://' ; font-src 'self'; img-src 'self' data: https:; style-src 'self' ; script-src 'self'"
+        />
         <div className="col-sm-8">
           <ReactPlayer url={this.state.videoLink} width="100%" height="100%" controls={true} />
         </div>
@@ -96,14 +100,7 @@ class video extends Component<match> {
             sx={{ height: 240, flexGrow: 1, maxWidth: 400, overflowY: 'auto' }}
           >
             {this.state.videoSection.map(section => (
-              <TreeItem
-                key={section.id}
-                nodeId={section.id}
-                label={section.sectionTitle}
-                onClick={() => {
-                  this.callback(section.id);
-                }}
-              >
+              <TreeItem key={section.id} nodeId={section.id} label={section.sectionTitle}>
                 {this.state.session
                   .filter(list => list.courseSection.id === section.id)
                   .map(session => (
