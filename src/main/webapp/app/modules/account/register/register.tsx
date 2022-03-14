@@ -6,9 +6,12 @@ import { toast } from 'react-toastify';
 import PasswordStrengthBar from 'app/shared/layout/password/password-strength-bar';
 import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { handleRegister, reset } from './register.reducer';
+import { getDropdownMenuPlacement } from 'react-bootstrap/DropdownMenu';
+import value from '*.json';
 
 export const RegisterPage = () => {
   const [password, setPassword] = useState('');
+  const [role, setRole] = useState('');
   const dispatch = useAppDispatch();
 
   useEffect(
@@ -20,8 +23,11 @@ export const RegisterPage = () => {
 
   const currentLocale = useAppSelector(state => state.locale.currentLocale);
 
-  const handleValidSubmit = ({ username, email, firstPassword }) => {
-    dispatch(handleRegister({ login: username, email, password: firstPassword, langKey: currentLocale }));
+  const handleValidSubmit = ({ username, email, firstPassword, authority }) => {
+    console.log('ROLES are --> ' + authority);
+    authority = [authority];
+    console.log('New --> ' + authority);
+    dispatch(handleRegister({ login: username, email, password: firstPassword, langKey: currentLocale, authorities: authority }));
   };
 
   const updatePassword = event => setPassword(event.target.value);
@@ -33,6 +39,11 @@ export const RegisterPage = () => {
       toast.success(translate(successMessage));
     }
   }, [successMessage]);
+
+  const handleChange = e => {
+    setRole(e.target.value);
+    console.log('ROLE is --> ' + role);
+  };
 
   return (
     <div>
@@ -101,7 +112,19 @@ export const RegisterPage = () => {
               }}
               data-cy="secondPassword"
             />
-            <Button id="register-submit" color="primary" type="submit" data-cy="submit">
+            <label>Profiles</label>
+
+            {/* <select className="form-control" defaultValue="ROLE_STUDENT" id="authority" name="authority" onChange={handleChange} form="register-form">*/}
+            {/*  <option value="ROLE_STUDENT">ROLE_STUDENT</option>*/}
+            {/*  <option value="ROLE_FACULTY">ROLE_FACULTY</option>*/}
+            {/* </select>*/}
+
+            <ValidatedField name="authority" type={'select'} defaultValue={['ROLE_STUDENT']}>
+              <option value="ROLE_STUDENT">ROLE_STUDENT</option>
+              <option value="ROLE_FACULTY">ROLE_FACULTY</option>
+            </ValidatedField>
+
+            <Button style={{ margin: '23px' }} id="register-submit" color="primary" type="submit" data-cy="submit">
               <Translate contentKey="register.form.button">Register</Translate>
             </Button>
           </ValidatedForm>
