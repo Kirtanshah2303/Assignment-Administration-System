@@ -8,6 +8,7 @@ import { useAppDispatch, useAppSelector } from 'app/config/store';
 import { handleRegister, reset } from './register.reducer';
 import { getDropdownMenuPlacement } from 'react-bootstrap/DropdownMenu';
 import value from '*.json';
+import _ from 'lodash';
 
 export const RegisterPage = () => {
   const [password, setPassword] = useState('');
@@ -25,14 +26,35 @@ export const RegisterPage = () => {
 
   const handleValidSubmit = ({ username, email, firstPassword, authority }) => {
     console.log('ROLES are --> ' + authority);
-    authority = [authority];
-    console.log('New --> ' + authority);
-    dispatch(handleRegister({ login: username, email, password: firstPassword, langKey: currentLocale, authorities: authority }));
+    const mail = email.substring(email.lastIndexOf('@') + 1);
+    console.log('splited mail --> ' + mail);
+    const studentDomain = 'charusat.edu.in';
+    const facultyDomain = 'charusat.ac.in';
+    const studentRole = 'ROLE_STUDENT';
+    const facultyRole = 'ROLE_FACULTY';
+    // authority = [authority];
+    // console.log('New --> ' + authority);
+
+    console.log('Domain --> ' + studentDomain);
+    if (_.isEqual(mail, facultyDomain) && _.isEqual(authority, facultyRole)) {
+      authority = [authority];
+      dispatch(handleRegister({ login: username, email, password: firstPassword, langKey: currentLocale, authorities: authority }));
+    } else if (_.isEqual(mail, studentDomain) && _.isEqual(authority, studentRole)) {
+      authority = [authority];
+      console.log('In Student IF');
+      dispatch(handleRegister({ login: username, email, password: firstPassword, langKey: currentLocale, authorities: authority }));
+    } else {
+      console.log('In Else part');
+      toast.error('Please register with your CHARUSAT Email only and Select your ROLE accordingly');
+    }
+
+    // dispatch(handleRegister({ login: username, email, password: firstPassword, langKey: currentLocale, authorities: authority }));
   };
 
   const updatePassword = event => setPassword(event.target.value);
 
   const successMessage = useAppSelector(state => state.register.successMessage);
+  const FailureMessage = useAppSelector(state => state.register.errorMessage);
 
   useEffect(() => {
     if (successMessage) {
