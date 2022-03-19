@@ -13,37 +13,33 @@ export const Home = () => {
 
   return (
     <Row>
-      <Col md="3" className="pad">
-        <span className="hipster rounded" />
-      </Col>
-      <Col className="col-md-6 mt-5">
-        <h2>Welcome, Students!</h2> <br />
-        {account?.login ? (
-          <div>
-            <Alert color="success">You are logged in as user {account.login}.</Alert>
+      <Col md="12" style={{ margin: '10px solid black', height: '100%' }}>
+        <div className="align-items-center row">
+          <div className="col-lg-5">
+            <div className="mt-40 home-2-content">
+              <h1 className="text-black fw-normal home-2-title display-4 mb-0">Make Your Learning Simple.</h1>
+              <p className="text-white-70 mt-4 f-15 mb-0">The beautifuly thing about learning is that nobody can take it from you.</p>
+              <div className="mt-5">
+                <a className="btn btn-custom me-4" href="/zooki/react/">
+                  Learn More
+                </a>
+              </div>
+            </div>
           </div>
-        ) : (
-          <div>
-            <br />
-            <Alert color="warning">
-              If you have already Register then
-              <span>&nbsp;</span>
-              <Link to="/login" className="alert-link">
-                {' '}
-                Sign In
-              </Link>
-            </Alert>
-            <br />
-            <Alert color="warning">
-              You do not have an account yet?&nbsp;
-              <Link to="/account/register" className="alert-link">
-                Register a new account
-              </Link>
-            </Alert>
-            <br />
+          <div className="col-lg-7">
+            <div className="mt-40 home-2-content position-relative">
+              <img src="/content/images/assignment.png" alt="" className="img-fluid mx-auto d-block home-2-img mover-img" />
+              <div className="home-2-bottom-img">
+                <img src="/zooki/react/static/media/home-2-bg.e74a5beee052680d051a.png" alt="" className="img-fluid d-block mx-auto" />
+              </div>
+            </div>
           </div>
-        )}
+        </div>
       </Col>
+
+      {/*    <Col md="8"> */}
+      {/*     <img src="content/images/assignment.png" /> */}
+      {/*    </Col> */}
     </Row>
   );
 };

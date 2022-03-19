@@ -36,6 +36,8 @@ const Routes = ({ match }) => (
       <ErrorBoundaryRoute path={`${match.url}course-assignment-input`} component={CourseAssignmentInput} />
       <ErrorBoundaryRoute path={`${match.url}course-assignment-output`} component={CourseAssignmentOutput} />
       <ErrorBoundaryRoute path={`${match.url}course-type`} component={CourseType} />
+      {/*       <PrivateRoute path="/videoSession/:id?" component={video} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} /> */}
+
       {/* jhipster-needle-add-route-path - JHipster will add routes here */}
     </Switch>
   </div>
