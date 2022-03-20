@@ -82,6 +82,10 @@ public class Course implements Serializable {
     @Column(name = "course_approval_date")
     private LocalDate courseApprovalDate;
 
+    @NotNull
+    @Column(name = "semester")
+    private Integer semester;
+
     @ManyToOne
     private CourseLevel courseLevel;
 
@@ -353,6 +357,15 @@ public class Course implements Serializable {
 
     public Course user(User user) {
         this.setUser(user);
+        return this;
+    }
+
+    public void setSemester(int semester) {
+        this.semester = semester;
+    }
+
+    public Course semester(int semester) {
+        this.setSemester(semester);
         return this;
     }
 

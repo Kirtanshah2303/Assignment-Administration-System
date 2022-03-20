@@ -1,10 +1,15 @@
 package com.mycompany.myapp.service.impl;
 
 import com.mycompany.myapp.domain.Course;
+import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.CourseRepository;
 import com.mycompany.myapp.service.CourseService;
+import com.mycompany.myapp.service.UserService;
 import com.mycompany.myapp.service.dto.CourseDTO;
 import com.mycompany.myapp.service.mapper.CourseMapper;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Optional;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -26,8 +31,11 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseMapper courseMapper;
 
-    public CourseServiceImpl(CourseRepository courseRepository, CourseMapper courseMapper) {
+    private final UserService userService;
+
+    public CourseServiceImpl(CourseRepository courseRepository, CourseMapper courseMapper, UserService userService) {
         this.courseRepository = courseRepository;
+        this.userService = userService;
         this.courseMapper = courseMapper;
     }
 
@@ -72,5 +80,64 @@ public class CourseServiceImpl implements CourseService {
     public void delete(Long id) {
         log.debug("Request to delete Course : {}", id);
         courseRepository.deleteById(id);
+    }
+
+    /**
+     * This method will fetch the courses for the given user according to the user's email.
+     * @return List<CourseDTO>
+     * */
+    public List<CourseDTO> findAllByCurrentSemester() {
+        log.debug("Request to get all Courses");
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (user.isPresent()) {
+            int currentYear = Math.subtractExact(
+                GregorianCalendar.getInstance().get(GregorianCalendar.YEAR) % 2000,
+                Integer.parseInt(user.get().getEmail().substring(0, 2))
+            );
+            int a = 1, b = 2;
+            int month = GregorianCalendar.getInstance().get(GregorianCalendar.MONTH);
+            if (currentYear == 0) {
+                a = 1;
+                b = 1;
+            } else if (currentYear == 1) {
+                if (month <= GregorianCalendar.JUNE) {
+                    a = 1;
+                    b = 2;
+                } else {
+                    a = 2;
+                    b = 3;
+                }
+            } else if (currentYear == 2) {
+                if (month <= GregorianCalendar.JUNE) {
+                    a = 3;
+                    b = 4;
+                } else {
+                    a = 4;
+                    b = 5;
+                }
+            } else if (currentYear == 3) {
+                if (month <= GregorianCalendar.JUNE) {
+                    a = 5;
+                    b = 6;
+                } else {
+                    a = 6;
+                    b = 7;
+                }
+            } else if (currentYear == 4) {
+                if (month <= GregorianCalendar.JUNE) {
+                    a = 7;
+                    b = 8;
+                }
+            }
+            List<CourseDTO> courseDTOList = new ArrayList<>();
+            courseRepository
+                .findAllBySemester(a, b)
+                .stream()
+                .forEach(course -> {
+                    courseDTOList.add(courseMapper.toDto(course));
+                });
+            return courseDTOList;
+        }
+        return null;
     }
 }

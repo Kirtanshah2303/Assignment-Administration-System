@@ -13,4 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface CourseRepository extends JpaRepository<Course, Long>, JpaSpecificationExecutor<Course> {
     @Query("select course from Course course where course.user.login = ?#{principal.username}")
     List<Course> findByUserIsCurrentUser();
+
+    @Query("select course from Course course where course.semester in (?1, ?2)")
+    List<Course> findAllBySemester(int a, int b);
 }
