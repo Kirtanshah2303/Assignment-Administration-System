@@ -94,24 +94,40 @@ public class CourseServiceImpl implements CourseService {
                 GregorianCalendar.getInstance().get(GregorianCalendar.YEAR) % 2000,
                 Integer.parseInt(user.get().getEmail().substring(0, 2))
             );
-            int a, b;
-            switch (currentYear) {
-                case 2:
-                    a = 3;
-                    b = 4;
-                    break;
-                case 3:
-                    a = 5;
-                    b = 6;
-                    break;
-                case 4:
-                    a = 7;
-                    b = 8;
-                    break;
-                default:
+            int a = 1, b = 2;
+            int month = GregorianCalendar.getInstance().get(GregorianCalendar.MONTH);
+            if (currentYear == 0) {
+                a = 1;
+                b = 1;
+            } else if (currentYear == 1) {
+                if (month <= GregorianCalendar.JUNE) {
                     a = 1;
                     b = 2;
-                    break;
+                } else {
+                    a = 2;
+                    b = 3;
+                }
+            } else if (currentYear == 2) {
+                if (month <= GregorianCalendar.JUNE) {
+                    a = 3;
+                    b = 4;
+                } else {
+                    a = 4;
+                    b = 5;
+                }
+            } else if (currentYear == 3) {
+                if (month <= GregorianCalendar.JUNE) {
+                    a = 5;
+                    b = 6;
+                } else {
+                    a = 6;
+                    b = 7;
+                }
+            } else if (currentYear == 4) {
+                if (month <= GregorianCalendar.JUNE) {
+                    a = 7;
+                    b = 8;
+                }
             }
             List<CourseDTO> courseDTOList = new ArrayList<>();
             courseRepository
