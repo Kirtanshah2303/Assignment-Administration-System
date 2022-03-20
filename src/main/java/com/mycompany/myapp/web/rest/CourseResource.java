@@ -16,8 +16,6 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -75,7 +73,7 @@ public class CourseResource {
     /**
      * {@code PUT  /courses/:id} : Updates an existing course.
      *
-     * @param id the id of the courseDTO to save.
+     * @param id        the id of the courseDTO to save.
      * @param courseDTO the courseDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated courseDTO,
      * or with status {@code 400 (Bad Request)} if the courseDTO is not valid,
@@ -109,7 +107,7 @@ public class CourseResource {
     /**
      * {@code PATCH  /courses/:id} : Partial updates given fields of an existing course, field will ignore if it is null
      *
-     * @param id the id of the courseDTO to save.
+     * @param id        the id of the courseDTO to save.
      * @param courseDTO the courseDTO to update.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and with body the updated courseDTO,
      * or with status {@code 400 (Bad Request)} if the courseDTO is not valid,
@@ -145,7 +143,6 @@ public class CourseResource {
     /**
      * {@code GET  /courses} : get all the courses.
      *
-     * @param pageable the pagination information.
      * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of courses in body.
      */
@@ -155,7 +152,8 @@ public class CourseResource {
         //        @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
         log.debug("REST request to get Courses by criteria: {}", criteria);
-        List<CourseDTO> list = courseQueryService.findByCriteria(criteria);
+        List<CourseDTO> list = courseService.findAllByCurrentSemester();
+        //        List<CourseDTO> list = courseQueryService.findByCriteria(criteria);
         //        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().body(list);
     }
