@@ -9,7 +9,8 @@ public class UserDTO {
 
     private Long id;
 
-    private String login;
+    //    private String login;
+    private String firstName;
 
     public UserDTO() {
         // Empty constructor needed for Jackson.
@@ -18,7 +19,8 @@ public class UserDTO {
     public UserDTO(User user) {
         this.id = user.getId();
         // Customize it here if you need, or not, firstName/lastName/etc
-        this.login = user.getLogin();
+        //        this.login = user.getLogin();
+        this.firstName = user.getFirstName();
     }
 
     public Long getId() {
@@ -29,20 +31,33 @@ public class UserDTO {
         this.id = id;
     }
 
-    public String getLogin() {
-        return login;
+    //    public String getLogin() {
+    //        return login;
+    //    }
+    public String getFirstName() {
+        return firstName;
     }
 
-    public void setLogin(String login) {
-        this.login = login;
+    //    public void setLogin(String login) {
+    //        this.login = login;
+    //    }
+    public void setFirstName(String firstName) {
+        this.firstName = firstName;
     }
 
     // prettier-ignore
+//    @Override
+//    public String toString() {
+//        return "UserDTO{" +
+//            "id='" + id + '\'' +
+//            ", login='" + login + '\'' +
+//            "}";
+//    }
     @Override
     public String toString() {
         return "UserDTO{" +
             "id='" + id + '\'' +
-            ", login='" + login + '\'' +
+            ", login='" + firstName + '\'' +
             "}";
     }
 }
