@@ -1,5 +1,7 @@
 package com.mycompany.myapp.web.rest;
 
+import com.mycompany.myapp.domain.Course;
+import com.mycompany.myapp.domain.CourseCategory;
 import com.mycompany.myapp.repository.CourseCategoryRepository;
 import com.mycompany.myapp.service.CourseCategoryQueryService;
 import com.mycompany.myapp.service.CourseCategoryService;
@@ -9,6 +11,7 @@ import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import javax.validation.Valid;
@@ -204,5 +207,28 @@ public class CourseCategoryResource {
             .noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    // To Get Parent/Main Categories of courses
+
+    @GetMapping("/course-category/parent-categories")
+    public ResponseEntity<List<CourseCategory>> getParentCourseCategories() {
+        log.debug("REST request to get course category by isParent");
+        List<CourseCategory> list = courseCategoryService.listParentCategory();
+        return ResponseEntity.ok().body(list);
+    }
+
+    // To get Sub Categories by Parent Category
+
+    @GetMapping("/course-category/sub-categories/{id}")
+    public ResponseEntity<List<CourseCategory>> getSubCourseCategories(@PathVariable Long id) {
+        log.debug("REST request to get course category by parentId");
+        return ResponseEntity.ok().body(courseCategoryService.listByParentId(id));
+    }
+
+    @GetMapping("/course-category/sub-categories/courses")
+    public ResponseEntity<Map<String, List<Course>>> getCoursesBySubCategories() {
+        log.debug("REST request to get courses by sub categories");
+        return ResponseEntity.ok().body(courseCategoryService.getCoursesBySubCategories());
     }
 }

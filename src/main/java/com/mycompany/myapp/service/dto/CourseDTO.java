@@ -1,5 +1,6 @@
 package com.mycompany.myapp.service.dto;
 
+import com.mycompany.myapp.domain.Course;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
@@ -67,6 +68,16 @@ public class CourseDTO implements Serializable {
     private CourseTypeDTO courseType;
 
     private UserDTO user;
+
+    Boolean enrolled;
+
+    Integer minStudents;
+
+    Integer maxStudents;
+
+    public CourseDTO() {}
+
+    public CourseDTO(Course course) {}
 
     public Long getId() {
         return id;
@@ -226,6 +237,30 @@ public class CourseDTO implements Serializable {
 
     public void setUser(UserDTO user) {
         this.user = user;
+    }
+
+    public Integer getMinStudents() {
+        return minStudents;
+    }
+
+    public void setMinStudents(Integer minStudents) {
+        this.minStudents = minStudents;
+    }
+
+    public Boolean getEnrolled() {
+        return enrolled;
+    }
+
+    public void setEnrolled(Boolean enrolled) {
+        this.enrolled = enrolled;
+    }
+
+    public Integer getMaxStudents() {
+        return maxStudents;
+    }
+
+    public void setMaxStudents(Integer maxStudents) {
+        this.maxStudents = maxStudents;
     }
 
     @Override

@@ -6,6 +6,7 @@ import java.util.List;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 /**
  * Service Interface for managing {@link com.mycompany.myapp.domain.Course}.
@@ -55,4 +56,13 @@ public interface CourseService {
      *
      * */
     List<CourseDTO> findAllByCurrentSemester();
+
+    List<Course> getEnrolledCourses() throws Exception;
+
+    /**
+     * CUSTOM
+     * */
+    List<CourseDTO> getByCategoryId(Long id) throws Exception;
+
+    ResponseEntity<Integer> getStudentEnrolledCountByCourse(Long courseId);
 }

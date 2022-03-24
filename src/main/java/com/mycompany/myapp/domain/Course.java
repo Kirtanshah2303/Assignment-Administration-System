@@ -2,8 +2,11 @@ package com.mycompany.myapp.domain;
 
 import java.io.Serializable;
 import java.time.LocalDate;
+import java.util.HashSet;
+import java.util.Set;
 import javax.persistence.*;
 import javax.validation.constraints.*;
+import org.hibernate.annotations.CacheConcurrencyStrategy;
 
 /**
  * A Course.
@@ -86,6 +89,12 @@ public class Course implements Serializable {
     @Column(name = "semester")
     private Integer semester;
 
+    @Column(name = "min_students")
+    private Integer minStudents;
+
+    @Column(name = "max_students")
+    private Integer maxStudents;
+
     @ManyToOne
     private CourseLevel courseLevel;
 
@@ -98,7 +107,39 @@ public class Course implements Serializable {
     @ManyToOne
     private User user;
 
+    @ManyToMany
+    @JoinTable(
+        name = "rel_course__enrolled_users_list",
+        joinColumns = @JoinColumn(name = "course_id"),
+        inverseJoinColumns = @JoinColumn(name = "enrolled_users_list_id")
+    )
+    private Set<User> enrolledUsersLists = new HashSet<>();
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
+
+    public Set<User> getEnrolledUsersLists() {
+        return enrolledUsersLists;
+    }
+
+    public void setEnrolledUsersLists(Set<User> enrolledUsersLists) {
+        this.enrolledUsersLists = enrolledUsersLists;
+    }
+
+    public Integer getMinStudents() {
+        return minStudents;
+    }
+
+    public void setMinStudents(Integer minStudents) {
+        this.minStudents = minStudents;
+    }
+
+    public Integer getMaxStudents() {
+        return maxStudents;
+    }
+
+    public void setMaxStudents(Integer maxStudents) {
+        this.maxStudents = maxStudents;
+    }
 
     public Long getId() {
         return this.id;

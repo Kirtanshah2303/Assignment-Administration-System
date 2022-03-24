@@ -1,6 +1,10 @@
 package com.mycompany.myapp.service;
 
+import com.mycompany.myapp.domain.Course;
+import com.mycompany.myapp.domain.CourseCategory;
 import com.mycompany.myapp.service.dto.CourseCategoryDTO;
+import java.util.List;
+import java.util.Map;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -47,4 +51,10 @@ public interface CourseCategoryService {
      * @param id the id of the entity.
      */
     void delete(Long id);
+
+    List<CourseCategory> listParentCategory();
+
+    List<CourseCategory> listByParentId(Long id);
+
+    Map<String, List<Course>> getCoursesBySubCategories();
 }

@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -139,5 +140,55 @@ public class CourseServiceImpl implements CourseService {
             return courseDTOList;
         }
         return null;
+    }
+
+    @Override
+    public List<Course> getEnrolledCourses() throws Exception {
+        Optional<User> user = userService.getUserWithAuthorities();
+        List<Course> courses;
+        if (user.isPresent()) {
+            courses = courseRepository.findCourseByEnrolledUsersListsContaining(user.get());
+            return courses;
+        } else {
+            throw new Exception("User not found");
+        }
+    }
+
+    /**
+     * CUSTOM
+     * */
+    @Override
+    public List<CourseDTO> getByCategoryId(Long id) throws Exception {
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (user.isPresent()) {
+            List<CourseDTO> list = new ArrayList<>();
+            List<Course> courses = courseRepository.findByCategoryId(id);
+            CourseDTO courseDTO;
+            for (Course course : courses) {
+                courseDTO = new CourseDTO(course);
+                if (course.getEnrolledUsersLists().contains(user.get())) {
+                    courseDTO.setEnrolled(true);
+                } else {
+                    courseDTO.setEnrolled(false);
+                }
+                courseDTO.setMinStudents(course.getMinStudents() + getStudentEnrolledCountByCourse(course.getId()).getBody());
+                list.add(courseDTO);
+            }
+            return list;
+        } else {
+            throw new Exception("User ot found");
+        }
+    }
+
+    @Override
+    public ResponseEntity<Integer> getStudentEnrolledCountByCourse(Long courseId) {
+        Optional<Course> course = courseRepository.findById(courseId);
+        if (course.isPresent()) {
+            Integer count = course.get().getEnrolledUsersLists().size();
+            return ResponseEntity.ok(count);
+        } else {
+            log.error("Course not found");
+            return ResponseEntity.noContent().build();
+        }
     }
 }

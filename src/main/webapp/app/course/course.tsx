@@ -63,7 +63,9 @@ class Course extends Component {
 
     bearer = bearer + token;
 
-    fetch('/api/courses', {
+    // fetch('/api/courses', {
+    fetch('/api/courses/enrolled', {
+      // fetch('/api/courses/category/12', {
       method: 'GET',
       headers: {
         accept: '*/*',

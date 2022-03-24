@@ -1,5 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
+import com.mycompany.myapp.domain.Course;
 import com.mycompany.myapp.repository.CourseRepository;
 import com.mycompany.myapp.service.CourseQueryService;
 import com.mycompany.myapp.service.CourseService;
@@ -181,6 +182,20 @@ public class CourseResource {
         log.debug("REST request to get Course : {}", id);
         Optional<CourseDTO> courseDTO = courseService.findOne(id);
         return ResponseUtil.wrapOrNotFound(courseDTO);
+    }
+
+    @GetMapping("courses/enrolled")
+    public ResponseEntity<List<Course>> enrolledCourses() throws Exception {
+        log.debug("REST request to get a page of Courses");
+        List<Course> list = courseService.getEnrolledCourses();
+        return ResponseEntity.ok().body(list);
+    }
+
+    @GetMapping("/courses/category/{categoryId}")
+    public ResponseEntity<List<CourseDTO>> getCourseByCategory(@PathVariable Long categoryId) throws Exception {
+        log.debug("REST request to get Course by categoryId : {}", categoryId);
+        List<CourseDTO> list = courseService.getByCategoryId(categoryId);
+        return ResponseEntity.ok().body(list);
     }
 
     /**
