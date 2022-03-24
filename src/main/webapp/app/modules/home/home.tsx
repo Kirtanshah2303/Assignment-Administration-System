@@ -22,6 +22,7 @@ export const Home = () => {
       {account?.login ? (
         <div>
           {/* <Alert color="success">You are logged in as user {account.login}.</Alert>*/}
+          {/* <Course match={'18'}/>*/}
           <Course />
         </div>
       ) : (

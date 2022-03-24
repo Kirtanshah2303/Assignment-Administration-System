@@ -1,15 +1,20 @@
 package com.mycompany.myapp.service.dto;
 
 import com.mycompany.myapp.domain.Course;
+import com.mycompany.myapp.domain.CourseLevel;
+import com.mycompany.myapp.service.mapper.CourseMapper;
 import java.io.Serializable;
 import java.time.LocalDate;
 import java.util.Objects;
 import javax.validation.constraints.*;
+import org.springframework.beans.factory.annotation.Autowired;
 
 /**
  * A DTO for the {@link com.mycompany.myapp.domain.Course} entity.
  */
 public class CourseDTO implements Serializable {
+
+    private CourseMapper courseMapper;
 
     @NotNull
     private Long id;
@@ -77,7 +82,30 @@ public class CourseDTO implements Serializable {
 
     public CourseDTO() {}
 
-    public CourseDTO(Course course) {}
+    public CourseDTO(CourseDTO course) {
+        this.id = course.getId();
+        this.courseTitle = course.getCourseTitle();
+        this.courseDescription = course.getCourseDescription();
+        this.courseObjectives = course.getCourseObjectives();
+        this.courseSubTitle = course.getCourseSubTitle();
+        this.coursePreviewURL = course.getCoursePreviewURL();
+        this.courseLength = course.getCourseLength();
+        this.courseLogo = course.getCourseLogo();
+        this.courseCreatedOn = course.getCourseCreatedOn();
+        this.courseUpdatedOn = course.getCourseUpdatedOn();
+        this.courseRootDir = course.getCourseRootDir();
+        this.amount = course.getAmount();
+        this.isDraft = course.getIsDraft();
+        this.isApproved = course.getIsApproved();
+        this.isPublished = course.getIsPublished();
+        this.courseApprovalDate = course.getCourseApprovalDate();
+        this.courseLevel = course.getCourseLevel();
+        this.courseCategory = course.getCourseCategory();
+        this.courseType = course.getCourseType();
+        this.user = course.getUser();
+        this.minStudents = course.getMinStudents();
+        this.maxStudents = course.getMaxStudents();
+    }
 
     public Long getId() {
         return id;

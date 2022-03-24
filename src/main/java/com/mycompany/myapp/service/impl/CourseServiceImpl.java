@@ -6,6 +6,7 @@ import com.mycompany.myapp.repository.CourseRepository;
 import com.mycompany.myapp.service.CourseService;
 import com.mycompany.myapp.service.UserService;
 import com.mycompany.myapp.service.dto.CourseDTO;
+import com.mycompany.myapp.service.dto.CourseTypeDTO;
 import com.mycompany.myapp.service.mapper.CourseMapper;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
@@ -165,7 +166,7 @@ public class CourseServiceImpl implements CourseService {
             List<Course> courses = courseRepository.findByCategoryId(id);
             CourseDTO courseDTO;
             for (Course course : courses) {
-                courseDTO = new CourseDTO(course);
+                courseDTO = new CourseDTO(courseMapper.toDto(course));
                 if (course.getEnrolledUsersLists().contains(user.get())) {
                     courseDTO.setEnrolled(true);
                 } else {
