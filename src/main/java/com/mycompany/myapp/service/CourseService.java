@@ -57,7 +57,7 @@ public interface CourseService {
      * */
     List<CourseDTO> findAllByCurrentSemester();
 
-    List<Course> getEnrolledCourses() throws Exception;
+    List<CourseDTO> getEnrolledCourses() throws Exception;
 
     /**
      * CUSTOM

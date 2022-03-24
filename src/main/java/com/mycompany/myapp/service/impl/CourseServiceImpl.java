@@ -144,12 +144,19 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getEnrolledCourses() throws Exception {
+    public List<CourseDTO> getEnrolledCourses() throws Exception {
         Optional<User> user = userService.getUserWithAuthorities();
         List<Course> courses;
+        List<CourseDTO> courseDTOList = new ArrayList<>();
+        CourseDTO courseDTO;
         if (user.isPresent()) {
             courses = courseRepository.findCourseByEnrolledUsersListsContaining(user.get());
-            return courses;
+            for (Course course : courses) {
+                courseDTO = new CourseDTO(courseMapper.toDto(course));
+                courseDTO.setEnrolled(true);
+                courseDTOList.add(courseDTO);
+            }
+            return courseDTOList;
         } else {
             throw new Exception("User not found");
         }

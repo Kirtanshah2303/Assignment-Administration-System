@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom';
 import { Button, Card } from 'react-bootstrap';
 import { Row } from 'reactstrap';
 import any = jasmine.any;
+import _ from 'lodash';
 // export const Course = () => {
 //   const history = useHistory();
 //   const account = useAppSelector(state => state.authentication.account);
@@ -176,14 +177,40 @@ class Course extends Component<match> {
                 </span>
               </p>
             </Card.Body>
-            <Button
-              onClick={e => {
-                // window.location.href = this.onbuttonclick(course.id);
-                window.location.href = '/videoSession/' + course.id;
-              }}
-            >
-              <h6>View Course</h6>
-            </Button>
+
+            {
+              // _.isEqual(course.enrolled,false) ? (  <Button
+              course.enrolled ? (
+                <Button
+                  onClick={e => {
+                    // window.location.href = this.onbuttonclick(course.id);
+                    window.location.href = '/videoSession/' + course.id;
+                    console.log(course.enrolled);
+                  }}
+                >
+                  <h6>View Course</h6>
+                </Button>
+              ) : (
+                <Button
+                  onClick={e => {
+                    // window.location.href = this.onbuttonclick(course.id);
+                    window.location.href = '/videoSession/' + course.id;
+                    console.log(course.enrolled);
+                  }}
+                >
+                  <h6>Enroll</h6>
+                </Button>
+              )
+            }
+
+            {/* <Button*/}
+            {/*  onClick={e => {*/}
+            {/*    // window.location.href = this.onbuttonclick(course.id);*/}
+            {/*    window.location.href = '/videoSession/' + course.id;*/}
+            {/*  }}*/}
+            {/* >*/}
+            {/*  <h6>View Course</h6>*/}
+            {/* </Button>*/}
           </Card>
         ))}
       </Row>

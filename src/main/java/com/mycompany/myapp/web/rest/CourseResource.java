@@ -185,9 +185,9 @@ public class CourseResource {
     }
 
     @GetMapping("courses/enrolled")
-    public ResponseEntity<List<Course>> enrolledCourses() throws Exception {
+    public ResponseEntity<List<CourseDTO>> enrolledCourses() throws Exception {
         log.debug("REST request to get a page of Courses");
-        List<Course> list = courseService.getEnrolledCourses();
+        List<CourseDTO> list = courseService.getEnrolledCourses();
         return ResponseEntity.ok().body(list);
     }
 
