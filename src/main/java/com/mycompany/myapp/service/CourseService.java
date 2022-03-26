@@ -65,4 +65,6 @@ public interface CourseService {
     List<CourseDTO> getByCategoryId(Long id) throws Exception;
 
     ResponseEntity<Integer> getStudentEnrolledCountByCourse(Long courseId);
+
+    ResponseEntity enrollInCourse(Long courseId);
 }

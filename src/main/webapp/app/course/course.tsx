@@ -193,9 +193,34 @@ class Course extends Component<match> {
               ) : (
                 <Button
                   onClick={e => {
+                    let bearer = 'Bearer ';
+                    let token = sessionStorage.getItem('jhi-authenticationToken');
+
+                    console.log(this.props.match);
+
+                    const data = course.id;
+
+                    token = token.slice(1, -1);
+
+                    bearer = bearer + token;
                     // window.location.href = this.onbuttonclick(course.id);
-                    window.location.href = '/videoSession/' + course.id;
-                    console.log(course.enrolled);
+                    fetch(`/api/courses/enroll`, {
+                      method: 'POST',
+                      headers: {
+                        accept: '*/*',
+                        Authorization: bearer,
+                      },
+                      body: data,
+                    })
+                      .then(response => response.json())
+                      .then(result => {
+                        window.location.href = '/videoSession/' + course.id;
+                        console.log(course.enrolled);
+                        console.log(this.state);
+                      })
+                      .catch(error => {
+                        console.log(error);
+                      });
                   }}
                 >
                   <h6>Enroll</h6>

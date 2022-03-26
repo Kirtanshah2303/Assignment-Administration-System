@@ -6,12 +6,9 @@ import com.mycompany.myapp.repository.CourseRepository;
 import com.mycompany.myapp.service.CourseService;
 import com.mycompany.myapp.service.UserService;
 import com.mycompany.myapp.service.dto.CourseDTO;
-import com.mycompany.myapp.service.dto.CourseTypeDTO;
 import com.mycompany.myapp.service.mapper.CourseMapper;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
+import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -175,8 +172,10 @@ public class CourseServiceImpl implements CourseService {
             for (Course course : courses) {
                 courseDTO = new CourseDTO(courseMapper.toDto(course));
                 if (course.getEnrolledUsersLists().contains(user.get())) {
+                    System.out.println("HAHAHAHAHAHAHA  --> " + course.getEnrolledUsersLists());
                     courseDTO.setEnrolled(true);
                 } else {
+                    System.out.println("HAHAHAHAHAHAHA2  --> " + course.getEnrolledUsersLists());
                     courseDTO.setEnrolled(false);
                 }
                 courseDTO.setMinStudents(course.getMinStudents() + getStudentEnrolledCountByCourse(course.getId()).getBody());
@@ -197,6 +196,58 @@ public class CourseServiceImpl implements CourseService {
         } else {
             log.error("Course not found");
             return ResponseEntity.noContent().build();
+        }
+    }
+
+    @Override
+    public ResponseEntity enrollInCourse(Long courseId) {
+        AtomicBoolean flag = new AtomicBoolean(false);
+        try {
+            System.out.println("Inside Try Block");
+            System.out.println("courseId is --> " + courseId);
+            //            System.out.println("courseId is --> "+Long.valueOf(courseId));
+
+            Optional<Course> demoCourse = courseRepository.findById(courseId);
+            Set<User> alreadyEnrolledUsers = demoCourse.get().getEnrolledUsersLists();
+            if (
+                userService.getUserWithAuthorities().isPresent() &&
+                !alreadyEnrolledUsers.contains(userService.getUserWithAuthorities().get())
+            ) {
+                System.out.println("Inside If Part");
+                alreadyEnrolledUsers.add(userService.getUserWithAuthorities().get());
+                System.out.println(alreadyEnrolledUsers);
+                demoCourse.get().setEnrolledUsersLists(alreadyEnrolledUsers);
+                flag.set(true);
+                courseRepository.save(demoCourse.orElse(null));
+            }
+            if (flag.get()) return ResponseEntity.accepted().build(); else {
+                return ResponseEntity.badRequest().body("Already enrolled");
+            }
+            //            courseRepository
+            //                .findById(courseId)
+            //                .map(
+            //                    existingCourse -> {
+            //                        System.out.println("Inside Try Block 2");
+            //                        Set<User> alreadyEnrolledUsers = existingCourse.getEnrolledUsersLists();
+            //                        if (
+            //                            userService.getUserWithAuthorities().isPresent() &&
+            //                                !alreadyEnrolledUsers.contains(userService.getUserWithAuthorities().get())
+            //                        ) {
+            //                            System.out.println("Inside If Part");
+            //                            alreadyEnrolledUsers.add(userService.getUserWithAuthorities().get());
+            //                            System.out.println(alreadyEnrolledUsers);
+            //                            existingCourse.setEnrolledUsersLists(alreadyEnrolledUsers);
+            //                            flag.set(true);
+            //                        }
+            //                        return existingCourse;
+            //                    }
+            //                )
+            //                .map(courseRepository::save);
+            //            if (flag.get()) return ResponseEntity.accepted().build(); else {
+            //                return ResponseEntity.badRequest().body("Already enrolled");
+            //            }
+        } catch (Exception e) {
+            return ResponseEntity.status(500).build();
         }
     }
 }

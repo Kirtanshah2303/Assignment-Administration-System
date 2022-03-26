@@ -199,6 +199,18 @@ public class CourseResource {
     }
 
     /**
+     * CUSTOM
+     * {@code POST  /courses/enroll} : Enroll in a particular course.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)}.
+     */
+    @PostMapping("/courses/enroll")
+    public ResponseEntity enrollInCourse(@RequestBody Long courseId) {
+        log.debug("REST request to enroll in Course : {}", courseId);
+        return courseService.enrollInCourse(courseId);
+    }
+
+    /**
      * {@code DELETE  /courses/:id} : delete the "id" course.
      *
      * @param id the id of the courseDTO to delete.
