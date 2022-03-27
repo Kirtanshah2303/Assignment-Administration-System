@@ -1,28 +1,25 @@
 package com.mycompany.myapp.web.rest;
 
 import com.mycompany.myapp.domain.Course;
+import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.CourseRepository;
 import com.mycompany.myapp.service.CourseQueryService;
 import com.mycompany.myapp.service.CourseService;
 import com.mycompany.myapp.service.criteria.CourseCriteria;
 import com.mycompany.myapp.service.dto.CourseDTO;
+import com.mycompany.myapp.service.mapper.CourseMapper;
 import com.mycompany.myapp.web.rest.errors.BadRequestAlertException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.List;
-import java.util.Objects;
-import java.util.Optional;
+import java.util.*;
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import tech.jhipster.web.util.HeaderUtil;
-import tech.jhipster.web.util.PaginationUtil;
 import tech.jhipster.web.util.ResponseUtil;
 
 /**
@@ -43,11 +40,19 @@ public class CourseResource {
 
     private final CourseRepository courseRepository;
 
+    private final CourseMapper courseMapper;
+
     private final CourseQueryService courseQueryService;
 
-    public CourseResource(CourseService courseService, CourseRepository courseRepository, CourseQueryService courseQueryService) {
+    public CourseResource(
+        CourseService courseService,
+        CourseRepository courseRepository,
+        CourseMapper courseMapper,
+        CourseQueryService courseQueryService
+    ) {
         this.courseService = courseService;
         this.courseRepository = courseRepository;
+        this.courseMapper = courseMapper;
         this.courseQueryService = courseQueryService;
     }
 
@@ -184,6 +189,13 @@ public class CourseResource {
         return ResponseUtil.wrapOrNotFound(courseDTO);
     }
 
+    /**
+     * CUSTOM
+     * {@code GET  /courses/enroll} :Get Enrolled courses of Logged in User.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)}.
+     */
+
     @GetMapping("courses/enrolled")
     public ResponseEntity<List<CourseDTO>> enrolledCourses() throws Exception {
         log.debug("REST request to get a page of Courses");
@@ -191,11 +203,42 @@ public class CourseResource {
         return ResponseEntity.ok().body(list);
     }
 
+    /**
+     * CUSTOM
+     * {@code GET  /courses/enroll} :Get Courses by Category ID of Logged in User.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)}.
+     */
+
     @GetMapping("/courses/category/{categoryId}")
     public ResponseEntity<List<CourseDTO>> getCourseByCategory(@PathVariable Long categoryId) throws Exception {
         log.debug("REST request to get Course by categoryId : {}", categoryId);
         List<CourseDTO> list = courseService.getByCategoryId(categoryId);
         return ResponseEntity.ok().body(list);
+    }
+
+    /**
+     * CUSTOM
+     * {@code GET  /courses/{courseId}/student-count} :Get count of enrolled student of Courses.
+     *
+     * @return the {@link ResponseEntity} with status {@code 200 (OK)}.
+     */
+    @GetMapping("/courses/{courseId}/student-count")
+    public ResponseEntity<Integer> getStudentCountByCourse(@PathVariable Long courseId) {
+        log.debug("REST request to get student enrolled count based on courseId : {}", courseId);
+        return courseService.getStudentEnrolledCountByCourse(courseId);
+    }
+
+    @GetMapping("/courses/get-overview")
+    public ResponseEntity<Map<String, String>> getOverview() {
+        log.debug("REST request to get courses overview");
+        return courseService.getOverview();
+    }
+
+    @GetMapping("/course/{courseId}/get-enrolled-users")
+    public ResponseEntity<Set<User>> getEnrolledUsersByCourse(@PathVariable Long courseId) {
+        log.debug("REST request to get enrolled user list by Course: {}", courseId);
+        return courseService.getEnrolledUsersByCourseId(courseId);
     }
 
     /**

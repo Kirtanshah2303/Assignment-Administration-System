@@ -3,10 +3,12 @@ package com.mycompany.myapp.service.impl;
 import com.mycompany.myapp.domain.Course;
 import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.CourseRepository;
+import com.mycompany.myapp.security.AuthoritiesConstants;
 import com.mycompany.myapp.service.CourseService;
 import com.mycompany.myapp.service.UserService;
 import com.mycompany.myapp.service.dto.CourseDTO;
 import com.mycompany.myapp.service.mapper.CourseMapper;
+import java.time.LocalDate;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicBoolean;
 import org.slf4j.Logger;
@@ -42,6 +44,19 @@ public class CourseServiceImpl implements CourseService {
     public CourseDTO save(CourseDTO courseDTO) {
         log.debug("Request to save Course : {}", courseDTO);
         Course course = courseMapper.toEntity(courseDTO);
+        /**
+         * Setting the default values that needs to set during the course creation.
+         * */
+        if (course.getCourseCreatedOn() == null) {
+            course.setCourseCreatedOn(LocalDate.now());
+        }
+        course.setIsApproved(false);
+        course.isPublished(false);
+        course.setIsDraft(true);
+        course.setCourseUpdatedOn(LocalDate.now());
+        course.setUser(userService.getUserWithAuthorities().get());
+        /** * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * * */
+
         course = courseRepository.save(course);
         return courseMapper.toDto(course);
     }
@@ -53,6 +68,7 @@ public class CourseServiceImpl implements CourseService {
         return courseRepository
             .findById(courseDTO.getId())
             .map(existingCourse -> {
+                existingCourse.setCourseUpdatedOn(LocalDate.now());
                 courseMapper.partialUpdate(existingCourse, courseDTO);
 
                 return existingCourse;
@@ -248,6 +264,37 @@ public class CourseServiceImpl implements CourseService {
             //            }
         } catch (Exception e) {
             return ResponseEntity.status(500).build();
+        }
+    }
+
+    @Override
+    public ResponseEntity<Map<String, String>> getOverview() {
+        Map<String, String> map = new HashMap<>();
+
+        Integer data = courseRepository.findAll().size();
+        map.put("totalCourses", data.toString());
+
+        data = courseRepository.findTotalEnrollment();
+        List<Course> courses = courseRepository.findAll();
+        for (Course course : courses) {
+            data += course.getMinStudents();
+        }
+        map.put("totalEnrollments", data.toString());
+
+        data = userService.getTotalUsersByAuthority(AuthoritiesConstants.FACULTY);
+        map.put("totalInstructors", data.toString());
+
+        return ResponseEntity.ok().body(map);
+    }
+
+    @Override
+    public ResponseEntity<Set<User>> getEnrolledUsersByCourseId(Long courseId) {
+        Optional<Course> course = courseRepository.findById(courseId);
+        if (course.isPresent()) {
+            Set<User> users = course.get().getEnrolledUsersLists();
+            return ResponseEntity.ok().body(users);
+        } else {
+            return ResponseEntity.badRequest().build();
         }
     }
 }

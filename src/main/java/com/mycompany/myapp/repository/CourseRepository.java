@@ -26,4 +26,7 @@ public interface CourseRepository extends JpaRepository<Course, Long>, JpaSpecif
         value = "select course from Course course where course.courseCategory.id = :id and course.isApproved = true order by course.courseTitle"
     )
     List<Course> findByCategoryId(@Param("id") Long id);
+
+    @Query(value = "select count(*) from rel_course__enrolled_users_list", nativeQuery = true)
+    Integer findTotalEnrollment();
 }

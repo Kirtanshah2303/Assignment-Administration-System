@@ -301,4 +301,8 @@ public class UserService {
     public List<String> getAuthorities() {
         return authorityRepository.findAll().stream().map(Authority::getName).collect(Collectors.toList());
     }
+
+    public Integer getTotalUsersByAuthority(String authority) {
+        return userRepository.countAllByAuthoritiesContains(authority);
+    }
 }

@@ -1,9 +1,12 @@
 package com.mycompany.myapp.service;
 
 import com.mycompany.myapp.domain.Course;
+import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.service.dto.CourseDTO;
 import java.util.List;
+import java.util.Map;
 import java.util.Optional;
+import java.util.Set;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.ResponseEntity;
@@ -67,4 +70,8 @@ public interface CourseService {
     ResponseEntity<Integer> getStudentEnrolledCountByCourse(Long courseId);
 
     ResponseEntity enrollInCourse(Long courseId);
+
+    ResponseEntity<Map<String, String>> getOverview();
+
+    ResponseEntity<Set<User>> getEnrolledUsersByCourseId(Long courseId);
 }
