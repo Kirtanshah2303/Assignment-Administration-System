@@ -57,4 +57,6 @@ public interface CourseCategoryService {
     List<CourseCategory> listByParentId(Long id);
 
     Map<String, List<Course>> getCoursesBySubCategories();
+
+    Map<String, List<CourseCategory>> getCourseSubCategoriesByParentCategories();
 }

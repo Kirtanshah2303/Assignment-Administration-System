@@ -1,8 +1,11 @@
 package com.mycompany.myapp.service.impl;
 
+import com.mycompany.myapp.config.Constants;
 import com.mycompany.myapp.domain.Course;
+import com.mycompany.myapp.domain.CourseReviewStatus;
 import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.CourseRepository;
+import com.mycompany.myapp.repository.UserRepository;
 import com.mycompany.myapp.security.AuthoritiesConstants;
 import com.mycompany.myapp.service.CourseService;
 import com.mycompany.myapp.service.UserService;
@@ -30,12 +33,20 @@ public class CourseServiceImpl implements CourseService {
 
     private final CourseRepository courseRepository;
 
+    private final UserRepository userRepository;
+
     private final CourseMapper courseMapper;
 
     private final UserService userService;
 
-    public CourseServiceImpl(CourseRepository courseRepository, CourseMapper courseMapper, UserService userService) {
+    public CourseServiceImpl(
+        CourseRepository courseRepository,
+        UserRepository userRepository,
+        CourseMapper courseMapper,
+        UserService userService
+    ) {
         this.courseRepository = courseRepository;
+        this.userRepository = userRepository;
         this.userService = userService;
         this.courseMapper = courseMapper;
     }

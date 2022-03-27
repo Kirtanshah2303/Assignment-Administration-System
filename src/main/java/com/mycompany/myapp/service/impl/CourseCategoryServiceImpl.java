@@ -111,4 +111,15 @@ public class CourseCategoryServiceImpl implements CourseCategoryService {
         }
         return map;
     }
+
+    @Override
+    public Map<String, List<CourseCategory>> getCourseSubCategoriesByParentCategories() {
+        List<CourseCategory> courseCategories = courseCategoryRepository.findCourseCategoryByIsParent(true);
+        Map<String, List<CourseCategory>> map = new HashMap<>();
+        for (CourseCategory category : courseCategories) {
+            List<CourseCategory> subCategories = courseCategoryRepository.findByParentId(category.getParentId());
+            map.put(category.getCourseCategoryTitle().strip(), subCategories);
+        }
+        return map;
+    }
 }
