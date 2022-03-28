@@ -226,53 +226,82 @@ public class CourseServiceImpl implements CourseService {
         }
     }
 
-    @Override
-    public ResponseEntity enrollInCourse(Long courseId) {
-        AtomicBoolean flag = new AtomicBoolean(false);
-        try {
-            System.out.println("Inside Try Block");
-            System.out.println("courseId is --> " + courseId);
-            //            System.out.println("courseId is --> "+Long.valueOf(courseId));
+    //    @Override
+    //    public ResponseEntity enrollInCourse(Long courseId) {
+    //        AtomicBoolean flag = new AtomicBoolean(false);
+    //        try {
+    //            System.out.println("Inside Try Block");
+    //            System.out.println("courseId is --> " + courseId);
+    //            //            System.out.println("courseId is --> "+Long.valueOf(courseId));
+    //
+    //            Optional<Course> demoCourse = courseRepository.findById(courseId);
+    //            Set<User> alreadyEnrolledUsers = demoCourse.get().getEnrolledUsersLists();
+    //            if (
+    //                userService.getUserWithAuthorities().isPresent() &&
+    //                !alreadyEnrolledUsers.contains(userService.getUserWithAuthorities().get())
+    //            ) {
+    //                System.out.println("Inside If Part");
+    //                alreadyEnrolledUsers.add(userService.getUserWithAuthorities().get());
+    //                System.out.println(alreadyEnrolledUsers);
+    //                demoCourse.get().setEnrolledUsersLists(alreadyEnrolledUsers);
+    //                flag.set(true);
+    //                courseRepository.save(demoCourse.orElse(null));
+    //            }
+    //            if (flag.get()) return ResponseEntity.accepted().build(); else {
+    //                return ResponseEntity.badRequest().body("Already enrolled");
+    //            }
+    //            //            courseRepository
+    //            //                .findById(courseId)
+    //            //                .map(
+    //            //                    existingCourse -> {
+    //            //                        System.out.println("Inside Try Block 2");
+    //            //                        Set<User> alreadyEnrolledUsers = existingCourse.getEnrolledUsersLists();
+    //            //                        if (
+    //            //                            userService.getUserWithAuthorities().isPresent() &&
+    //            //                                !alreadyEnrolledUsers.contains(userService.getUserWithAuthorities().get())
+    //            //                        ) {
+    //            //                            System.out.println("Inside If Part");
+    //            //                            alreadyEnrolledUsers.add(userService.getUserWithAuthorities().get());
+    //            //                            System.out.println(alreadyEnrolledUsers);
+    //            //                            existingCourse.setEnrolledUsersLists(alreadyEnrolledUsers);
+    //            //                            flag.set(true);
+    //            //                        }
+    //            //                        return existingCourse;
+    //            //                    }
+    //            //                )
+    //            //                .map(courseRepository::save);
+    //            //            if (flag.get()) return ResponseEntity.accepted().build(); else {
+    //            //                return ResponseEntity.badRequest().body("Already enrolled");
+    //            //            }
+    //        } catch (Exception e) {
+    //            return ResponseEntity.status(500).build();
+    //        }
+    //    }
 
-            Optional<Course> demoCourse = courseRepository.findById(courseId);
-            Set<User> alreadyEnrolledUsers = demoCourse.get().getEnrolledUsersLists();
-            if (
-                userService.getUserWithAuthorities().isPresent() &&
-                !alreadyEnrolledUsers.contains(userService.getUserWithAuthorities().get())
-            ) {
-                System.out.println("Inside If Part");
-                alreadyEnrolledUsers.add(userService.getUserWithAuthorities().get());
-                System.out.println(alreadyEnrolledUsers);
-                demoCourse.get().setEnrolledUsersLists(alreadyEnrolledUsers);
-                flag.set(true);
-                courseRepository.save(demoCourse.orElse(null));
-            }
-            if (flag.get()) return ResponseEntity.accepted().build(); else {
+    @Override
+    public ResponseEntity enrollInCourse(String courseId) {
+        AtomicBoolean flag = new AtomicBoolean(false);
+        Map<String, String> body = new HashMap<>();
+        body.put("Success", "Data Entered Successfully");
+        try {
+            courseRepository
+                .findById(Long.valueOf(courseId))
+                .map(existingCourse -> {
+                    Set<User> alreadyEnrolledUsers = existingCourse.getEnrolledUsersLists();
+                    if (
+                        userService.getUserWithAuthorities().isPresent() &&
+                        !alreadyEnrolledUsers.contains(userService.getUserWithAuthorities().get())
+                    ) {
+                        System.out.println("I am in if part");
+                        alreadyEnrolledUsers.add(userService.getUserWithAuthorities().get());
+                        flag.set(true);
+                    }
+                    return existingCourse;
+                })
+                .map(courseRepository::save);
+            if (flag.get()) return ResponseEntity.ok().body(body); else {
                 return ResponseEntity.badRequest().body("Already enrolled");
             }
-            //            courseRepository
-            //                .findById(courseId)
-            //                .map(
-            //                    existingCourse -> {
-            //                        System.out.println("Inside Try Block 2");
-            //                        Set<User> alreadyEnrolledUsers = existingCourse.getEnrolledUsersLists();
-            //                        if (
-            //                            userService.getUserWithAuthorities().isPresent() &&
-            //                                !alreadyEnrolledUsers.contains(userService.getUserWithAuthorities().get())
-            //                        ) {
-            //                            System.out.println("Inside If Part");
-            //                            alreadyEnrolledUsers.add(userService.getUserWithAuthorities().get());
-            //                            System.out.println(alreadyEnrolledUsers);
-            //                            existingCourse.setEnrolledUsersLists(alreadyEnrolledUsers);
-            //                            flag.set(true);
-            //                        }
-            //                        return existingCourse;
-            //                    }
-            //                )
-            //                .map(courseRepository::save);
-            //            if (flag.get()) return ResponseEntity.accepted().build(); else {
-            //                return ResponseEntity.badRequest().body("Already enrolled");
-            //            }
         } catch (Exception e) {
             return ResponseEntity.status(500).build();
         }
@@ -306,6 +335,29 @@ public class CourseServiceImpl implements CourseService {
             return ResponseEntity.ok().body(users);
         } else {
             return ResponseEntity.badRequest().build();
+        }
+    }
+
+    @Override
+    @Transactional(readOnly = true)
+    public List<Course> findAll() {
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (user.isPresent()) {
+            String authority = user.get().getAuthorities().toString();
+            System.out.println("HAHAHAH");
+            if (authority.contains(AuthoritiesConstants.ADMIN)) {
+                return courseRepository.findAll();
+            } else if (authority.contains(AuthoritiesConstants.FACULTY)) {
+                return courseRepository.findCourseByUserEquals(user.get());
+            } else if (authority.contains(AuthoritiesConstants.STUDENT)) {
+                //                return courseRepository.findCourseByEnrolledUsersListsContaining(user.get(), pageable);
+                return courseRepository.findAllByIsApproved(true);
+            } else {
+                return null;
+            }
+        } else {
+            System.out.println("Inside ELse part");
+            return null;
         }
     }
 }

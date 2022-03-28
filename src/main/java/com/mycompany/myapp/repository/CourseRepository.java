@@ -29,4 +29,8 @@ public interface CourseRepository extends JpaRepository<Course, Long>, JpaSpecif
 
     @Query(value = "select count(*) from rel_course__enrolled_users_list", nativeQuery = true)
     Integer findTotalEnrollment();
+
+    List<Course> findAllByIsApproved(Boolean value);
+
+    List<Course> findCourseByUserEquals(User author);
 }

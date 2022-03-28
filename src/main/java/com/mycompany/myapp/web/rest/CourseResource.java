@@ -17,6 +17,7 @@ import javax.validation.constraints.NotNull;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import tech.jhipster.web.util.HeaderUtil;
@@ -149,18 +150,21 @@ public class CourseResource {
     /**
      * {@code GET  /courses} : get all the courses.
      *
-     * @param criteria the criteria which the requested entities should match.
+//     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of courses in body.
      */
     @GetMapping("/courses")
-    public ResponseEntity<List<CourseDTO>> getAllCourses(
-        CourseCriteria criteria
+    public ResponseEntity<List<Course>> getAllCourses(
+        //        CourseCriteria criteria
         //        @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get Courses by criteria: {}", criteria);
-        List<CourseDTO> list = courseService.findAllByCurrentSemester();
+        //        log.debug("REST request to get Courses by criteria: {}", criteria);
+        //        List<CourseDTO> list = courseService.findAllByCurrentSemester();
         //        List<CourseDTO> list = courseQueryService.findByCriteria(criteria);
         //        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
+        //        return ResponseEntity.ok().body(list);
+        List<Course> list = courseService.findAll();
+        System.out.println("HAHAHAH--> " + list);
         return ResponseEntity.ok().body(list);
     }
 
@@ -247,8 +251,8 @@ public class CourseResource {
      *
      * @return the {@link ResponseEntity} with status {@code 200 (OK)}.
      */
-    @PostMapping("/courses/enroll")
-    public ResponseEntity enrollInCourse(@RequestBody Long courseId) {
+    @PostMapping(value = "/courses/enroll", consumes = MediaType.TEXT_PLAIN_VALUE)
+    public ResponseEntity enrollInCourse(@RequestBody String courseId) {
         log.debug("REST request to enroll in Course : {}", courseId);
         return courseService.enrollInCourse(courseId);
     }

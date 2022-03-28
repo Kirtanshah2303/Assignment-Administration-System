@@ -69,9 +69,11 @@ public interface CourseService {
 
     ResponseEntity<Integer> getStudentEnrolledCountByCourse(Long courseId);
 
-    ResponseEntity enrollInCourse(Long courseId);
+    ResponseEntity enrollInCourse(String courseId);
 
     ResponseEntity<Map<String, String>> getOverview();
 
     ResponseEntity<Set<User>> getEnrolledUsersByCourseId(Long courseId);
+
+    List<Course> findAll();
 }
