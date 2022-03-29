@@ -8,6 +8,7 @@ import java.util.Map;
 import java.util.Optional;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 
 /**
  * Service Interface for managing {@link com.mycompany.myapp.domain.CourseCategory}.
@@ -59,4 +60,8 @@ public interface CourseCategoryService {
     Map<String, List<Course>> getCoursesBySubCategories();
 
     Map<String, List<CourseCategory>> getCourseSubCategoriesByParentCategories();
+
+    ResponseEntity<Map<Long, Integer>> getCourseCountBySubCategory(Long parentId);
+
+    ResponseEntity<Map<Long, Integer>> getCourseCountByParentCategory();
 }

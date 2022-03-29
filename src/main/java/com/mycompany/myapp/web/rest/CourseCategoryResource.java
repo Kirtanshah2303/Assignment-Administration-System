@@ -226,6 +226,17 @@ public class CourseCategoryResource {
         return ResponseEntity.ok().body(courseCategoryService.listByParentId(id));
     }
 
+    // to get count of courses of parent category
+    @GetMapping("/course-category/{parentId}/sub-category/get-course-count")
+    public ResponseEntity<Map<Long, Integer>> getCourseCountBySubCategory(@PathVariable Long parentId) {
+        return courseCategoryService.getCourseCountBySubCategory(parentId);
+    }
+
+    @GetMapping("/course-category/get-course-count")
+    public ResponseEntity<Map<Long, Integer>> getCourseCountByParentCategory() {
+        return courseCategoryService.getCourseCountByParentCategory();
+    }
+
     @GetMapping("/course-category/sub-categories/courses")
     public ResponseEntity<Map<String, List<Course>>> getCoursesBySubCategories() {
         log.debug("REST request to get courses by sub categories");

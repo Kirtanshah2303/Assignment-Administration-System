@@ -15,6 +15,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -121,5 +122,25 @@ public class CourseCategoryServiceImpl implements CourseCategoryService {
             map.put(category.getCourseCategoryTitle().strip(), subCategories);
         }
         return map;
+    }
+
+    @Override
+    public ResponseEntity<Map<Long, Integer>> getCourseCountBySubCategory(Long parentId) {
+        List<CourseCategory> courseCategories = courseCategoryRepository.findByParentId(parentId.intValue());
+        Map<Long, Integer> map = new HashMap<>();
+        for (CourseCategory category : courseCategories) {
+            map.put(category.getId(), courseCategoryRepository.getCourseCountBySubCategory(category.getId()));
+        }
+        return ResponseEntity.ok().body(map);
+    }
+
+    @Override
+    public ResponseEntity<Map<Long, Integer>> getCourseCountByParentCategory() {
+        List<CourseCategory> courseCategories = courseCategoryRepository.findParentCategory();
+        Map<Long, Integer> map = new HashMap<>();
+        for (CourseCategory category : courseCategories) {
+            map.put(category.getId(), courseCategoryRepository.getCourseCountByParentCategory(category.getId().intValue()));
+        }
+        return ResponseEntity.ok().body(map);
     }
 }
