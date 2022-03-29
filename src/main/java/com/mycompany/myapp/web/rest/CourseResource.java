@@ -1,5 +1,6 @@
 package com.mycompany.myapp.web.rest;
 
+import com.mycompany.myapp.domain.Course;
 import com.mycompany.myapp.repository.CourseRepository;
 import com.mycompany.myapp.service.CourseQueryService;
 import com.mycompany.myapp.service.CourseService;
@@ -143,16 +144,16 @@ public class CourseResource {
     /**
      * {@code GET  /courses} : get all the courses.
      *
-     * @param criteria the criteria which the requested entities should match.
+//     * @param criteria the criteria which the requested entities should match.
      * @return the {@link ResponseEntity} with status {@code 200 (OK)} and the list of courses in body.
      */
     @GetMapping("/courses")
-    public ResponseEntity<List<CourseDTO>> getAllCourses(
-        CourseCriteria criteria
-        //        @org.springdoc.api.annotations.ParameterObject Pageable pageable
+    public ResponseEntity<List<Course>> getAllCourses(
+        //   CourseCriteria criteria
+        //              @org.springdoc.api.annotations.ParameterObject Pageable pageable
     ) {
-        log.debug("REST request to get Courses by criteria: {}", criteria);
-        List<CourseDTO> list = courseService.findAllByCurrentSemester();
+        //        log.debug("REST request to get Courses by criteria: {}", criteria);
+        List<Course> list = courseService.findAll();
         //        List<CourseDTO> list = courseQueryService.findByCriteria(criteria);
         //        HttpHeaders headers = PaginationUtil.generatePaginationHttpHeaders(ServletUriComponentsBuilder.fromCurrentRequest(), page);
         return ResponseEntity.ok().body(list);

@@ -32,9 +32,9 @@ import tech.jhipster.security.RandomUtil;
 @Transactional
 class UserServiceIT {
 
-    private static final String DEFAULT_LOGIN = "johndoe";
+    private static final String DEFAULT_LOGIN = "19it132@charusat.edu.in";
 
-    private static final String DEFAULT_EMAIL = "johndoe@localhost";
+    private static final String DEFAULT_EMAIL = "19it132@charusat.edu.int";
 
     private static final String DEFAULT_FIRSTNAME = "john";
 
@@ -78,7 +78,7 @@ class UserServiceIT {
     @Transactional
     void assertThatUserMustExistToResetPassword() {
         userRepository.saveAndFlush(user);
-        Optional<User> maybeUser = userService.requestPasswordReset("invalid.login@localhost");
+        Optional<User> maybeUser = userService.requestPasswordReset("19it127@charusat.edu.in");
         assertThat(maybeUser).isNotPresent();
 
         maybeUser = userService.requestPasswordReset(user.getEmail());

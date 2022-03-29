@@ -82,9 +82,9 @@ public class Course implements Serializable {
     @Column(name = "course_approval_date")
     private LocalDate courseApprovalDate;
 
-    @NotNull
-    @Column(name = "semester")
-    private Integer semester;
+    //    @NotNull
+    //    @Column(name = "semester")
+    //    private Integer semester;
 
     @ManyToOne
     private CourseLevel courseLevel;
@@ -360,14 +360,14 @@ public class Course implements Serializable {
         return this;
     }
 
-    public void setSemester(int semester) {
-        this.semester = semester;
-    }
-
-    public Course semester(int semester) {
-        this.setSemester(semester);
-        return this;
-    }
+    //    public void setSemester(int semester) {
+    //        this.semester = semester;
+    //    }
+    //
+    //    public Course semester(int semester) {
+    //        this.setSemester(semester);
+    //        return this;
+    //    }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
 

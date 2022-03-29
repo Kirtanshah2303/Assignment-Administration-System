@@ -3,6 +3,7 @@ package com.mycompany.myapp.service.impl;
 import com.mycompany.myapp.domain.Course;
 import com.mycompany.myapp.domain.User;
 import com.mycompany.myapp.repository.CourseRepository;
+import com.mycompany.myapp.security.AuthoritiesConstants;
 import com.mycompany.myapp.service.CourseService;
 import com.mycompany.myapp.service.UserService;
 import com.mycompany.myapp.service.dto.CourseDTO;
@@ -82,62 +83,84 @@ public class CourseServiceImpl implements CourseService {
         courseRepository.deleteById(id);
     }
 
+    @Override
+    @Transactional(readOnly = true)
+    public List<Course> findAll() {
+        Optional<User> user = userService.getUserWithAuthorities();
+        if (user.isPresent()) {
+            String authority = user.get().getAuthorities().toString();
+            System.out.println("HAHAHAH");
+            if (authority.contains(AuthoritiesConstants.ADMIN)) {
+                return courseRepository.findAll();
+            } else if (authority.contains(AuthoritiesConstants.FACULTY)) {
+                return courseRepository.findCourseByUserEquals(user.get());
+            } else if (authority.contains(AuthoritiesConstants.STUDENT)) {
+                //                return courseRepository.findCourseByEnrolledUsersListsContaining(user.get(), pageable);
+                return courseRepository.findAllByIsApproved(true);
+            } else {
+                return null;
+            }
+        } else {
+            System.out.println("Inside ELse part");
+            return null;
+        }
+    }
     /**
      * This method will fetch the courses for the given user according to the user's email.
      * @return List<CourseDTO>
      * */
-    public List<CourseDTO> findAllByCurrentSemester() {
-        log.debug("Request to get all Courses");
-        Optional<User> user = userService.getUserWithAuthorities();
-        if (user.isPresent()) {
-            int currentYear = Math.subtractExact(
-                GregorianCalendar.getInstance().get(GregorianCalendar.YEAR) % 2000,
-                Integer.parseInt(user.get().getEmail().substring(0, 2))
-            );
-            int a = 1, b = 2;
-            int month = GregorianCalendar.getInstance().get(GregorianCalendar.MONTH);
-            if (currentYear == 0) {
-                a = 1;
-                b = 1;
-            } else if (currentYear == 1) {
-                if (month <= GregorianCalendar.JUNE) {
-                    a = 1;
-                    b = 2;
-                } else {
-                    a = 2;
-                    b = 3;
-                }
-            } else if (currentYear == 2) {
-                if (month <= GregorianCalendar.JUNE) {
-                    a = 3;
-                    b = 4;
-                } else {
-                    a = 4;
-                    b = 5;
-                }
-            } else if (currentYear == 3) {
-                if (month <= GregorianCalendar.JUNE) {
-                    a = 5;
-                    b = 6;
-                } else {
-                    a = 6;
-                    b = 7;
-                }
-            } else if (currentYear == 4) {
-                if (month <= GregorianCalendar.JUNE) {
-                    a = 7;
-                    b = 8;
-                }
-            }
-            List<CourseDTO> courseDTOList = new ArrayList<>();
-            courseRepository
-                .findAllBySemester(a, b)
-                .stream()
-                .forEach(course -> {
-                    courseDTOList.add(courseMapper.toDto(course));
-                });
-            return courseDTOList;
-        }
-        return null;
-    }
+    //    public List<CourseDTO> findAllByCurrentSemester() {
+    //        log.debug("Request to get all Courses");
+    //        Optional<User> user = userService.getUserWithAuthorities();
+    //        if (user.isPresent()) {
+    //            int currentYear = Math.subtractExact(
+    //                GregorianCalendar.getInstance().get(GregorianCalendar.YEAR) % 2000,
+    //                Integer.parseInt(user.get().getEmail().substring(0, 2))
+    //            );
+    //            int a = 1, b = 2;
+    //            int month = GregorianCalendar.getInstance().get(GregorianCalendar.MONTH);
+    //            if (currentYear == 0) {
+    //                a = 1;
+    //                b = 1;
+    //            } else if (currentYear == 1) {
+    //                if (month <= GregorianCalendar.JUNE) {
+    //                    a = 1;
+    //                    b = 2;
+    //                } else {
+    //                    a = 2;
+    //                    b = 3;
+    //                }
+    //            } else if (currentYear == 2) {
+    //                if (month <= GregorianCalendar.JUNE) {
+    //                    a = 3;
+    //                    b = 4;
+    //                } else {
+    //                    a = 4;
+    //                    b = 5;
+    //                }
+    //            } else if (currentYear == 3) {
+    //                if (month <= GregorianCalendar.JUNE) {
+    //                    a = 5;
+    //                    b = 6;
+    //                } else {
+    //                    a = 6;
+    //                    b = 7;
+    //                }
+    //            } else if (currentYear == 4) {
+    //                if (month <= GregorianCalendar.JUNE) {
+    //                    a = 7;
+    //                    b = 8;
+    //                }
+    //            }
+    //            List<CourseDTO> courseDTOList = new ArrayList<>();
+    //            courseRepository
+    //                .findAllBySemester(a, b)
+    //                .stream()
+    //                .forEach(course -> {
+    //                    courseDTOList.add(courseMapper.toDto(course));
+    //                });
+    //            return courseDTOList;
+    //        }
+    //        return null;
+    //    }
 }

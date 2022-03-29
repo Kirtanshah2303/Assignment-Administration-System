@@ -36,8 +36,32 @@ import org.springframework.transaction.annotation.Transactional;
 @IntegrationTest
 class UserResourceIT {
 
-    private static final String DEFAULT_LOGIN = "johndoe";
-    private static final String UPDATED_LOGIN = "jhipster";
+    //
+    //    private static final String DEFAULT_LOGIN = "user";
+    //    private static final String UPDATED_LOGIN = "19it132@charusat.edu.in";
+    //
+    //    private static final Long DEFAULT_ID = 1L;
+    //
+    //    private static final String DEFAULT_PASSWORD = "user";
+    //    private static final String UPDATED_PASSWORD = "user";
+    //
+    //    private static final String DEFAULT_EMAIL = "johndoe@localhost";
+    //    private static final String UPDATED_EMAIL = "19it132@charusat.edu.in";
+    //
+    //    private static final String DEFAULT_FIRSTNAME = "john";
+    //    private static final String UPDATED_FIRSTNAME = "jhipsterFirstName";
+    //
+    //    private static final String DEFAULT_LASTNAME = "doe";
+    //    private static final String UPDATED_LASTNAME = "jhipsterLastName";
+    //
+    //    private static final String DEFAULT_IMAGEURL = "http://placehold.it/50x50";
+    //    private static final String UPDATED_IMAGEURL = "http://placehold.it/40x40";
+    //
+    //    private static final String DEFAULT_LANGKEY = "en";
+    //    private static final String UPDATED_LANGKEY = "fr";
+
+    private static final String DEFAULT_LOGIN = "user";
+    private static final String UPDATED_LOGIN = "19it132@charusat.edu.in";
 
     private static final Long DEFAULT_ID = 1L;
 
@@ -97,6 +121,7 @@ class UserResourceIT {
      */
     public static User initTestUser(UserRepository userRepository, EntityManager em) {
         User user = createEntity(em);
+        user.setId(DEFAULT_ID);
         user.setLogin(DEFAULT_LOGIN);
         user.setEmail(DEFAULT_EMAIL);
         return user;
@@ -175,7 +200,7 @@ class UserResourceIT {
     @Transactional
     void createUserWithExistingLogin() throws Exception {
         // Initialize the database
-        userRepository.saveAndFlush(user);
+        //userRepository.saveAndFlush(user);
         int databaseSizeBeforeCreate = userRepository.findAll().size();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
@@ -204,7 +229,7 @@ class UserResourceIT {
     @Transactional
     void createUserWithExistingEmail() throws Exception {
         // Initialize the database
-        userRepository.saveAndFlush(user);
+        // userRepository.saveAndFlush(user);
         int databaseSizeBeforeCreate = userRepository.findAll().size();
 
         ManagedUserVM managedUserVM = new ManagedUserVM();
@@ -233,7 +258,7 @@ class UserResourceIT {
     @Transactional
     void getAllUsers() throws Exception {
         // Initialize the database
-        userRepository.saveAndFlush(user);
+        //userRepository.saveAndFlush(user);
 
         // Get all the users
         restUserMockMvc
@@ -252,7 +277,7 @@ class UserResourceIT {
     @Transactional
     void getUser() throws Exception {
         // Initialize the database
-        userRepository.saveAndFlush(user);
+        //userRepository.saveAndFlush(user);
 
         // Get the user
         restUserMockMvc
@@ -277,7 +302,7 @@ class UserResourceIT {
     @Transactional
     void updateUser() throws Exception {
         // Initialize the database
-        userRepository.saveAndFlush(user);
+        //userRepository.saveAndFlush(user);
         int databaseSizeBeforeUpdate = userRepository.findAll().size();
 
         // Update the user
@@ -321,7 +346,7 @@ class UserResourceIT {
     @Transactional
     void updateUserLogin() throws Exception {
         // Initialize the database
-        userRepository.saveAndFlush(user);
+        //   userRepository.saveAndFlush(user);
         int databaseSizeBeforeUpdate = userRepository.findAll().size();
 
         // Update the user
@@ -366,7 +391,7 @@ class UserResourceIT {
     @Transactional
     void updateUserExistingEmail() throws Exception {
         // Initialize the database with 2 users
-        userRepository.saveAndFlush(user);
+        // userRepository.saveAndFlush(user);
 
         User anotherUser = new User();
         anotherUser.setLogin("jhipster");
@@ -409,7 +434,7 @@ class UserResourceIT {
     @Transactional
     void updateUserExistingLogin() throws Exception {
         // Initialize the database
-        userRepository.saveAndFlush(user);
+        //   userRepository.saveAndFlush(user);
 
         User anotherUser = new User();
         anotherUser.setLogin("jhipster");
@@ -452,7 +477,7 @@ class UserResourceIT {
     @Transactional
     void deleteUser() throws Exception {
         // Initialize the database
-        userRepository.saveAndFlush(user);
+        // userRepository.saveAndFlush(user);
         int databaseSizeBeforeDelete = userRepository.findAll().size();
 
         // Delete the user
