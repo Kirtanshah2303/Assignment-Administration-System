@@ -36,6 +36,8 @@ class CourseSectionResourceIT {
     private static final String DEFAULT_SECTION_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_SECTION_TITLE = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_SECTION_ID = 1L;
+
     private static final String DEFAULT_SECTION_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_SECTION_DESCRIPTION = "BBBBBBBBBB";
 
@@ -82,6 +84,7 @@ class CourseSectionResourceIT {
             .sectionOrder(DEFAULT_SECTION_ORDER)
             .isDraft(DEFAULT_IS_DRAFT)
             .isApproved(DEFAULT_IS_APPROVED);
+        courseSection.setId(DEFAULT_SECTION_ID);
         return courseSection;
     }
 
@@ -729,7 +732,7 @@ class CourseSectionResourceIT {
     @Transactional
     void putNewCourseSection() throws Exception {
         // Initialize the database
-        courseSectionRepository.saveAndFlush(courseSection);
+        // courseSectionRepository.saveAndFlush(courseSection);
 
         int databaseSizeBeforeUpdate = courseSectionRepository.findAll().size();
 

@@ -35,6 +35,8 @@ class CourseCategoryResourceIT {
     private static final String DEFAULT_COURSE_CATEGORY_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_COURSE_CATEGORY_TITLE = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_COURSE_CATEGORY_ID = 1L;
+
     private static final String DEFAULT_LOGO = "AAAAAAAAAA";
     private static final String UPDATED_LOGO = "BBBBBBBBBB";
 
@@ -80,7 +82,9 @@ class CourseCategoryResourceIT {
             .logo(DEFAULT_LOGO)
             .isParent(DEFAULT_IS_PARENT)
             .parentId(DEFAULT_PARENT_ID)
-            .description(DEFAULT_DESCRIPTION);
+            .description(DEFAULT_DESCRIPTION)
+            .id(DEFAULT_COURSE_CATEGORY_ID);
+
         return courseCategory;
     }
 
@@ -252,7 +256,7 @@ class CourseCategoryResourceIT {
     @Transactional
     void getCourseCategory() throws Exception {
         // Initialize the database
-        courseCategoryRepository.saveAndFlush(courseCategory);
+        //  courseCategoryRepository.saveAndFlush(courseCategory);
 
         // Get the courseCategory
         restCourseCategoryMockMvc

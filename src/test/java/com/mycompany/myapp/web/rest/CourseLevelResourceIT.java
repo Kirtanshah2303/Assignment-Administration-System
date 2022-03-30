@@ -35,6 +35,8 @@ class CourseLevelResourceIT {
     private static final String DEFAULT_TITLE = "AAAAAAAAAA";
     private static final String UPDATED_TITLE = "BBBBBBBBBB";
 
+    private static final Long DEFAULT_ID = 1L;
+
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
 
@@ -65,7 +67,7 @@ class CourseLevelResourceIT {
      * if they test an entity which requires the current entity.
      */
     public static CourseLevel createEntity(EntityManager em) {
-        CourseLevel courseLevel = new CourseLevel().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION);
+        CourseLevel courseLevel = new CourseLevel().title(DEFAULT_TITLE).description(DEFAULT_DESCRIPTION).id(DEFAULT_ID);
         return courseLevel;
     }
 
