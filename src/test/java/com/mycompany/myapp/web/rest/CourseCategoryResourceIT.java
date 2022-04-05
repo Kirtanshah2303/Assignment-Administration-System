@@ -732,7 +732,7 @@ class CourseCategoryResourceIT {
     @Transactional
     void putNewCourseCategory() throws Exception {
         // Initialize the database
-        courseCategoryRepository.saveAndFlush(courseCategory);
+        // courseCategoryRepository.saveAndFlush(courseCategory);
 
         int databaseSizeBeforeUpdate = courseCategoryRepository.findAll().size();
 
