@@ -18,6 +18,7 @@ import findUsername from 'app/modules/account/find-username/findUsername';
 import Course from 'app/course/course';
 import video from 'app/videoSession/video';
 import courseSection from 'app/courseSection/courseSection';
+import CourseCategory from 'app/courseCategory/courseCategory';
 
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
@@ -47,6 +48,7 @@ const Routes = () => {
           hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT, AUTHORITIES.FACULTY]}
         />
         <PrivateRoute path="/home" component={Course} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
+        <PrivateRoute path="/courseCategory" component={CourseCategory} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
         <PrivateRoute path="/courseSection/:id?" component={courseSection} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
         <PrivateRoute path="/videoSession/:id?" component={video} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
         <ErrorBoundaryRoute path="/" exact component={Home} />
