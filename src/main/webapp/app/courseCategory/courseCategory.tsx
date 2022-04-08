@@ -115,7 +115,7 @@ class CourseCategory extends Component<match> {
             <Card key={course.id} style={{ width: '18rem', margin: '1rem', flexWrap: 'wrap' }}>
               <Card.Body>
                 <Card.Title>{course.courseCategoryTitle}</Card.Title>
-                <Card.Text>Course Count :</Card.Text>
+                <Card.Text>Course Count : {this.state.coursecount[course.id]}</Card.Text>
               </Card.Body>
               <Button>View</Button>
             </Card>
