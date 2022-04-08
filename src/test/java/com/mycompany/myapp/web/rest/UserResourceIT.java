@@ -68,16 +68,16 @@ class UserResourceIT {
     private static final String DEFAULT_PASSWORD = "passjohndoe";
     private static final String UPDATED_PASSWORD = "passjhipster";
 
-    private static final String DEFAULT_EMAIL = "johndoe@localhost";
+    private static final String DEFAULT_EMAIL = "user@localhost";
     private static final String UPDATED_EMAIL = "jhipster@localhost";
 
-    private static final String DEFAULT_FIRSTNAME = "john";
+    private static final String DEFAULT_FIRSTNAME = "User";
     private static final String UPDATED_FIRSTNAME = "jhipsterFirstName";
 
-    private static final String DEFAULT_LASTNAME = "doe";
+    private static final String DEFAULT_LASTNAME = "User";
     private static final String UPDATED_LASTNAME = "jhipsterLastName";
 
-    private static final String DEFAULT_IMAGEURL = "http://placehold.it/50x50";
+    private static final String DEFAULT_IMAGEURL = "";
     private static final String UPDATED_IMAGEURL = "http://placehold.it/40x40";
 
     private static final String DEFAULT_LANGKEY = "en";
