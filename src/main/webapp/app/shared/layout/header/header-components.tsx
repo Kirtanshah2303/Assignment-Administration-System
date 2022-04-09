@@ -29,5 +29,12 @@ export const Home = () => (
         <Translate contentKey="global.menu.home">Home</Translate>
       </span>
     </NavLink>
+
+    <NavLink tag={Link} to="/courseCategory" className="d-flex align-items-center">
+      <FontAwesomeIcon icon="home" />
+      <span>
+        <Translate contentKey="CourseCategory">Course</Translate>
+      </span>
+    </NavLink>
   </NavItem>
 );

@@ -19,6 +19,7 @@ import Course from 'app/course/course';
 import video from 'app/videoSession/video';
 import courseSection from 'app/courseSection/courseSection';
 import CourseCategory from 'app/courseCategory/courseCategory';
+import CourseSubCategory from 'app/courseSubCategory/courseSubCategory';
 
 const Account = Loadable({
   loader: () => import(/* webpackChunkName: "account" */ 'app/modules/account'),
@@ -49,6 +50,11 @@ const Routes = () => {
         />
         <PrivateRoute path="/home" component={Course} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
         <PrivateRoute path="/courseCategory" component={CourseCategory} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
+        <PrivateRoute
+          path="/coursesubCategory/:id?"
+          component={CourseSubCategory}
+          hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]}
+        />
         <PrivateRoute path="/courseSection/:id?" component={courseSection} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
         <PrivateRoute path="/videoSession/:id?" component={video} hasAnyAuthorities={[AUTHORITIES.ADMIN, AUTHORITIES.STUDENT]} />
         <ErrorBoundaryRoute path="/" exact component={Home} />

@@ -1,4 +1,4 @@
-import './courseCategory.scss';
+import './courseSubCategory.scss';
 
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
@@ -7,8 +7,6 @@ import { Button, Card } from 'react-bootstrap';
 import { Row } from 'reactstrap';
 import any = jasmine.any;
 import _ from 'lodash';
-import CourseSubCategory from 'app/courseSubCategory/courseSubCategory';
-
 // export const Course = () => {
 //   const history = useHistory();
 //   const account = useAppSelector(state => state.authentication.account);
@@ -49,10 +47,10 @@ import CourseSubCategory from 'app/courseSubCategory/courseSubCategory';
 
 interface match {
   match?: any;
-  // id?:any
+  id?: any;
 }
 
-class CourseCategory extends Component<match> {
+class CourseSubCategory extends Component<match> {
   state = {
     course: [],
     coursecount: [],
@@ -60,28 +58,6 @@ class CourseCategory extends Component<match> {
   };
   constructor(props) {
     super(props);
-    this.subcategories = this.subcategories.bind(this);
-  }
-
-  subcategories(id) {
-    console.log('hello -> ' + id);
-    fetch(`/course-category/sub-categories/{id}`, {
-      // fetch(`/api/courses`, {
-      method: 'GET',
-      headers: {
-        accept: '*/*',
-      },
-    })
-      .then(response => response.json())
-      .then(resul => {
-        this.setState({ sub_category: resul });
-        console.log(this.state.sub_category);
-      })
-      .catch(error => {
-        console.log(error);
-      });
-
-    //           this.props.history.push("/home");
   }
 
   componentDidMount() {
@@ -94,7 +70,7 @@ class CourseCategory extends Component<match> {
 
     bearer = bearer + token;
 
-    fetch(`/api/course-category/parent-categories`, {
+    fetch(`/api/course-category/sub-categories/${this.props.match.params.id}`, {
       // fetch(`/api/courses`, {
       method: 'GET',
       headers: {
@@ -111,7 +87,7 @@ class CourseCategory extends Component<match> {
         console.log(error);
       });
 
-    fetch(`/api/course-category/get-course-count`, {
+    fetch(`/api/course-category/${this.props.match.params.id}/sub-category/get-course-count`, {
       // fetch(`/api/courses`, {
       method: 'GET',
       headers: {
@@ -120,21 +96,22 @@ class CourseCategory extends Component<match> {
       },
     })
       .then(response => response.json())
-      .then(res => {
-        this.setState({ coursecount: res });
+      .then(result => {
+        this.setState({ coursecount: result });
         console.log(this.state);
       })
       .catch(error => {
         console.log(error);
       });
-    console.log('hEllo' + this.state.coursecount);
   }
 
   render() {
     return (
+      //     <div>Hello This is Sub Categories</div>
+
       <div>
         {' '}
-        <h5>Available Categories.</h5> <br />
+        <h5>Available Sub Categories.</h5> <br />
         <Row>
           {this.state.course.map(course => (
             <Card key={course.id} style={{ width: '18rem', margin: '1rem', flexWrap: 'wrap' }} border="dark" className="mb-2">
@@ -144,7 +121,7 @@ class CourseCategory extends Component<match> {
                 <Card.Text>Course Count : {this.state.coursecount[course.id]}</Card.Text>
                 {/*               <Button variant="primary">View</Button> */}
               </Card.Body>
-              <Button variant="primary" onClick={CourseSubCategory}></Button>
+              <Button variant="primary">View</Button>
             </Card>
           ))}
         </Row>
@@ -152,5 +129,5 @@ class CourseCategory extends Component<match> {
     );
   }
 }
-// onClick={e => { window.location.href = '/coursesubCategory/' + course.id;}}
-export default CourseCategory;
+
+export default CourseSubCategory;
